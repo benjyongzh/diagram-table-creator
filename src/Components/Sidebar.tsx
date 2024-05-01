@@ -1,6 +1,8 @@
 import { NodeTypes } from "reactflow";
 import { SidebarComponentListItem } from "./SidebarComponentListItem";
 import { useAppSelector } from "Hooks/reduxHooks";
+import { convertRecordToArray } from "Utilities/objects";
+import nodeTypePair from "Types/nodeType";
 
 export const Sidebar = () => {
   const nodeTypes: NodeTypes = useAppSelector((state) => state.nodes.nodeTypes);
@@ -114,9 +116,11 @@ export const Sidebar = () => {
             <section className="menu-section px-4">
               <span className="menu-title">Components</span>
               <ul className="menu-items">
-                {nodeTypes.map((nodeType) => (
-                  <SidebarComponentListItem nodeType={nodeType} />
-                ))}
+                {convertRecordToArray(nodeTypes).map(
+                  (nodeType: nodeTypePair) => (
+                    <SidebarComponentListItem nodeType={nodeType} />
+                  )
+                )}
               </ul>
             </section>
             {/* <section className="menu-section px-4">

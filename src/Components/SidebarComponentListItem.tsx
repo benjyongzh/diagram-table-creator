@@ -1,26 +1,27 @@
+import nodeTypePair from "Types/nodeType";
+
 type sidebarComponentListItemProps = {
-  nodeType: Node;
+  nodeType: nodeTypePair;
 };
 
 export const SidebarComponentListItem = (
   props: sidebarComponentListItemProps
 ) => {
-  //   const [isHovered, setIsHovered] = useState(false);
   const onAdd = () => {};
   const onEdit = () => {};
   return (
     <li>
       <input
         type="checkbox"
-        id={`component-list-item-${props.nodeType || "myComponent"}`}
+        id={`component-list-item-${Object.keys(props)[0]}`}
         className="menu-toggle"
       />
       <label
         className="menu-item justify-between"
-        htmlFor={`component-list-item-${props.nodeType || "myComponent"}`}
+        htmlFor={`component-list-item-${Object.keys(props)[0]}`}
       >
         <div className="flex gap-2">
-          <span>{props.nodeType || "myComponent"}</span>
+          <span>{Object.keys(props)[0]}</span>
         </div>
       </label>
 
