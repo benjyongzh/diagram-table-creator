@@ -11,13 +11,23 @@ import initialEdges from "Objects/initialEdges";
 import { minimapStyle } from "Styles/minimap";
 import "reactflow/dist/style.css";
 
+import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
+import { setNodes } from "Features/nodeSlice";
+
 const ReactFlowContainer = () => {
+  const nodes = useAppSelector((state) => state.nodes.nodes);
+  const dispatch = useAppDispatch();
+
   const onInit = () => {
     console.log("hello! reactflow initialized");
+    if (featureFlags.USE_INITIAL_OBJECTS) {
+      dispatch(setNodes(initialNodes));
+    }
   };
+
   return (
     <ReactFlow
-      nodes={featureFlags.USE_INITIAL_OBJECTS ? initialNodes : []}
+      nodes={nodes}
       edges={featureFlags.USE_INITIAL_OBJECTS ? initialEdges : []}
       //   onNodesChange={onNodesChange}
       //   onEdgesChange={onEdgesChange}

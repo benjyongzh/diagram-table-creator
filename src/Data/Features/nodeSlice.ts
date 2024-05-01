@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { StoreNodeState } from "Types/storeNodeState";
+import { Node } from "reactflow";
 
 // Define the initial state using that type
 const initialState: StoreNodeState = {
@@ -10,20 +11,19 @@ export const nodeSlice = createSlice({
   name: "nodes",
   initialState,
   reducers: {
-    increment: (state) => {
-      //   state.value += 1;
+    addNode: (state, action: PayloadAction<Node>) => {
+      state.nodes.push(action.payload);
     },
-    decrement: (state) => {
+    removeNode: (state, action: PayloadAction<Node>) => {
       //   state.value -= 1;
     },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      //   state.value += action.payload;
+    setNodes: (state, action: PayloadAction<Array<Node>>) => {
+      state.nodes = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = nodeSlice.actions;
+export const { addNode, removeNode, setNodes } = nodeSlice.actions;
 
 export default nodeSlice.reducer;
