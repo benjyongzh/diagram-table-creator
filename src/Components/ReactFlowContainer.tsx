@@ -47,6 +47,14 @@ const ReactFlowContainer = () => {
       <MiniMap style={minimapStyle} zoomable pannable />
       <Controls />
       <Background color="#999" variant={BackgroundVariant.Dots} gap={16} />
+      {/* <div className="w-fit">
+        <label
+          htmlFor="sidebar-mobile-fixed"
+          className="btn-primary btn sm:hidden"
+        >
+          Open Sidebar
+        </label>
+      </div> */}
     </ReactFlow>
   );
 };
