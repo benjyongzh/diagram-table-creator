@@ -1,4 +1,9 @@
+import { NodeTypes } from "reactflow";
+import { SidebarComponentListItem } from "./SidebarComponentListItem";
+import { useAppSelector } from "Hooks/reduxHooks";
+
 export const Sidebar = () => {
+  const nodeTypes: NodeTypes = useAppSelector((state) => state.nodes.nodeTypes);
   return (
     <div className="sm:w-full sm:max-w-[18rem]">
       <input
@@ -107,10 +112,18 @@ export const Sidebar = () => {
             </section>
             <div className="divider my-0"></div>
             <section className="menu-section px-4">
+              <span className="menu-title">Components</span>
+              <ul className="menu-items">
+                {nodeTypes.map((nodeType) => (
+                  <SidebarComponentListItem nodeType={nodeType} />
+                ))}
+              </ul>
+            </section>
+            {/* <section className="menu-section px-4">
               <span className="menu-title">Settings</span>
               <ul className="menu-items">
                 <li className="menu-item">
-                  {/* <svg
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="opacity-75"
                     width="22"
@@ -126,14 +139,14 @@ export const Sidebar = () => {
                     <path d="M7 10l5 -6l5 6"></path>
                     <path d="M21 10l-2 8a2 2.5 0 0 1 -2 2h-10a2 2.5 0 0 1 -2 -2l-2 -8z"></path>
                     <path d="M12 15m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                  </svg> */}
+                  </svg>
                   Products
                 </li>
                 <li>
                   <input type="checkbox" id="menu-2" className="menu-toggle" />
                   <label className="menu-item justify-between" htmlFor="menu-2">
                     <div className="flex gap-2">
-                      {/* <svg
+                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="opacity-75"
                         width="22"
@@ -153,7 +166,7 @@ export const Sidebar = () => {
                         <path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path>
                         <path d="M9 7l4 0"></path>
                         <path d="M9 11l4 0"></path>
-                      </svg> */}
+                      </svg>
                       <span>Contracts</span>
                     </div>
 
@@ -187,10 +200,10 @@ export const Sidebar = () => {
                   </div>
                 </li>
               </ul>
-            </section>
+            </section> */}
           </nav>
         </section>
-        <section className="sidebar-footer justify-end bg-gray-2 pt-2">
+        {/* <section className="sidebar-footer justify-end bg-gray-2 pt-2">
           <div className="divider my-0"></div>
           <div className="dropdown z-50 flex h-fit w-full cursor-pointer hover:bg-gray-4">
             <label
@@ -199,7 +212,7 @@ export const Sidebar = () => {
             >
               <div className="flex flex-row gap-4 p-4">
                 <div className="avatar-square avatar avatar-md">
-                  {/* <img src="https://i.pravatar.cc/150?img=30" alt="avatar" /> */}
+                  <img src="https://i.pravatar.cc/150?img=30" alt="avatar" />
                 </div>
 
                 <div className="flex flex-col">
@@ -214,7 +227,7 @@ export const Sidebar = () => {
               </a>
             </div>
           </div>
-        </section>
+        </section> */}
       </aside>
     </div>
   );
