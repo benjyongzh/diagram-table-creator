@@ -18,7 +18,7 @@ export const edgeSlice = createSlice({
       addEdge(newEdge, state.edges);
     },
     removeEdge: (state, action: PayloadAction<Edge>) => {
-      //   state.value -= 1;
+      state.edges = state.edges.filter((edge) => edge.id !== action.payload.id);
     },
     setAllEdges: (state, action: PayloadAction<Array<Edge>>) => {
       state.edges = action.payload;
