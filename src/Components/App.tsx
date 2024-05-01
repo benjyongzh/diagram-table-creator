@@ -3,11 +3,11 @@ import ReactFlowContainer from "./ReactFlowContainer";
 
 const App = () => {
   return (
-    <div className="providerflow">
-      <ReactFlowProvider>
+    <ReactFlowProvider>
+      <div className="main">
         <ReactFlowContainer />
-      </ReactFlowProvider>
-    </div>
+      </div>
+    </ReactFlowProvider>
   );
 };
 

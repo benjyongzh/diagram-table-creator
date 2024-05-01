@@ -9,6 +9,7 @@ import featureFlags from "Configs/featureFlags";
 import initialNodes from "Objects/initialNodes";
 import initialEdges from "Objects/initialEdges";
 import { minimapStyle } from "Styles/minimap";
+import "reactflow/dist/style.css";
 
 const ReactFlowContainer = () => {
   const onInit = () => {
