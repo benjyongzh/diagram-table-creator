@@ -17,8 +17,10 @@
       "Components/*": ["./src/Components/*"],
       "Types/*": ["./src/Data/Types/*"],
       "Objects/*": ["./src/Data/Objects/*"],
+      "Features/*": ["./src/Data/Features/*"],
       "Configs/*": ["./src/Data/Configs/*"],
       "Utilities/*": ["./src/Utilities/*"],
+      "Hooks/*": ["./src/Hooks/*"],
       "Styles/*": ["./src/Styles/*"],
       "@/*": ["./src/*"]
     },
