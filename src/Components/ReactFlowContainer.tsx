@@ -6,7 +6,10 @@ import {
   BackgroundVariant,
 } from "reactflow";
 import featureFlags from "Configs/featureFlags";
-import initialNodes, { initialNodeTypes } from "Objects/initialNodes";
+import initialNodes, {
+  initialCustomNodeVariants,
+  initialNodeTypes,
+} from "Objects/initialNodes";
 import initialEdges from "Objects/initialEdges";
 import { minimapStyle } from "Styles/minimap";
 import "reactflow/dist/style.css";
@@ -15,6 +18,7 @@ import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 import { setAllNodes } from "Features/nodeSlice";
 import { setAllNodeTypes } from "Features/nodeTypeSlice";
 import { setAllEdges } from "Features/edgeSlice";
+import { setAllNodeVariants } from "Features/customNodeVariantSlice";
 
 const ReactFlowContainer = () => {
   const nodes = useAppSelector((state) => state.nodes.nodes);
@@ -28,6 +32,7 @@ const ReactFlowContainer = () => {
       dispatch(setAllNodes(initialNodes));
       dispatch(setAllEdges(initialEdges));
       dispatch(setAllNodeTypes(initialNodeTypes));
+      dispatch(setAllNodeVariants(initialCustomNodeVariants));
     }
   };
 

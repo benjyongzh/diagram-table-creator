@@ -19,7 +19,7 @@ export const initialNodeTypes: NodeTypes = {
   [nodeConfigs.INITIAL_CUSTOM_NODE_NAME]: CustomComponentNode,
 };
 
-export const initialCustomNodeList: Array<CustomNodeVariant> = [
+export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
   { nodeName: "Monitoring Unit", handleCount: 7 },
   { nodeName: "Extenion Unit", handleCount: 3 },
 ];
