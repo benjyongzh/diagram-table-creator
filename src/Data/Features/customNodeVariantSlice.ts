@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { StoreCustomNodeVariants } from "Types/storeCustomNodeVariants";
-import { removeSubsetObject } from "Utilities/objects";
 import CustomNodeVariant from "Types/customNodeVariant";
 
 // Define the initial state using that type
@@ -17,8 +16,9 @@ export const nodeVariantSlice = createSlice({
       state.variants = { ...state.variants, ...action.payload };
     },
     removeNodeVariant: (state, action: PayloadAction<CustomNodeVariant>) => {
-      // state.nodes = state.nodes.filter((node) => node.id !== action.payload.id);
-      state.variants = removeSubsetObject(state.variants, action.payload);
+      state.variants = state.variants.filter(
+        (variant) => !(variant.nodeName !== action.payload.nodeName)
+      );
     },
     setAllNodeVariants: (state, action: PayloadAction<CustomNodeVariant[]>) => {
       state.variants = action.payload;
