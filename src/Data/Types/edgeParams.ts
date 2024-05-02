@@ -1,4 +1,4 @@
-export type edgeParams = {
+export type EdgeParams = {
   id: string;
   source: string;
   target: string;
