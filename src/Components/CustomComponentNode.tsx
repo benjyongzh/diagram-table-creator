@@ -1,12 +1,11 @@
 import { memo } from "react";
-import { Handle, NodeProps, Position } from "reactflow";
+import { Handle, Position } from "reactflow";
 import CustomNodeVariant from "Types/customNodeVariant";
-const CustomComponentNode = (props: NodeProps<CustomNodeVariant>) => {
-  const { data } = props;
 
+const CustomComponentNode = (data: CustomNodeVariant) => {
   return (
-    <div>
-      CustomComponentNode {data.nodeName}
+    <>
+      <div>CustomComponentNode {data.nodeName}</div>
       {Array.from({ length: data.handleCount }).map((_item, index) => (
         <Handle
           id={`${data.nodeName} port ${index.toString()}`}
@@ -14,7 +13,7 @@ const CustomComponentNode = (props: NodeProps<CustomNodeVariant>) => {
           position={Position.Right} //position should depend on value of handleCount
         />
       ))}
-    </div>
+    </>
   );
 };
 

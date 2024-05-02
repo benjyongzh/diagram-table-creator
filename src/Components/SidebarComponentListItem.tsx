@@ -1,4 +1,7 @@
 import CustomNodeVariant from "Types/customNodeVariant";
+import { useAppDispatch } from "Hooks/reduxHooks";
+import { addNewNode } from "Features/nodeSlice";
+import { createNodeFromData } from "Objects/nodes";
 
 type sidebarComponentListItemProps = {
   variant: CustomNodeVariant;
@@ -7,8 +10,14 @@ type sidebarComponentListItemProps = {
 export const SidebarComponentListItem = (
   props: sidebarComponentListItemProps
 ) => {
-  const onAdd = () => {};
+  const dispatch = useAppDispatch();
+
+  const onAdd = () => {
+    dispatch(addNewNode(createNodeFromData(props.variant)));
+  };
+
   const onEdit = () => {};
+
   return (
     <li>
       <input
