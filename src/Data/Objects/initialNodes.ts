@@ -1,4 +1,7 @@
 import { Node, NodeTypes } from "reactflow";
+import CustomComponentNode from "Components/CustomComponentNode";
+import nodeConfigs from "Configs/nodeConfig";
+import CustomNodeVariant from "Types/customNodeVariant";
 
 const initialNodes: Array<Node> = [
   {
@@ -12,6 +15,13 @@ const initialNodes: Array<Node> = [
   { id: "provider-4", data: { label: "Node 4" }, position: { x: 400, y: 200 } },
 ];
 
-export const initialNodeTypes: NodeTypes = {};
+export const initialNodeTypes: NodeTypes = {
+  [nodeConfigs.INITIAL_CUSTOM_NODE_NAME]: CustomComponentNode,
+};
+
+export const initialCustomNodeList: Array<CustomNodeVariant> = [
+  { nodeName: "Monitoring Unit", handleCount: 7 },
+  { nodeName: "Extenion Unit", handleCount: 3 },
+];
 
 export default initialNodes;

@@ -1,11 +1,11 @@
-import { NodeTypes } from "reactflow";
 import { SidebarComponentListItem } from "./SidebarComponentListItem";
 import { useAppSelector } from "Hooks/reduxHooks";
-import { convertRecordToArray } from "Utilities/objects";
-import nodeTypePair from "Types/nodeType";
+import CustomNodeVariant from "Types/customNodeVariant";
 
 export const Sidebar = () => {
-  const nodeTypes: NodeTypes = useAppSelector((state) => state.nodes.nodeTypes);
+  const variants: Array<CustomNodeVariant> = useAppSelector(
+    (state) => state.customNodeVariants.variants
+  );
   return (
     <div className="sm:w-full sm:max-w-[18rem]">
       <input
@@ -116,11 +116,9 @@ export const Sidebar = () => {
             <section className="menu-section px-4">
               <span className="menu-title">Components</span>
               <ul className="menu-items">
-                {convertRecordToArray(nodeTypes).map(
-                  (nodeType: nodeTypePair) => (
-                    <SidebarComponentListItem nodeType={nodeType} />
-                  )
-                )}
+                {variants.map((variant: CustomNodeVariant) => (
+                  <SidebarComponentListItem variant={variant} />
+                ))}
               </ul>
             </section>
             {/* <section className="menu-section px-4">

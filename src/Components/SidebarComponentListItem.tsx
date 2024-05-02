@@ -1,7 +1,7 @@
-import nodeTypePair from "Types/nodeType";
+import CustomNodeVariant from "Types/customNodeVariant";
 
 type sidebarComponentListItemProps = {
-  nodeType: nodeTypePair;
+  variant: CustomNodeVariant;
 };
 
 export const SidebarComponentListItem = (
