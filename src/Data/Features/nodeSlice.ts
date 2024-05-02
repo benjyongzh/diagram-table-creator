@@ -1,13 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { StoreNodeState } from "Types/storeNodeState";
+import { StoreNodes } from "Types/storeNodes";
 import { Node } from "reactflow";
-import { NodeTypes } from "reactflow";
-import { removeSubsetObject } from "Utilities/objects";
 
 // Define the initial state using that type
-const initialState: StoreNodeState = {
+const initialState: StoreNodes = {
   nodes: [],
-  nodeTypes: {},
 };
 
 export const nodeSlice = createSlice({
@@ -24,27 +21,10 @@ export const nodeSlice = createSlice({
     setAllNodes: (state, action: PayloadAction<Array<Node>>) => {
       state.nodes = action.payload;
     },
-    // node types
-    addNewNodeType: (state, action: PayloadAction<NodeTypes>) => {
-      state.nodeTypes = { ...state.nodeTypes, ...action.payload };
-    },
-    removeNodeType: (state, action: PayloadAction<NodeTypes>) => {
-      state.nodeTypes = removeSubsetObject(state.nodeTypes, action.payload);
-    },
-    setAllNodeTypes: (state, action: PayloadAction<NodeTypes>) => {
-      state.nodeTypes = action.payload;
-    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {
-  addNewNode,
-  removeNode,
-  setAllNodes,
-  addNewNodeType,
-  removeNodeType,
-  setAllNodeTypes,
-} = nodeSlice.actions;
+export const { addNewNode, removeNode, setAllNodes } = nodeSlice.actions;
 
 export default nodeSlice.reducer;

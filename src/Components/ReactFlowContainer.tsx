@@ -12,13 +12,14 @@ import { minimapStyle } from "Styles/minimap";
 import "reactflow/dist/style.css";
 
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
-import { setAllNodes, setAllNodeTypes } from "Features/nodeSlice";
+import { setAllNodes } from "Features/nodeSlice";
+import { setAllNodeTypes } from "Features/nodeTypeSlice";
 import { setAllEdges } from "Features/edgeSlice";
 
 const ReactFlowContainer = () => {
   const nodes = useAppSelector((state) => state.nodes.nodes);
   const edges = useAppSelector((state) => state.edges.edges);
-  const nodeTypes = useAppSelector((state) => state.nodes.nodeTypes);
+  const nodeTypes = useAppSelector((state) => state.nodeTypes.nodeTypes);
   const dispatch = useAppDispatch();
 
   const onInit = () => {

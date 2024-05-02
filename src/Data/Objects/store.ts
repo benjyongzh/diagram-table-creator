@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import nodesReducer from "Features/nodeSlice";
+import nodeTypesReducer from "Features/nodeTypeSlice";
+import customNodeVariantsReducer from "Features/customNodeVariantSlice";
 import edgesReducer from "Features/edgeSlice";
 
 export const store = configureStore({
   reducer: {
     nodes: nodesReducer,
+    nodeTypes: nodeTypesReducer,
+    customNodeVariants: customNodeVariantsReducer,
     edges: edgesReducer,
   },
 });
