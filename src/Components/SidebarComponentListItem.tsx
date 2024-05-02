@@ -13,15 +13,15 @@ export const SidebarComponentListItem = (
     <li>
       <input
         type="checkbox"
-        id={`component-list-item-${Object.keys(props)[0]}`}
+        id={`component-list-item-${props.variant.nodeName}`}
         className="menu-toggle"
       />
       <label
         className="menu-item justify-between"
-        htmlFor={`component-list-item-${Object.keys(props)[0]}`}
+        htmlFor={`component-list-item-${props.variant.nodeName}`}
       >
         <div className="flex gap-2">
-          <span>{Object.keys(props)[0]}</span>
+          <span>{props.variant.nodeName}</span>
         </div>
       </label>
 
