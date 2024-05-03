@@ -1,6 +1,7 @@
 import { SidebarComponentListItem } from "./SidebarComponentListItem";
 import { useAppSelector } from "Hooks/reduxHooks";
 import CustomNodeVariant from "Types/customNodeVariant";
+import { SidebarSection } from "./SidebarSection";
 
 export const Sidebar = () => {
   const variants: Array<CustomNodeVariant> = useAppSelector(
@@ -38,11 +39,9 @@ export const Sidebar = () => {
         </section>
         <section className="sidebar-content">
           <nav className="menu rounded-md">
-            <section className="menu-section px-4">
-              <span className="menu-title">Main menu</span>
-              <ul className="menu-items">
-                <li className="menu-item">
-                  {/* <svg
+            <SidebarSection sectionName="Main menu">
+              <li className="menu-item">
+                {/* <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 opacity-75"
                     fill="none"
@@ -61,13 +60,13 @@ export const Sidebar = () => {
                       d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg> */}
-                  <span>General</span>
-                </li>
-                <li>
-                  <input type="checkbox" id="menu-1" className="menu-toggle" />
-                  <label className="menu-item justify-between" htmlFor="menu-1">
-                    <div className="flex gap-2">
-                      {/* <svg
+                <span>General</span>
+              </li>
+              <li>
+                <input type="checkbox" id="menu-1" className="menu-toggle" />
+                <label className="menu-item justify-between" htmlFor="menu-1">
+                  <div className="flex gap-2">
+                    {/* <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5 opacity-75"
                         fill="none"
@@ -81,46 +80,44 @@ export const Sidebar = () => {
                           d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                         />
                       </svg> */}
-                      <span>Account</span>
-                    </div>
-
-                    <span className="menu-icon">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </label>
-
-                  <div className="menu-item-collapse">
-                    <div className="min-h-0">
-                      <label className="menu-item menu-item-disabled ml-6">
-                        Change Email
-                      </label>
-                      <label className="menu-item ml-6">Profile</label>
-                      <label className="menu-item ml-6">Change Password</label>
-                    </div>
+                    <span>Account</span>
                   </div>
-                </li>
-              </ul>
-            </section>
+
+                  <span className="menu-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </label>
+
+                <div className="menu-item-collapse">
+                  <div className="min-h-0">
+                    <label className="menu-item menu-item-disabled ml-6">
+                      Change Email
+                    </label>
+                    <label className="menu-item ml-6">Profile</label>
+                    <label className="menu-item ml-6">Change Password</label>
+                  </div>
+                </div>
+              </li>
+            </SidebarSection>
+
             <div className="divider my-0"></div>
-            <section className="menu-section px-4">
-              <span className="menu-title">Components</span>
-              <ul className="menu-items">
-                {variants.map((variant: CustomNodeVariant) => (
-                  <SidebarComponentListItem variant={variant} />
-                ))}
-              </ul>
-            </section>
+            <SidebarSection sectionName="Components">
+              {variants.map((variant: CustomNodeVariant) => (
+                <SidebarComponentListItem variant={variant} />
+              ))}
+            </SidebarSection>
+
             {/* <section className="menu-section px-4">
               <span className="menu-title">Settings</span>
               <ul className="menu-items">
