@@ -28,6 +28,12 @@ export const reactFlowSlice = createSlice({
     setAllNodes: (state, action: PayloadAction<Array<Node>>) => {
       state.nodes = action.payload;
     },
+    addNode: (state, action: PayloadAction<Node>) => {
+      state.nodes.push(action.payload);
+    },
+    removeNode: (state, action: PayloadAction<Node>) => {
+      state.nodes = state.nodes.filter((node) => node.id !== action.payload.id);
+    },
 
     //edges
     onEdgesChange: (state, action: PayloadAction<EdgeChange[]>) => {
@@ -39,6 +45,9 @@ export const reactFlowSlice = createSlice({
     setAllEdges: (state, action: PayloadAction<Array<Edge>>) => {
       state.edges = action.payload;
     },
+    removeEdge: (state, action: PayloadAction<Edge>) => {
+      state.edges = state.edges.filter((edge) => edge.id !== action.payload.id);
+    },
   },
 });
 
@@ -46,9 +55,12 @@ export const reactFlowSlice = createSlice({
 export const {
   onNodesChange,
   setAllNodes,
+  addNode,
+  removeNode,
   onEdgesChange,
   onConnect,
   setAllEdges,
+  removeEdge,
 } = reactFlowSlice.actions;
 
 export default reactFlowSlice.reducer;

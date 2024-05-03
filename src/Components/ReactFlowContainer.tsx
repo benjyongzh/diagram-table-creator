@@ -33,7 +33,7 @@ import { setAllNodeVariants } from "Features/customNodeVariantSlice";
 const ReactFlowContainer = () => {
   const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
   const edges = useAppSelector((state) => state.reactFlowObjects.edges);
-  // const nodeTypes = useAppSelector((state) => state.nodeTypes.nodeTypes);
+  const nodeTypes = useAppSelector((state) => state.nodeTypes.nodeTypes);
   const dispatch = useAppDispatch();
 
   const onNodesChange = useCallback(
@@ -54,8 +54,8 @@ const ReactFlowContainer = () => {
     if (featureFlags.USE_INITIAL_OBJECTS) {
       dispatch(setAllNodes(initialNodes));
       dispatch(setAllEdges(initialEdges));
-      // dispatch(setAllNodeTypes(initialNodeTypes));
-      // dispatch(setAllNodeVariants(initialCustomNodeVariants));
+      dispatch(setAllNodeTypes(initialNodeTypes));
+      dispatch(setAllNodeVariants(initialCustomNodeVariants));
     }
   };
 
@@ -65,7 +65,7 @@ const ReactFlowContainer = () => {
     <ReactFlow
       nodes={nodes}
       edges={edges}
-      // nodeTypes={nodeTypes}
+      nodeTypes={nodeTypes}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
