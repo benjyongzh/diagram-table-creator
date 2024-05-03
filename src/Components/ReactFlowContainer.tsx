@@ -1,9 +1,14 @@
+import { useCallback } from "react";
+
 import {
   ReactFlow,
   MiniMap,
   Controls,
   Background,
   BackgroundVariant,
+  NodeChange,
+  EdgeChange,
+  Connection,
 } from "reactflow";
 import featureFlags from "Configs/featureFlags";
 import initialNodes, {
@@ -15,24 +20,42 @@ import { minimapStyle } from "Styles/minimap";
 import "reactflow/dist/style.css";
 
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
-import { setAllNodes } from "Features/nodeSlice";
+import {
+  onNodesChange as onReactFlowNodesChange,
+  onEdgesChange as onReactFlowEdgesChange,
+  onConnect as onReactFlowConnect,
+  setAllNodes,
+  setAllEdges,
+} from "Features/reactFlowSlice";
 import { setAllNodeTypes } from "Features/nodeTypeSlice";
-import { setAllEdges } from "Features/edgeSlice";
 import { setAllNodeVariants } from "Features/customNodeVariantSlice";
 
 const ReactFlowContainer = () => {
-  const nodes = useAppSelector((state) => state.nodes.nodes);
-  const edges = useAppSelector((state) => state.edges.edges);
-  const nodeTypes = useAppSelector((state) => state.nodeTypes.nodeTypes);
+  const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
+  const edges = useAppSelector((state) => state.reactFlowObjects.edges);
+  // const nodeTypes = useAppSelector((state) => state.nodeTypes.nodeTypes);
   const dispatch = useAppDispatch();
+
+  const onNodesChange = useCallback(
+    (changes: NodeChange[]) => dispatch(onReactFlowNodesChange(changes)),
+    []
+  );
+  const onEdgesChange = useCallback(
+    (changes: EdgeChange[]) => dispatch(onReactFlowEdgesChange(changes)),
+    []
+  );
+  const onConnect = useCallback(
+    (connection: Connection) => dispatch(onReactFlowConnect(connection)),
+    []
+  );
 
   const onInit = () => {
     console.log("hello! reactflow initialized");
     if (featureFlags.USE_INITIAL_OBJECTS) {
       dispatch(setAllNodes(initialNodes));
       dispatch(setAllEdges(initialEdges));
-      dispatch(setAllNodeTypes(initialNodeTypes));
-      dispatch(setAllNodeVariants(initialCustomNodeVariants));
+      // dispatch(setAllNodeTypes(initialNodeTypes));
+      // dispatch(setAllNodeVariants(initialCustomNodeVariants));
     }
   };
 
@@ -42,10 +65,10 @@ const ReactFlowContainer = () => {
     <ReactFlow
       nodes={nodes}
       edges={edges}
-      nodeTypes={nodeTypes}
-      //   onNodesChange={onNodesChange}
-      //   onEdgesChange={onEdgesChange}
-      //   onConnect={onConnect}
+      // nodeTypes={nodeTypes}
+      onNodesChange={onNodesChange}
+      onEdgesChange={onEdgesChange}
+      onConnect={onConnect}
       onInit={onInit}
       // connectionLineComponent={}
       fitView
