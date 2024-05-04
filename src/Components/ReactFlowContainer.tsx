@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -66,9 +66,6 @@ const ReactFlowContainer = () => {
       dispatch(setAllNodeVariants(initialCustomNodeVariants));
     }
   };
-
-  // const nodeTypes = useMemo(() => ({ textUpdater: TextUpdaterNode }), []);
-
   return (
     <ReactFlow
       nodes={nodes}
