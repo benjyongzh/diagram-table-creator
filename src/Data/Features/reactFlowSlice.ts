@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
 import { StoreReactFlowObjects } from "Types/storeReactFlowObjects";
 import {
   Node,
@@ -17,7 +17,7 @@ const initialState: StoreReactFlowObjects = {
   edges: [],
 };
 
-export const reactFlowSlice = createSlice({
+export const reactFlowSlice: Slice = createSlice({
   name: "nodes",
   initialState,
   reducers: {
@@ -32,7 +32,9 @@ export const reactFlowSlice = createSlice({
       state.nodes.push(action.payload);
     },
     removeNode: (state, action: PayloadAction<Node>) => {
-      state.nodes = state.nodes.filter((node) => node.id !== action.payload.id);
+      state.nodes = state.nodes.filter(
+        (node: Node) => node.id !== action.payload.id
+      );
     },
 
     //edges
@@ -46,7 +48,9 @@ export const reactFlowSlice = createSlice({
       state.edges = action.payload;
     },
     removeEdge: (state, action: PayloadAction<Edge>) => {
-      state.edges = state.edges.filter((edge) => edge.id !== action.payload.id);
+      state.edges = state.edges.filter(
+        (edge: Edge) => edge.id !== action.payload.id
+      );
     },
   },
 });
