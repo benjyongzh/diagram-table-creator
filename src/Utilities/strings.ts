@@ -51,18 +51,18 @@ const evaluaterandomStringGeneratorOptions = (
 const assembleCharList = (options: randomStringGeneratorOptions): string => {
   let charList: string = "";
   if (options.charType !== charType.alphabet) {
-    charList.concat(numberCharacters);
+    charList += numberCharacters;
   }
   switch (options.case) {
     case casing.lower:
-      charList.concat(lowerCaseCharacters);
+      charList += lowerCaseCharacters;
       break;
     case casing.upper:
-      charList.concat(upperCaseCharacters);
+      charList += upperCaseCharacters;
       break;
     default:
-      charList.concat(upperCaseCharacters);
-      charList.concat(lowerCaseCharacters);
+      charList += upperCaseCharacters;
+      charList += lowerCaseCharacters;
       break;
   }
   return charList;
