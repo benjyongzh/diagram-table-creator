@@ -8,6 +8,7 @@ import {
   NodeChange,
   EdgeChange,
   Connection,
+  Panel,
 } from "reactflow";
 //components
 import DevTools from "./DevTools";
@@ -86,15 +87,15 @@ const ReactFlowContainer = () => {
         variant={BackgroundVariant.Cross}
         gap={40}
       />
-      {/* <div className="w-fit">
+      {/* <DevTools /> */}
+      <Panel position="top-left">
         <label
           htmlFor="sidebar-mobile-fixed"
           className="btn-primary btn sm:hidden"
         >
           Open Sidebar
         </label>
-      </div> */}
-      <DevTools />
+      </Panel>
     </ReactFlow>
   );
 };
