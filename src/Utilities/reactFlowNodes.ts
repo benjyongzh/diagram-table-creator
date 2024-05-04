@@ -1,8 +1,10 @@
 import { standardNodeData } from "Objects/nodes";
 import { Node } from "reactflow";
+import { randomStringGenerator } from "./strings";
+import nodeConfigs from "Configs/nodeConfig";
 
 export const createNodeFromData = <T>(data: T): Node => {
-  const newNodeId: string = "hello"; //implement random generator here
+  const newNodeId: string = randomStringGenerator(nodeConfigs.ID_LENGTH); //implement random generator here
 
   return { id: newNodeId, data, ...standardNodeData };
 };
