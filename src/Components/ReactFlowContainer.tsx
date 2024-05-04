@@ -1,5 +1,4 @@
-import { useCallback } from "react";
-
+import { useCallback, useMemo } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -10,15 +9,13 @@ import {
   EdgeChange,
   Connection,
 } from "reactflow";
-import featureFlags from "Configs/featureFlags";
-import initialNodes, {
-  initialCustomNodeVariants,
-  initialNodeTypes,
-} from "Objects/initialNodes";
-import initialEdges from "Objects/initialEdges";
-import { minimapStyle } from "Styles/minimap";
-import "reactflow/dist/style.css";
+//components
+import DevTools from "./DevTools";
 
+//config
+import featureFlags from "Configs/featureFlags";
+
+//redux
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 import {
   onNodesChange as onReactFlowNodesChange,
@@ -29,6 +26,17 @@ import {
 } from "Features/reactFlowSlice";
 import { setAllNodeTypes } from "Features/nodeTypeSlice";
 import { setAllNodeVariants } from "Features/customNodeVariantSlice";
+
+//initial
+import initialNodes, {
+  initialCustomNodeVariants,
+  initialNodeTypes,
+} from "Objects/initialNodes";
+import initialEdges from "Objects/initialEdges";
+
+//styles
+import { minimapStyle } from "Styles/minimap";
+import "reactflow/dist/style.css";
 
 const ReactFlowContainer = () => {
   const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
@@ -89,6 +97,7 @@ const ReactFlowContainer = () => {
           Open Sidebar
         </label>
       </div> */}
+      <DevTools />
     </ReactFlow>
   );
 };
