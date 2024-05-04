@@ -13,6 +13,8 @@ import {
 //components
 import DevTools from "./DevTools";
 
+import { Bars3Icon } from "@heroicons/react/24/solid";
+
 //config
 import featureFlags from "Configs/featureFlags";
 
@@ -79,7 +81,7 @@ const ReactFlowContainer = () => {
       // connectionLineComponent={}
       fitView
     >
-      <MiniMap style={minimapStyle} zoomable pannable />
+      <MiniMap style={minimapStyle} nodeStrokeWidth={3} zoomable pannable />
       <Controls />
       <Background
         color="#555"
@@ -91,9 +93,9 @@ const ReactFlowContainer = () => {
       <Panel position="top-left">
         <label
           htmlFor="sidebar-mobile-fixed"
-          className="btn-primary btn sm:hidden"
+          className="btn-ghost btn sm:hidden px-2"
         >
-          Open Sidebar
+          <Bars3Icon className="h-8 w-8 text-gray-500" />
         </label>
       </Panel>
     </ReactFlow>
