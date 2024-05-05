@@ -67,7 +67,6 @@ export const reactFlowSlice: Slice = createSlice({
             isHovered: true,
           };
         }
-        console.log("mouseEnter");
         return node;
       });
     },
@@ -82,7 +81,6 @@ export const reactFlowSlice: Slice = createSlice({
             isHovered: false,
           };
         }
-        console.log("mouseLeave");
         return node;
       });
     },
