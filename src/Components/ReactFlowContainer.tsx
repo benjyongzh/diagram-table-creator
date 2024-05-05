@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -9,6 +9,7 @@ import {
   EdgeChange,
   Connection,
   Panel,
+  Node,
 } from "reactflow";
 //components
 import DevTools from "./DevTools";
@@ -22,6 +23,8 @@ import featureFlags from "Configs/featureFlags";
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 import {
   onNodesChange as onReactFlowNodesChange,
+  onNodeMouseEnter as onReactFlowMouseEnter,
+  onNodeMouseLeave as onReactFlowMouseLeave,
   onEdgesChange as onReactFlowEdgesChange,
   onConnect as onReactFlowConnect,
   setAllNodes,
@@ -59,6 +62,16 @@ const ReactFlowContainer = () => {
     (connection: Connection) => dispatch(onReactFlowConnect(connection)),
     []
   );
+  const onNodeMouseEnter = useCallback(
+    (event: React.MouseEvent, node: Node) =>
+      dispatch(onReactFlowMouseEnter(node)),
+    []
+  );
+  const onNodeMouseLeave = useCallback(
+    (event: React.MouseEvent, node: Node) =>
+      dispatch(onReactFlowMouseLeave(node)),
+    []
+  );
 
   const onInit = () => {
     console.log("hello! reactflow initialized");
@@ -78,9 +91,14 @@ const ReactFlowContainer = () => {
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
       onInit={onInit}
+      onNodeMouseEnter={onNodeMouseEnter}
+      onNodeMouseLeave={onNodeMouseLeave}
+      // onEdgeMouseEnter
+      // onEdgeMouseLeave
       // connectionLineComponent={}
-      className="bg-slate-12"
+      // className="bg-slate-12"
       fitView
+      attributionPosition="top-right"
     >
       <MiniMap style={minimapStyle} nodeStrokeWidth={3} zoomable pannable />
       <Controls />

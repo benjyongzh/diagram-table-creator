@@ -10,6 +10,9 @@ import {
   applyEdgeChanges,
   Connection,
 } from "reactflow";
+import CustomNodeVariant from "Types/customNodeVariant";
+import { checkNodeType } from "Utilities/reactFlowNodes";
+import nodeConfigs from "Configs/nodeConfig";
 
 // Define the initial state using that type
 const initialState: StoreReactFlowObjects = {
@@ -36,6 +39,53 @@ export const reactFlowSlice: Slice = createSlice({
         (node: Node) => node.id !== action.payload.id
       );
     },
+    // onNodeDataChange: (
+    //   state,
+    //   action: PayloadAction<{ editedNode: Node; newData: CustomNodeVariant }>
+    // ) => {
+    //   state.nodes = state.nodes.map((node: Node) => {
+    //     if (node.id === action.payload.editedNode.id) {
+    //       // it's important that you create a new object here
+    //       // in order to notify react flow about the change
+    //       node.data = {
+    //         ...node.data,
+    //         ...action.payload.newData,
+    //       };
+    //     }
+
+    //     return node;
+    //   });
+    // },
+    onNodeMouseEnter: (state, action: PayloadAction<Node>) => {
+      if (!checkNodeType(action.payload, nodeConfigs.INITIAL_CUSTOM_NODE_NAME))
+        return;
+
+      state.nodes = state.nodes.map((node: Node) => {
+        if (node.id === action.payload.id) {
+          node.data = {
+            ...node.data,
+            isHovered: true,
+          };
+        }
+        console.log("mouseEnter");
+        return node;
+      });
+    },
+    onNodeMouseLeave: (state, action: PayloadAction<Node>) => {
+      if (!checkNodeType(action.payload, nodeConfigs.INITIAL_CUSTOM_NODE_NAME))
+        return;
+
+      state.nodes = state.nodes.map((node: Node) => {
+        if (node.id === action.payload.id) {
+          node.data = {
+            ...node.data,
+            isHovered: false,
+          };
+        }
+        console.log("mouseLeave");
+        return node;
+      });
+    },
 
     //edges
     onEdgesChange: (state, action: PayloadAction<EdgeChange[]>) => {
@@ -61,6 +111,8 @@ export const {
   setAllNodes,
   addNode,
   removeNode,
+  onNodeMouseEnter,
+  onNodeMouseLeave,
   onEdgesChange,
   onConnect,
   setAllEdges,

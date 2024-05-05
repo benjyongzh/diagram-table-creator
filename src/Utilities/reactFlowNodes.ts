@@ -7,3 +7,7 @@ export const createNodeFromData = <T>(data: T): Node => {
   const newNodeId: string = randomStringGenerator(nodeConfigs.ID_LENGTH);
   return { id: newNodeId, data, ...standardNodeData };
 };
+
+export const checkNodeType = (node: Node, type: string): boolean => {
+  return node.type === type;
+};
