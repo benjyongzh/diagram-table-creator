@@ -79,13 +79,14 @@ const ReactFlowContainer = () => {
       onConnect={onConnect}
       onInit={onInit}
       // connectionLineComponent={}
+      className="bg-slate-12"
       fitView
     >
       <MiniMap style={minimapStyle} nodeStrokeWidth={3} zoomable pannable />
       <Controls />
       <Background
         color="#555"
-        size={8}
+        size={6}
         variant={BackgroundVariant.Cross}
         gap={40}
       />
