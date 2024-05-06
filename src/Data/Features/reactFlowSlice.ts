@@ -14,7 +14,6 @@ import {
   applyEdgeChanges,
   Connection,
 } from "reactflow";
-import CustomNodeVariant from "Types/customNodeVariant";
 import {
   checkNodeType,
   createCountLibrary,

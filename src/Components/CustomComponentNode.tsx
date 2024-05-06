@@ -1,14 +1,26 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { Handle } from "reactflow";
 import CustomNodeVariant from "Types/customNodeVariant";
+import { XMarkIcon } from "@heroicons/react/16/solid";
+import colorName from "Types/colorString";
+import { getNodeBackgroundColourStyleTailwind } from "Utilities/colors";
+import { colorNodeBackground } from "Objects/colors";
 
 export default memo(({ data }: { data: CustomNodeVariant }) => {
   const onDeleteButtonClicked = () => {};
+  const backgroundColor = useMemo(
+    () => getNodeBackgroundColourStyleTailwind(colorName[data.color]),
+    [data.color]
+  );
   return (
     <div
-      className={`${
-        data.isHovered ? "bg-primary" : "bg-content2"
-      } nodeComponent flex-col`}
+      className={`nodeComponent flex-col ${
+        data.isHovered
+          ? // ? colorNodeBackground[colorName[data.color]].hover
+            // : colorNodeBackground[colorName[data.color]].normal
+            backgroundColor.hover
+          : backgroundColor.normal
+      }`}
     >
       <h2>
         {data.nodeName} {data.variantIndex}
@@ -16,23 +28,10 @@ export default memo(({ data }: { data: CustomNodeVariant }) => {
       <p>{/*data.isHovered ? data.isHovered.toString() : "false"*/}</p>
       <div className={`${data.isHovered ? "visible" : "invisible"}`}>
         <button
-          className="btn btn-circle btn-error"
+          className="btn btn-circle btn-ghost btn-xs btn-error"
           onClick={onDeleteButtonClicked}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          <XMarkIcon className="h-6 w-6 text-gray-500" />;
         </button>
       </div>
       {data.handleTypes.map((handleType) =>

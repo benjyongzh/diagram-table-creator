@@ -1,4 +1,5 @@
 import { HandleVariant } from "./handleVariant";
+import colorName from "./colorString";
 
 type CustomNodeVariant = {
   nodeName: string;
@@ -6,6 +7,7 @@ type CustomNodeVariant = {
   handleTypes: HandleVariant[];
   isHovered?: boolean;
   isSelected?: boolean;
+  color: colorName;
 };
 
 export default CustomNodeVariant;
