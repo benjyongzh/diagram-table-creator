@@ -84,11 +84,16 @@ export const reactFlowSlice: Slice = createSlice({
       state.variantCount = updateVariantCount(state);
     },
     addNode: (state, action: PayloadAction<Node>) => {
-      state.nodes.push(action.payload);
       updateVariantCount(state, {
         action: updateVariantCountAction.add,
         node: action.payload,
       });
+      //add index number
+      const indexNumber: number =
+        state.variantCount[action.payload.data.nodeName];
+      const newData = { ...action.payload.data, variantIndex: indexNumber };
+      const realNode: Node = { ...action.payload, data: { ...newData } };
+      state.nodes.push(realNode);
     },
     removeNode: (state, action: PayloadAction<Node>) => {
       state.nodes = state.nodes.filter(
@@ -116,6 +121,7 @@ export const reactFlowSlice: Slice = createSlice({
     //     return node;
     //   });
     // },
+
     onNodeMouseEnter: (state, action: PayloadAction<Node>) => {
       if (!checkNodeType(action.payload, nodeConfigs.INITIAL_CUSTOM_NODE_NAME))
         return;

@@ -10,7 +10,9 @@ export default memo(({ data }: { data: CustomNodeVariant }) => {
         data.isHovered ? "bg-primary" : "bg-content2"
       } nodeComponent flex-col`}
     >
-      <h2>{data.nodeName}</h2>
+      <h2>
+        {data.nodeName} {data.variantIndex}
+      </h2>
       <p>{/*data.isHovered ? data.isHovered.toString() : "false"*/}</p>
       <div className={`${data.isHovered ? "visible" : "invisible"}`}>
         <button
