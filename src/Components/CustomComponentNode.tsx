@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Handle, Node, NodeProps } from "reactflow";
+import { Handle } from "reactflow";
 import CustomNodeVariant from "Types/customNodeVariant";
 
 export default memo(({ data }: { data: CustomNodeVariant }) => {
@@ -8,7 +8,7 @@ export default memo(({ data }: { data: CustomNodeVariant }) => {
     <div
       className={`${
         data.isHovered ? "bg-primary" : "bg-content2"
-      } rounded-md flex flex-col p-4 gap-3`}
+      } nodeComponent flex-col`}
     >
       <h2>{data.nodeName}</h2>
       <p>{/*data.isHovered ? data.isHovered.toString() : "false"*/}</p>
