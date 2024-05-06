@@ -15,9 +15,13 @@ import {
   Connection,
 } from "reactflow";
 import CustomNodeVariant from "Types/customNodeVariant";
-import { checkNodeType } from "Utilities/reactFlowNodes";
+import {
+  checkNodeType,
+  createCountLibrary,
+  addIndexNumberToNodesBasedOnCountLibrary,
+} from "Utilities/reactFlowNodes";
+import { countLibraryEdit } from "Utilities/objects";
 import nodeConfigs from "Configs/nodeConfig";
-import { nodeStyle } from "Styles/node";
 
 // Define the initial state using that type
 const initialState: StoreReactFlowObjects = {
@@ -26,7 +30,7 @@ const initialState: StoreReactFlowObjects = {
   variantCount: {},
 };
 
-export const updateVariantCount = (
+const updateVariantCount = (
   state: StoreReactFlowObjects,
   options?: updateVariantCountOptions
 ): Record<string, number> => {
@@ -34,41 +38,19 @@ export const updateVariantCount = (
 
   if (!options) {
     //redo entire library
-    const newLibrary: Record<string, number> = {};
-    nodes.forEach((node) => {
-      if (node.type === nodeConfigs.INITIAL_CUSTOM_NODE_NAME) {
-        const nodeName = node.data.nodeName;
-        if (!newLibrary[nodeName]) {
-          newLibrary[nodeName] = 1;
-        } else {
-          newLibrary[nodeName] += 1;
-        }
-      }
-    });
-    return newLibrary;
+    return createCountLibrary(nodes, "nodeName");
   } else {
     //only change library according to options stated
     const { action, node } = options;
     const nodeName: string = node.data.nodeName;
-    if (action === updateVariantCountAction.add) {
-      //adding
-      if (variantCount[nodeName]) {
-        variantCount[nodeName] += 1;
-      } else {
-        variantCount[nodeName] = 1;
-      }
-    } else {
-      //removing
-      if (variantCount[nodeName]) {
-        if (variantCount[nodeName] > 1) {
-          variantCount[nodeName] -= 1;
-        } else {
-          delete variantCount[nodeName];
-        }
-      }
-    }
+    countLibraryEdit(variantCount, nodeName, action);
     return variantCount;
   }
+};
+
+const updateVariantIndexsOnNodes = (state: StoreReactFlowObjects) => {
+  const { nodes, variantCount } = state;
+  addIndexNumberToNodesBasedOnCountLibrary(nodes, variantCount);
 };
 
 export const reactFlowSlice: Slice = createSlice({
@@ -82,6 +64,7 @@ export const reactFlowSlice: Slice = createSlice({
     setAllNodes: (state, action: PayloadAction<Array<Node>>) => {
       state.nodes = action.payload;
       state.variantCount = updateVariantCount(state);
+      updateVariantIndexsOnNodes(state);
     },
     addNode: (state, action: PayloadAction<Node>) => {
       updateVariantCount(state, {

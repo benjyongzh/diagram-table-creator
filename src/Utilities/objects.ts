@@ -13,19 +13,32 @@ export const removeSubsetObject = <T>(
   return newObject;
 };
 
-// const object1 = {
-//   hello: "world",
-//   bye: "bitch",
-//   maybe: "yes",
-// };
+type countLibraryEditOptions = {
+  allowNegative: boolean;
+  allowZero: boolean;
+};
 
-// const object2 = {
-//   hello: "world",
-//   bye: "bitch",
-// };
+export const countLibraryEdit = (
+  library: Record<string, number>,
+  key: string,
+  change: number,
+  options: countLibraryEditOptions = {
+    allowNegative: false,
+    allowZero: false,
+  }
+) => {
+  library[key] ? (library[key] += change) : (library[key] = change);
 
-// const lol = removeSubsetObject(object1, object2);
-// console.log(lol);
+  //check zero
+  if (options.allowZero !== true && library[key] === 0) {
+    delete library[key];
+  }
+
+  //check negative
+  if (options.allowNegative !== true && library[key]! < 0) {
+    delete library[key];
+  }
+};
 
 export const convertRecordToArray = <T>(
   obj: Record<string, T>
