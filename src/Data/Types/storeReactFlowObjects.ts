@@ -7,8 +7,8 @@ export type StoreReactFlowObjects = {
 };
 
 export enum updateVariantCountAction {
-  "add" = -1,
-  "remove" = 1,
+  "add" = 1,
+  "remove" = -1,
 }
 
 export type updateVariantCountOptions = {
