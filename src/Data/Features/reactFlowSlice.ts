@@ -16,7 +16,7 @@ import {
 } from "reactflow";
 import {
   checkNodeType,
-  createCountLibrary,
+  createNodeCountLibrary,
   addIndexNumberToNodesBasedOnCountLibrary,
 } from "Utilities/reactFlowNodes";
 import { countLibraryEdit } from "Utilities/objects";
@@ -37,7 +37,7 @@ const updateVariantCount = (
 
   if (!options) {
     //redo entire library
-    return createCountLibrary(nodes, "nodeName");
+    return createNodeCountLibrary(nodes, "nodeName");
   } else {
     //only change library according to options stated
     const { action, node } = options;

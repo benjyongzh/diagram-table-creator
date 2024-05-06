@@ -15,7 +15,7 @@ export const checkNodeType = (node: Node, type: string): boolean => {
   return node.type === type;
 };
 
-export const createCountLibrary = <T extends Node>(
+export const createNodeCountLibrary = <T extends Node>(
   arr: Array<T>,
   dataKey: string,
   nodeType: string = nodeConfigs.INITIAL_CUSTOM_NODE_NAME
