@@ -1,7 +1,7 @@
 import { SidebarComponentListItem } from "./SidebarComponentListItem";
 import { useAppSelector } from "Hooks/reduxHooks";
 import CustomNodeVariant from "Types/customNodeVariant";
-import { SidebarSection } from "./SidebarSection";
+import { SidebarSectionDropDown } from "./SidebarSectionDropDown";
 
 export const Sidebar = () => {
   const variants: Array<CustomNodeVariant> = useAppSelector(
@@ -39,7 +39,7 @@ export const Sidebar = () => {
         </section>
         <section className="sidebar-content">
           <nav className="menu rounded-md">
-            <SidebarSection sectionName="Main menu">
+            <SidebarSectionDropDown sectionName="Main menu">
               <li className="menu-item">
                 {/* <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -109,14 +109,14 @@ export const Sidebar = () => {
                   </div>
                 </div>
               </li>
-            </SidebarSection>
+            </SidebarSectionDropDown>
 
             <div className="divider my-0"></div>
-            <SidebarSection sectionName="Components">
+            <SidebarSectionDropDown sectionName="Components">
               {variants.map((variant: CustomNodeVariant) => (
                 <SidebarComponentListItem variant={variant} />
               ))}
-            </SidebarSection>
+            </SidebarSectionDropDown>
 
             {/* <section className="menu-section px-4">
               <span className="menu-title">Settings</span>
