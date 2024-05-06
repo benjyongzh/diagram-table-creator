@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
-import { StoreReactFlowObjects } from "Types/storeReactFlowObjects";
+import {
+  StoreReactFlowObjects,
+  updateVariantCountAction,
+  updateVariantCountOptions,
+} from "Types/storeReactFlowObjects";
 import {
   Node,
   NodeChange,
@@ -13,11 +17,58 @@ import {
 import CustomNodeVariant from "Types/customNodeVariant";
 import { checkNodeType } from "Utilities/reactFlowNodes";
 import nodeConfigs from "Configs/nodeConfig";
+import { nodeStyle } from "Styles/node";
 
 // Define the initial state using that type
 const initialState: StoreReactFlowObjects = {
   nodes: [],
   edges: [],
+  variantCount: {},
+};
+
+export const updateVariantCount = (
+  state: StoreReactFlowObjects,
+  options?: updateVariantCountOptions
+): Record<string, number> => {
+  const { nodes, variantCount } = state;
+
+  if (!options) {
+    //redo entire library
+    const newLibrary: Record<string, number> = {};
+    nodes.forEach((node) => {
+      if (node.type === nodeConfigs.INITIAL_CUSTOM_NODE_NAME) {
+        const nodeName = node.data.nodeName;
+        if (!newLibrary[nodeName]) {
+          newLibrary[nodeName] = 1;
+        } else {
+          newLibrary[nodeName] += 1;
+        }
+      }
+    });
+    return newLibrary;
+  } else {
+    //only change library according to options stated
+    const { action, node } = options;
+    const nodeName: string = node.data.nodeName;
+    if (action === updateVariantCountAction.add) {
+      //adding
+      if (variantCount[nodeName]) {
+        variantCount[nodeName] += 1;
+      } else {
+        variantCount[nodeName] = 1;
+      }
+    } else {
+      //removing
+      if (variantCount[nodeName]) {
+        if (variantCount[nodeName] > 1) {
+          variantCount[nodeName] -= 1;
+        } else {
+          delete variantCount[nodeName];
+        }
+      }
+    }
+    return variantCount;
+  }
 };
 
 export const reactFlowSlice: Slice = createSlice({
@@ -30,14 +81,23 @@ export const reactFlowSlice: Slice = createSlice({
     },
     setAllNodes: (state, action: PayloadAction<Array<Node>>) => {
       state.nodes = action.payload;
+      state.variantCount = updateVariantCount(state);
     },
     addNode: (state, action: PayloadAction<Node>) => {
       state.nodes.push(action.payload);
+      updateVariantCount(state, {
+        action: updateVariantCountAction.add,
+        node: action.payload,
+      });
     },
     removeNode: (state, action: PayloadAction<Node>) => {
       state.nodes = state.nodes.filter(
         (node: Node) => node.id !== action.payload.id
       );
+      updateVariantCount(state, {
+        action: updateVariantCountAction.remove,
+        node: action.payload,
+      });
     },
     // onNodeDataChange: (
     //   state,

@@ -5,7 +5,9 @@ import nodeConfigs from "Configs/nodeConfig";
 
 export const createNodeFromData = <T>(data: T): Node => {
   const newNodeId: string = randomStringGenerator(nodeConfigs.ID_LENGTH);
-  return { id: newNodeId, data, ...standardNodeData };
+  const variantIndex: number = 0;
+  const newData = { ...data, variantIndex };
+  return { id: newNodeId, data: newData, ...standardNodeData };
 };
 
 export const checkNodeType = (node: Node, type: string): boolean => {
