@@ -2,7 +2,7 @@ import { Node, NodeTypes, Position } from "reactflow";
 import CustomComponentNode from "Components/CustomComponentNode";
 import nodeConfigs from "Configs/nodeConfig";
 import CustomNodeVariant from "Types/customNodeVariant";
-import colorName from "Types/colorString";
+import colors from "Types/colorString";
 
 const initialNodes: Array<Node> = [
   {
@@ -30,9 +30,9 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
         quantity: 7,
       },
     ],
-    color: colorName.orange,
+    color: colors.orange,
   },
-  { nodeName: "Extension Unit", handleTypes: [], color: colorName.blue },
+  { nodeName: "Extension Unit", handleTypes: [], color: colors.blue },
 ];
 
 export default initialNodes;

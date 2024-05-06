@@ -1,25 +1,21 @@
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import { Handle } from "reactflow";
 import CustomNodeVariant from "Types/customNodeVariant";
 import { XMarkIcon } from "@heroicons/react/16/solid";
-import colorName from "Types/colorString";
-import { getNodeBackgroundColourStyleTailwind } from "Utilities/colors";
-import { colorNodeBackground } from "Objects/colors";
+import colors from "Types/colorString";
+import { nodeBackgroundBrightnessTailwind } from "Configs/nodeConfig";
 
 export default memo(({ data }: { data: CustomNodeVariant }) => {
   const onDeleteButtonClicked = () => {};
-  const backgroundColor = useMemo(
-    () => getNodeBackgroundColourStyleTailwind(colorName[data.color]),
-    [data.color]
-  );
+
   return (
     <div
       className={`nodeComponent flex-col ${
         data.isHovered
-          ? // ? colorNodeBackground[colorName[data.color]].hover
-            // : colorNodeBackground[colorName[data.color]].normal
-            backgroundColor.hover
-          : backgroundColor.normal
+          ? `bg-${colors[data.color]}-${nodeBackgroundBrightnessTailwind.hover}`
+          : `bg-${colors[data.color]}-${
+              nodeBackgroundBrightnessTailwind.normal
+            }`
       }`}
     >
       <h2>

@@ -1,3 +1,3 @@
 export const nodeStyle = {
-  backgroundColor: "transparent",
+  // backgroundColor: "transparent",
 };

@@ -8,6 +8,6 @@ const nodeConfigs = {
 export default nodeConfigs;
 
 export const nodeBackgroundBrightnessTailwind = {
-  normal: 200,
-  hover: 100,
+  normal: 600,
+  hover: 500,
 };
