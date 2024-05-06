@@ -26,8 +26,15 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
     handleTypes: [
       {
         handleType: "source", //source | target
+        handleName: "handle name bleh",
         position: Position.Right,
-        quantity: 7,
+        quantity: 2,
+      },
+      {
+        handleType: "source", //source | target
+        handleName: "handle name bla",
+        position: Position.Top,
+        quantity: 2,
       },
     ],
     color: colors.orange,
