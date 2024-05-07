@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo } from "react";
+import React, { memo, useCallback, useEffect, useMemo } from "react";
 import {
   Handle,
   NodeProps,
@@ -15,7 +15,10 @@ import { useAppSelector } from "Hooks/reduxHooks";
 import nodeDimensions from "Types/nodeDimenions";
 import { Node } from "reactflow";
 import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
-import { getHandlePropsGroupingByKey } from "Utilities/reactFlowHandles";
+import {
+  getHandlePropsGroupingByKey,
+  convertHandlePositionToStyleKey,
+} from "Utilities/reactFlowHandles";
 import { getSpacing } from "Utilities/numbers";
 
 // export default memo(({ id, data }: { id: string; data: CustomNodeVariant }) => {
@@ -41,7 +44,7 @@ export default memo((props: NodeProps) => {
 
   const onDeleteButtonClicked = () => {};
 
-  const getHandleComponentArray = () => {
+  const getHandleSpacingPerNodeSide = (): Record<Position, number> => {
     const positionGrouping: Record<
       string,
       Array<HandleProps>
@@ -69,37 +72,55 @@ export default memo((props: NodeProps) => {
       ),
     };
 
-    const handleGroups: Record<Position, Array<HandleProps>> = {
-      [Position.Left]: positionGrouping[Position.Left],
-      [Position.Right]: positionGrouping[Position.Right],
-      [Position.Top]: positionGrouping[Position.Top],
-      [Position.Bottom]: positionGrouping[Position.Bottom],
-    };
+    return handleSpacings;
 
-    const finalArr: any = [];
+    // const handleGroups: Record<Position, Array<HandleProps>> = {
+    //   [Position.Left]: positionGrouping[Position.Left],
+    //   [Position.Right]: positionGrouping[Position.Right],
+    //   [Position.Top]: positionGrouping[Position.Top],
+    //   [Position.Bottom]: positionGrouping[Position.Bottom],
+    // };
 
-    for (const side in handleGroups) {
-      const handleArray: Array<HandleProps> = handleGroups[side as Position];
-      const sideStyle = side.toString().toLocaleLowerCase();
-      for (let i = 0; i < handleArray.length; i++) {
-        const spacing = (i + 1) * handleSpacings[side as Position];
-        finalArr.push(
-          <Handle
-            key={i}
-            id={handleArray[i].id}
-            type={handleArray[i].type}
-            position={handleArray[i].position} //position should depend on value of handleCount
-            isConnectableStart={true}
-            isConnectableEnd={true}
-            style={{ [sideStyle]: spacing }}
-          />
-        );
-      }
-    }
-    return finalArr;
+    // for (const side in handleGroups) {
+    //   const handleArray: Array<HandleProps> = handleGroups[side as Position];
+    //   const sideStyle = side.toString().toLocaleLowerCase();
+    //   for (let i = 0; i < handleArray.length; i++) {
+    //     const spacing = (i + 1) * handleSpacings[side as Position];
+    //     finalArr.push(
+    //       <Handle
+    //         key={i}
+    //         id={handleArray[i].id}
+    //         type={handleArray[i].type}
+    //         position={handleArray[i].position} //position should depend on value of handleCount
+    //         isConnectableStart={true}
+    //         isConnectableEnd={true}
+    //         style={{ [sideStyle]: spacing }}
+    //       />
+    //     );
+    //   }
+    // }
+
+    // return {
+    //   [Position.Left]: {
+    //     spacing: handleSpacings[Position.Left],
+    //     array: positionGrouping[Position.Left],
+    //   },
+    //   [Position.Right]: {
+    //     spacing: handleSpacings[Position.Right],
+    //     array: positionGrouping[Position.Right],
+    //   },
+    //   [Position.Top]: {
+    //     spacing: handleSpacings[Position.Top],
+    //     array: positionGrouping[Position.Top],
+    //   },
+    //   [Position.Bottom]: {
+    //     spacing: handleSpacings[Position.Bottom],
+    //     array: positionGrouping[Position.Bottom],
+    //   },
+    // };
   };
 
-  const handles = useCallback(getHandleComponentArray, [
+  const handleSpacings = useMemo(getHandleSpacingPerNodeSide, [
     data.handleTypes,
     nodeDimensions,
   ]);
@@ -128,22 +149,28 @@ export default memo((props: NodeProps) => {
           <XMarkIcon className="h-6 w-6 text-gray-500" />;
         </button>
       </div>
-      {/* {data.handleTypes.map((handleType: HandleVariant) =>
-        Array.from({ length: handleType.quantity }).map((_item, index) => (
-          <Handle
-            key={index}
-            id={`${data.nodeName}-${data.variantIndex}-${
-              handleType.handleName
-            }-${index.toString()}`}
-            type={handleType.handleType}
-            position={handleType.position} //position should depend on value of handleCount
-            isConnectableStart={true}
-            isConnectableEnd={true}
-            // style={mapHandlePositionToStyle[handleType.position]}
-          />
-        ))
-      )} */}
-      {handles()}
+      {data.handleTypes.map((handleType: HandleVariant) =>
+        Array.from({ length: handleType.quantity }).map((_item, index) => {
+          const handleStyle = {
+            [convertHandlePositionToStyleKey(handleType.position)]:
+              index * handleSpacings[handleType.position],
+          };
+
+          return (
+            <Handle
+              key={index}
+              id={`${data.nodeName}-${data.variantIndex}-${
+                handleType.handleName
+              }-${index.toString()}`}
+              type={handleType.handleType}
+              position={handleType.position} //position should depend on value of handleCount
+              isConnectableStart={true}
+              isConnectableEnd={true}
+              style={handleStyle}
+            />
+          );
+        })
+      )}
     </div>
   );
 });

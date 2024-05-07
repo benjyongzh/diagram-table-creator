@@ -1,5 +1,5 @@
 import { HandleVariant } from "Types/handleVariant";
-import { HandleProps } from "reactflow";
+import { HandleProps, Position } from "reactflow";
 import { groupBy } from "./objects";
 
 export const flattenHandleVariantArrayIntoHandlePropsArray = <
@@ -34,4 +34,27 @@ export const getHandlePropsGroupingByKey = (
     key
   );
   return groupedHandlePropsArray;
+};
+
+export const convertHandlePositionToStyleKey = (pos: Position): string => {
+  let key: string;
+  switch (pos) {
+    case Position.Left:
+      key = Position.Top;
+      break;
+    case Position.Right:
+      key = Position.Top;
+      break;
+    case Position.Top:
+      key = Position.Left;
+      break;
+    case Position.Bottom:
+      key = Position.Left;
+      break;
+
+    default:
+      key = Position.Top;
+      break;
+  }
+  return key.toString().toLowerCase();
 };
