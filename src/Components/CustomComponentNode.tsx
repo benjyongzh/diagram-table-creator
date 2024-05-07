@@ -1,5 +1,11 @@
 import { memo, useEffect } from "react";
-import { Handle, NodeProps, useUpdateNodeInternals } from "reactflow";
+import {
+  Handle,
+  NodeProps,
+  useUpdateNodeInternals,
+  Position,
+  HandleProps,
+} from "reactflow";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import colors from "Types/colorString";
 import { nodeBackgroundBrightnessTailwind } from "Configs/nodeConfig";
@@ -8,6 +14,11 @@ import mapHandlePositionToStyle from "Styles/handle";
 import { useAppSelector } from "Hooks/reduxHooks";
 import nodeDimensions from "Types/nodeDimenions";
 import { Node } from "reactflow";
+import {
+  convertObjectGroupingOfArraysToCountLibrary,
+  getHighestValueBetweenTwoKeysOfCountLibrary,
+} from "Utilities/objects";
+import { getHandlePropsGroupingByKey } from "Utilities/reactFlowHandles";
 
 // export default memo(({ id, data }: { id: string; data: CustomNodeVariant }) => {
 export default memo((props: NodeProps) => {
@@ -32,7 +43,37 @@ export default memo((props: NodeProps) => {
 
   const onDeleteButtonClicked = () => {};
 
-  const setHandles = () => {};
+  const setHandles = () => {
+    const positionGrouping: Record<
+      string,
+      Array<HandleProps>
+    > = getHandlePropsGroupingByKey(data.handleTypes, "position");
+
+    const getHandleCountPerPosition: Record<string, number> =
+      convertObjectGroupingOfArraysToCountLibrary(positionGrouping);
+
+    const handleHighestCountHorizontals =
+      getHighestValueBetweenTwoKeysOfCountLibrary(
+        getHandleCountPerPosition,
+        Position.Left,
+        Position.Right
+      );
+
+    const handleHighestCountVerticals =
+      getHighestValueBetweenTwoKeysOfCountLibrary(
+        getHandleCountPerPosition,
+        Position.Top,
+        Position.Bottom
+      );
+
+    const getHandleSpacingVerticals =
+      nodeDimensions.height /
+      (getHandleCountPerPosition[handleHighestCountVerticals] + 1);
+
+    const getHandleSpacingHorizontals =
+      nodeDimensions.width /
+      (getHandleCountPerPosition[handleHighestCountHorizontals] + 1);
+  };
 
   return (
     <div
