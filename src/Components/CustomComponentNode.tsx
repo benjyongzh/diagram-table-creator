@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo, useCallback, useEffect, useMemo } from "react";
 import {
   Handle,
   NodeProps,
@@ -75,7 +75,34 @@ export default memo((props: NodeProps) => {
       [Position.Top]: positionGrouping[Position.Top],
       [Position.Bottom]: positionGrouping[Position.Bottom],
     };
+
+    const finalArr: any = [];
+
+    for (const side in handleGroups) {
+      const handleArray: Array<HandleProps> = handleGroups[side as Position];
+      const sideStyle = side.toString().toLocaleLowerCase();
+      for (let i = 0; i < handleArray.length; i++) {
+        const spacing = (i + 1) * handleSpacings[side as Position];
+        finalArr.push(
+          <Handle
+            key={i}
+            id={handleArray[i].id}
+            type={handleArray[i].type}
+            position={handleArray[i].position} //position should depend on value of handleCount
+            isConnectableStart={true}
+            isConnectableEnd={true}
+            style={{ [sideStyle]: spacing }}
+          />
+        );
+      }
+    }
+    return finalArr;
   };
+
+  const handles = useCallback(getHandleComponentArray, [
+    data.handleTypes,
+    nodeDimensions,
+  ]);
 
   return (
     <div
@@ -101,7 +128,7 @@ export default memo((props: NodeProps) => {
           <XMarkIcon className="h-6 w-6 text-gray-500" />;
         </button>
       </div>
-      {data.handleTypes.map((handleType: HandleVariant) =>
+      {/* {data.handleTypes.map((handleType: HandleVariant) =>
         Array.from({ length: handleType.quantity }).map((_item, index) => (
           <Handle
             key={index}
@@ -115,7 +142,8 @@ export default memo((props: NodeProps) => {
             // style={mapHandlePositionToStyle[handleType.position]}
           />
         ))
-      )}
+      )} */}
+      {handles()}
     </div>
   );
 });

@@ -11,6 +11,7 @@ export const flattenHandleVariantArrayIntoHandlePropsArray = <
   arr.forEach((variant) => {
     for (let i = 0; i < variant.quantity; i++) {
       const handle: HandleProps = {
+        id: `${variant.handleName}-${i}`,
         type: variant.handleType,
         position: variant.position,
         isConnectableStart: true,
