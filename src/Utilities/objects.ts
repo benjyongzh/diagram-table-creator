@@ -1,6 +1,3 @@
-import { HandleVariant } from "Types/handleVariant";
-import { HandleProps, HandleType } from "reactflow";
-
 export const removeSubsetObject = <T>(
   mainObject: Record<string, T>,
   subObject: Record<string, T>

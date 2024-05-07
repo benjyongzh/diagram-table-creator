@@ -2,7 +2,7 @@ import { memo, useEffect } from "react";
 import {
   Handle,
   NodeProps,
-  useUpdateNodeInternals,
+  // useUpdateNodeInternals,
   Position,
   HandleProps,
 } from "reactflow";
@@ -10,15 +10,13 @@ import { XMarkIcon } from "@heroicons/react/16/solid";
 import colors from "Types/colorString";
 import { nodeBackgroundBrightnessTailwind } from "Configs/nodeConfig";
 import { HandleVariant } from "Types/handleVariant";
-import mapHandlePositionToStyle from "Styles/handle";
+// import mapHandlePositionToStyle from "Styles/handle";
 import { useAppSelector } from "Hooks/reduxHooks";
 import nodeDimensions from "Types/nodeDimenions";
 import { Node } from "reactflow";
-import {
-  convertObjectGroupingOfArraysToCountLibrary,
-  getHighestValueBetweenTwoKeysOfCountLibrary,
-} from "Utilities/objects";
+import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 import { getHandlePropsGroupingByKey } from "Utilities/reactFlowHandles";
+import { getSpacing } from "Utilities/numbers";
 
 // export default memo(({ id, data }: { id: string; data: CustomNodeVariant }) => {
 export default memo((props: NodeProps) => {
@@ -43,7 +41,7 @@ export default memo((props: NodeProps) => {
 
   const onDeleteButtonClicked = () => {};
 
-  const setHandles = () => {
+  const getHandleComponentArray = () => {
     const positionGrouping: Record<
       string,
       Array<HandleProps>
@@ -52,27 +50,31 @@ export default memo((props: NodeProps) => {
     const getHandleCountPerPosition: Record<string, number> =
       convertObjectGroupingOfArraysToCountLibrary(positionGrouping);
 
-    const handleHighestCountHorizontals =
-      getHighestValueBetweenTwoKeysOfCountLibrary(
-        getHandleCountPerPosition,
-        Position.Left,
-        Position.Right
-      );
+    const handleSpacings: Record<Position, number> = {
+      [Position.Left]: getSpacing(
+        nodeDimensions.height,
+        getHandleCountPerPosition[Position.Left]
+      ),
+      [Position.Right]: getSpacing(
+        nodeDimensions.height,
+        getHandleCountPerPosition[Position.Right]
+      ),
+      [Position.Top]: getSpacing(
+        nodeDimensions.width,
+        getHandleCountPerPosition[Position.Top]
+      ),
+      [Position.Bottom]: getSpacing(
+        nodeDimensions.width,
+        getHandleCountPerPosition[Position.Bottom]
+      ),
+    };
 
-    const handleHighestCountVerticals =
-      getHighestValueBetweenTwoKeysOfCountLibrary(
-        getHandleCountPerPosition,
-        Position.Top,
-        Position.Bottom
-      );
-
-    const getHandleSpacingVerticals =
-      nodeDimensions.height /
-      (getHandleCountPerPosition[handleHighestCountVerticals] + 1);
-
-    const getHandleSpacingHorizontals =
-      nodeDimensions.width /
-      (getHandleCountPerPosition[handleHighestCountHorizontals] + 1);
+    const handleGroups: Record<Position, Array<HandleProps>> = {
+      [Position.Left]: positionGrouping[Position.Left],
+      [Position.Right]: positionGrouping[Position.Right],
+      [Position.Top]: positionGrouping[Position.Top],
+      [Position.Bottom]: positionGrouping[Position.Bottom],
+    };
   };
 
   return (
