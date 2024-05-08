@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo } from "react";
+import { memo, useCallback, useEffect, useMemo } from "react";
 import {
   Handle,
   NodeProps,
@@ -14,12 +14,14 @@ import { HandleVariant } from "Types/handleVariant";
 import { useAppSelector } from "Hooks/reduxHooks";
 import nodeDimensions from "Types/nodeDimenions";
 import { Node } from "reactflow";
-import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 import {
-  getHandlePropsGroupingByKey,
+  // flattenHandleVariantArrayIntoHandlePropsArray,
   convertHandlePositionToStyleKey,
+  getHandlePropsGroupingByKey,
+  getHandleSpacingAndArrayPerNodeSide,
+  handleSpacingAndArray,
 } from "Utilities/reactFlowHandles";
-import { getSpacing } from "Utilities/numbers";
+import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 
 // export default memo(({ id, data }: { id: string; data: CustomNodeVariant }) => {
 export default memo((props: NodeProps) => {
@@ -42,88 +44,41 @@ export default memo((props: NodeProps) => {
     ),
   };
 
-  const onDeleteButtonClicked = () => {};
+  const onDeleteButtonClicked = useCallback(() => {}, []);
 
-  const getHandleSpacingPerNodeSide = (): Record<Position, number> => {
-    const positionGrouping: Record<
-      string,
-      Array<HandleProps>
-    > = getHandlePropsGroupingByKey(data.handleTypes, "position");
+  // const handleArray: Array<HandleProps> = useMemo(
+  //   () => flattenHandleVariantArrayIntoHandlePropsArray(data.handleTypes),
+  //   [data.handleTypes]
+  // );
 
-    const getHandleCountPerPosition: Record<string, number> =
-      convertObjectGroupingOfArraysToCountLibrary(positionGrouping);
+  const handlesGroupings: Record<string, HandleProps[]> = useMemo(
+    () => getHandlePropsGroupingByKey(data.handleTypes, "position"),
+    [data.handleTypes]
+  );
 
-    const handleSpacings: Record<Position, number> = {
-      [Position.Left]: getSpacing(
-        nodeDimensions.height,
-        getHandleCountPerPosition[Position.Left]
-      ),
-      [Position.Right]: getSpacing(
-        nodeDimensions.height,
-        getHandleCountPerPosition[Position.Right]
-      ),
-      [Position.Top]: getSpacing(
-        nodeDimensions.width,
-        getHandleCountPerPosition[Position.Top]
-      ),
-      [Position.Bottom]: getSpacing(
-        nodeDimensions.width,
-        getHandleCountPerPosition[Position.Bottom]
-      ),
+  const handleSpacingsAndArray: Record<Position, handleSpacingAndArray> =
+    useMemo(
+      () =>
+        getHandleSpacingAndArrayPerNodeSide(nodeDimensions, data.handleTypes),
+      [nodeDimensions, data.handleTypes]
+    );
+
+  const createHandles = useMemo(
+    () => createArrayOfHandlesWithSpreadPositions(),
+    [handleSpacingsAndArray]
+  );
+
+  const createArrayOfHandlesWithSpreadPositions =
+    (): Array<React.ReactElement> => {
+      const finalArr: Array<React.ReactElement> = [];
+      const maxHandleCountPerSide: Record<string, number> =
+        convertObjectGroupingOfArraysToCountLibrary(handlesGroupings);
+      for (let i = 0; i < data.handleTypes.length; i++) {
+        for (let j = 0; j < data.handleTypes[i].quantity; j++) {}
+      }
+
+      return finalArr;
     };
-
-    return handleSpacings;
-
-    // const handleGroups: Record<Position, Array<HandleProps>> = {
-    //   [Position.Left]: positionGrouping[Position.Left],
-    //   [Position.Right]: positionGrouping[Position.Right],
-    //   [Position.Top]: positionGrouping[Position.Top],
-    //   [Position.Bottom]: positionGrouping[Position.Bottom],
-    // };
-
-    // for (const side in handleGroups) {
-    //   const handleArray: Array<HandleProps> = handleGroups[side as Position];
-    //   const sideStyle = side.toString().toLocaleLowerCase();
-    //   for (let i = 0; i < handleArray.length; i++) {
-    //     const spacing = (i + 1) * handleSpacings[side as Position];
-    //     finalArr.push(
-    //       <Handle
-    //         key={i}
-    //         id={handleArray[i].id}
-    //         type={handleArray[i].type}
-    //         position={handleArray[i].position} //position should depend on value of handleCount
-    //         isConnectableStart={true}
-    //         isConnectableEnd={true}
-    //         style={{ [sideStyle]: spacing }}
-    //       />
-    //     );
-    //   }
-    // }
-
-    // return {
-    //   [Position.Left]: {
-    //     spacing: handleSpacings[Position.Left],
-    //     array: positionGrouping[Position.Left],
-    //   },
-    //   [Position.Right]: {
-    //     spacing: handleSpacings[Position.Right],
-    //     array: positionGrouping[Position.Right],
-    //   },
-    //   [Position.Top]: {
-    //     spacing: handleSpacings[Position.Top],
-    //     array: positionGrouping[Position.Top],
-    //   },
-    //   [Position.Bottom]: {
-    //     spacing: handleSpacings[Position.Bottom],
-    //     array: positionGrouping[Position.Bottom],
-    //   },
-    // };
-  };
-
-  const handleSpacings = useMemo(getHandleSpacingPerNodeSide, [
-    data.handleTypes,
-    nodeDimensions,
-  ]);
 
   return (
     <div
@@ -149,10 +104,9 @@ export default memo((props: NodeProps) => {
           <XMarkIcon className="h-6 w-6 text-gray-500" />;
         </button>
       </div>
-      {data.handleTypes.map((handleType: HandleVariant) =>
-        Array.from({ length: handleType.quantity }).map((_item, index) => {
+      {/*handleArray.map() => {
           const handleStyle = {
-            [convertHandlePositionToStyleKey(handleType.position)]:
+            [convertHandlePositionToStyleKey(handleProp.position)]:
               index * handleSpacings[handleType.position],
           };
 
@@ -169,8 +123,8 @@ export default memo((props: NodeProps) => {
               style={handleStyle}
             />
           );
-        })
-      )}
+      )*/}
+      {createHandles}
     </div>
   );
 });
