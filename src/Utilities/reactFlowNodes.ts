@@ -47,3 +47,10 @@ export const addIndexNumberToNodesBasedOnCountLibrary = <T extends Node>(
     cloneLibrary[node.data.nodeName] -= 1;
   });
 };
+
+export function getNodeCenter(node: Node) {
+  return {
+    x: node.positionAbsolute.x + node.width / 2,
+    y: node.positionAbsolute.y + node.height / 2,
+  };
+}
