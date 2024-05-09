@@ -1,21 +1,13 @@
-import { CSSProperties, memo, useCallback, useMemo } from "react";
-import {
-  Handle,
-  NodeProps,
-  // useUpdateNodeInternals,
-  Position,
-  HandleProps,
-} from "reactflow";
-import { XMarkIcon } from "@heroicons/react/16/solid";
-import colors from "Types/colorString";
+import { CSSProperties, memo, useCallback, useMemo, useState } from "react";
+import { Handle, NodeProps, Position, HandleProps, Node } from "reactflow";
+
+//config
 import { nodeBackgroundBrightnessTailwind } from "Configs/nodeConfig";
-import defaultHandleStyles from "Styles/handle";
-// import mapHandlePositionToStyle from "Styles/handle";
+//redux
 import { useAppSelector } from "Hooks/reduxHooks";
+//methods
 import nodeDimensions from "Types/nodeDimenions";
-import { Node } from "reactflow";
 import {
-  // flattenHandleVariantArrayIntoHandlePropsArray,
   convertHandlePositionToStyleKey,
   getHandlePropsGroupingByKey,
   getHandleSpacingAndArrayPerNodeSide,
@@ -23,7 +15,11 @@ import {
 } from "Utilities/reactFlowHandles";
 import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 
-// export default memo(({ id, data }: { id: string; data: CustomNodeVariant }) => {
+//styles
+import { XMarkIcon } from "@heroicons/react/16/solid";
+import colors from "Types/colorString";
+import defaultHandleStyles from "Styles/handle";
+
 export default memo((props: NodeProps) => {
   const { id, data } = props;
   // const updateNodeInternals = useUpdateNodeInternals();
@@ -31,25 +27,51 @@ export default memo((props: NodeProps) => {
   //   updateNodeInternals(id);
   // }, [data.handleTypes]);
 
+  // const [nodeHeight, setNodeHeight] = useState(
+  //   useAppSelector(
+  //     (state) =>
+  //       state.reactFlowObjects.nodes.filter((node: Node) => node.id === id)[0]
+  //         .height
+  //   )
+  // );
+  // const [nodeWidth, setNodeWidth] = useState(
+  //   useAppSelector(
+  //     (state) =>
+  //       state.reactFlowObjects.nodes.filter((node: Node) => node.id === id)[0]
+  //         .width
+  //   )
+  // );
+
+  // const nodeDimensions: nodeDimensions = useMemo(() => {
+  //   return {
+  //     height: nodeHeight,
+  //     width: nodeWidth,
+  //   };
+  // }, []);
   const nodeDimensions: nodeDimensions = {
-    height: useAppSelector(
-      (state) =>
-        state.reactFlowObjects.nodes.filter((node: Node) => node.id === id)[0]
-          .height
+    height: useMemo(
+      () =>
+        useAppSelector(
+          (state) =>
+            state.reactFlowObjects.nodes.filter(
+              (node: Node) => node.id === id
+            )[0].height
+        ),
+      []
     ),
-    width: useAppSelector(
-      (state) =>
-        state.reactFlowObjects.nodes.filter((node: Node) => node.id === id)[0]
-          .width
+    width: useMemo(
+      () =>
+        useAppSelector(
+          (state) =>
+            state.reactFlowObjects.nodes.filter(
+              (node: Node) => node.id === id
+            )[0].width
+        ),
+      []
     ),
   };
 
   const onDeleteButtonClicked = useCallback(() => {}, []);
-
-  // const handleArray: Array<HandleProps> = useMemo(
-  //   () => flattenHandleVariantArrayIntoHandlePropsArray(data.handleTypes),
-  //   [data.handleTypes]
-  // );
 
   const handlesGroupings: Record<string, HandleProps[]> = useMemo(
     () => getHandlePropsGroupingByKey(data.handleTypes, "position"),
