@@ -1,4 +1,4 @@
-import { CSSProperties, memo, useCallback, useEffect, useMemo } from "react";
+import { CSSProperties, memo, useCallback, useMemo } from "react";
 import {
   Handle,
   NodeProps,
@@ -9,7 +9,7 @@ import {
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import colors from "Types/colorString";
 import { nodeBackgroundBrightnessTailwind } from "Configs/nodeConfig";
-import { HandleVariant } from "Types/handleVariant";
+import defaultHandleStyles from "Styles/handle";
 // import mapHandlePositionToStyle from "Styles/handle";
 import { useAppSelector } from "Hooks/reduxHooks";
 import nodeDimensions from "Types/nodeDimenions";
@@ -104,7 +104,7 @@ export default memo((props: NodeProps) => {
               position={handlePos} //position should depend on value of handleCount
               isConnectableStart={true}
               isConnectableEnd={true}
-              style={handleStyle}
+              style={{ ...defaultHandleStyles, ...handleStyle }}
             />
           );
 
