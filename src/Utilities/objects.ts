@@ -91,7 +91,11 @@ export const convertObjectGroupingOfArraysToCountLibrary = <T>(
 ): Record<string, number> => {
   const newLibrary: Record<string, number> = {};
   for (const key in obj) {
-    newLibrary[key] = obj[key].length;
+    if (Object.prototype.toString.call(obj[key]) === "[object Array]") {
+      newLibrary[key] = obj[key].length;
+    } else {
+      newLibrary[key] = 0;
+    }
   }
   return newLibrary;
 };

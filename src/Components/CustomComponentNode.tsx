@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo } from "react";
+import { CSSProperties, memo, useCallback, useEffect, useMemo } from "react";
 import {
   Handle,
   NodeProps,
@@ -63,22 +63,63 @@ export default memo((props: NodeProps) => {
       [nodeDimensions, data.handleTypes]
     );
 
-  const createHandles = useMemo(
-    () => createArrayOfHandlesWithSpreadPositions(),
-    [handleSpacingsAndArray]
-  );
-
   const createArrayOfHandlesWithSpreadPositions =
     (): Array<React.ReactElement> => {
       const finalArr: Array<React.ReactElement> = [];
+      if (data.handleTypes.length < 1) return finalArr;
+
       const maxHandleCountPerSide: Record<string, number> =
         convertObjectGroupingOfArraysToCountLibrary(handlesGroupings);
       for (let i = 0; i < data.handleTypes.length; i++) {
-        for (let j = 0; j < data.handleTypes[i].quantity; j++) {}
+        // i is the index of each handleVariant
+
+        // get info of this handleVariant
+        const {
+          handleType,
+          handleName,
+          position: handlePos,
+        } = data.handleTypes[i];
+
+        // establish styleKey for this Variant
+        const styleKey: string = convertHandlePositionToStyleKey(handlePos);
+
+        // get spacing for this handleVariant
+        const handleSpacing: number =
+          handleSpacingsAndArray[handlePos as Position].spacing;
+        console.log(handleSpacing);
+
+        for (let j = 0; j < data.handleTypes[i].quantity; j++) {
+          // j is the index of each <Handle> of this handleVariant}
+
+          // get styling offset for this 1 handle, using maxHandleCountPerSide
+          const offset: number = handleSpacing * (j + 1);
+          console.log(offset);
+          const handleStyle: CSSProperties = { [styleKey]: offset };
+
+          finalArr.push(
+            <Handle
+              key={`${handleName}-${j}`}
+              id={`${data.nodeName}-${data.variantIndex}-${handleName}-${j}`}
+              type={handleType}
+              position={handlePos} //position should depend on value of handleCount
+              isConnectableStart={true}
+              isConnectableEnd={true}
+              style={handleStyle}
+            />
+          );
+
+          // update the max count
+          maxHandleCountPerSide[handlePos] -= 1;
+        }
       }
 
       return finalArr;
     };
+
+  const createHandles = useMemo(
+    () => createArrayOfHandlesWithSpreadPositions(),
+    [nodeDimensions, data.handleTypes]
+  );
 
   return (
     <div
@@ -104,26 +145,6 @@ export default memo((props: NodeProps) => {
           <XMarkIcon className="h-6 w-6 text-gray-500" />;
         </button>
       </div>
-      {/*handleArray.map() => {
-          const handleStyle = {
-            [convertHandlePositionToStyleKey(handleProp.position)]:
-              index * handleSpacings[handleType.position],
-          };
-
-          return (
-            <Handle
-              key={index}
-              id={`${data.nodeName}-${data.variantIndex}-${
-                handleType.handleName
-              }-${index.toString()}`}
-              type={handleType.handleType}
-              position={handleType.position} //position should depend on value of handleCount
-              isConnectableStart={true}
-              isConnectableEnd={true}
-              style={handleStyle}
-            />
-          );
-      )*/}
       {createHandles}
     </div>
   );

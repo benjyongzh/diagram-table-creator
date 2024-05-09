@@ -28,7 +28,7 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
         handleType: "source", //source | target
         handleName: "handle name bleh",
         position: Position.Right,
-        quantity: 2,
+        quantity: 4,
       },
       {
         handleType: "source", //source | target
@@ -36,10 +36,28 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
         position: Position.Top,
         quantity: 2,
       },
+
+      {
+        handleType: "source", //source | target
+        handleName: "handle name bla",
+        position: Position.Bottom,
+        quantity: 8,
+      },
     ],
     color: colors.orange,
   },
-  { nodeName: "Extension Unit", handleTypes: [], color: colors.blue },
+  {
+    nodeName: "Extension Unit",
+    handleTypes: [
+      {
+        handleType: "source", //source | target
+        handleName: "handle name bleh",
+        position: Position.Right,
+        quantity: 7,
+      },
+    ],
+    color: colors.blue,
+  },
 ];
 
 export default initialNodes;
