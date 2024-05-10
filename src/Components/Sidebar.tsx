@@ -114,7 +114,10 @@ export const Sidebar = () => {
             <div className="divider my-0"></div>
             <SidebarSectionDropDown sectionName="Components">
               {variants.map((variant: CustomNodeVariant) => (
-                <SidebarComponentListItem variant={variant} />
+                <SidebarComponentListItem
+                  variant={variant}
+                  key={variant.nodeName}
+                />
               ))}
             </SidebarSectionDropDown>
 
