@@ -39,7 +39,7 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
 
       {
         handleType: "source", //source | target
-        handleName: "handle name bla",
+        handleName: "handle name blu",
         position: Position.Bottom,
         quantity: 8,
       },
