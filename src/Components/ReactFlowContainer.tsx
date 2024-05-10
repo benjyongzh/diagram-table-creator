@@ -30,7 +30,6 @@ import {
   setAllNodes,
   setAllEdges,
 } from "Features/reactFlowSlice";
-import { setAllNodeTypes } from "Features/nodeTypeSlice";
 import { setAllNodeVariants } from "Features/customNodeVariantSlice";
 
 //initial
@@ -64,7 +63,7 @@ const ReactFlowContainer = () => {
   );
   const onNodeMouseEnter = useCallback(
     (event: React.MouseEvent, node: Node) =>
-      dispatch(onReactFlowMouseLeave(node.id)),
+      dispatch(onReactFlowMouseEnter(node.id)),
     []
   );
   const onNodeMouseLeave = useCallback(
