@@ -43,10 +43,12 @@ import initialEdges from "Objects/initialEdges";
 import { minimapStyle } from "Styles/minimap";
 import "reactflow/dist/style.css";
 
+const nodeTypes = initialNodeTypes;
+
 const ReactFlowContainer = () => {
   const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
   const edges = useAppSelector((state) => state.reactFlowObjects.edges);
-  const nodeTypes = initialNodeTypes;
+
   const dispatch = useAppDispatch();
 
   const onNodesChange = useCallback(
