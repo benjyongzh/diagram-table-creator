@@ -64,13 +64,17 @@ const ReactFlowContainer = () => {
     []
   );
   const onNodeMouseEnter = useCallback(
-    (event: React.MouseEvent, node: Node) =>
-      dispatch(onReactFlowMouseEnter(node.id)),
+    (event: React.MouseEvent, node: Node) => {
+      event.preventDefault();
+      dispatch(onReactFlowMouseEnter(node.id));
+    },
     []
   );
   const onNodeMouseLeave = useCallback(
-    (event: React.MouseEvent, node: Node) =>
-      dispatch(onReactFlowMouseLeave(node.id)),
+    (event: React.MouseEvent, node: Node) => {
+      event.preventDefault();
+      dispatch(onReactFlowMouseLeave(node.id));
+    },
     []
   );
 
