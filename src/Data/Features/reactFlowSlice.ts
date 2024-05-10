@@ -104,12 +104,15 @@ export const reactFlowSlice: Slice = createSlice({
     //   });
     // },
 
-    onNodeMouseEnter: (state, action: PayloadAction<Node>) => {
-      if (!checkNodeType(action.payload, nodeConfigs.INITIAL_CUSTOM_NODE_NAME))
+    onNodeMouseEnter: (state, action: PayloadAction<string>) => {
+      const thisNode: Node = state.nodes.filter(
+        (node: Node) => node.id === action.payload
+      )[0];
+      if (!checkNodeType(thisNode, nodeConfigs.INITIAL_CUSTOM_NODE_NAME))
         return;
 
       state.nodes = state.nodes.map((node: Node) => {
-        if (node.id === action.payload.id) {
+        if (node.id === action.payload) {
           node.data = {
             ...node.data,
             isHovered: true,
@@ -118,12 +121,15 @@ export const reactFlowSlice: Slice = createSlice({
         return node;
       });
     },
-    onNodeMouseLeave: (state, action: PayloadAction<Node>) => {
-      if (!checkNodeType(action.payload, nodeConfigs.INITIAL_CUSTOM_NODE_NAME))
+    onNodeMouseLeave: (state, action: PayloadAction<string>) => {
+      const thisNode: Node = state.nodes.filter(
+        (node: Node) => node.id === action.payload
+      )[0];
+      if (!checkNodeType(thisNode, nodeConfigs.INITIAL_CUSTOM_NODE_NAME))
         return;
 
       state.nodes = state.nodes.map((node: Node) => {
-        if (node.id === action.payload.id) {
+        if (node.id === action.payload) {
           node.data = {
             ...node.data,
             isHovered: false,
