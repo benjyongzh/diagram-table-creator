@@ -5,8 +5,6 @@ import { Handle, NodeProps, Position, HandleProps, Node } from "reactflow";
 import { nodeBackgroundBrightnessTailwind } from "Configs/nodeConfig";
 //redux
 import { useAppSelector } from "Hooks/reduxHooks";
-//methods
-import nodeDimensions from "Types/nodeDimenions";
 import {
   convertHandlePositionToStyleKey,
   getHandlePropsGroupingByKey,
@@ -27,49 +25,16 @@ export default memo((props: NodeProps) => {
   //   updateNodeInternals(id);
   // }, [data.handleTypes]);
 
-  // const [nodeHeight, setNodeHeight] = useState(
-  //   useAppSelector(
-  //     (state) =>
-  //       state.reactFlowObjects.nodes.filter((node: Node) => node.id === id)[0]
-  //         .height
-  //   )
-  // );
-  // const [nodeWidth, setNodeWidth] = useState(
-  //   useAppSelector(
-  //     (state) =>
-  //       state.reactFlowObjects.nodes.filter((node: Node) => node.id === id)[0]
-  //         .width
-  //   )
-  // );
-
-  // const nodeDimensions: nodeDimensions = useMemo(() => {
-  //   return {
-  //     height: nodeHeight,
-  //     width: nodeWidth,
-  //   };
-  // }, []);
-  const nodeDimensions: nodeDimensions = {
-    height: useMemo(
-      () =>
-        useAppSelector(
-          (state) =>
-            state.reactFlowObjects.nodes.filter(
-              (node: Node) => node.id === id
-            )[0].height
-        ),
-      []
-    ),
-    width: useMemo(
-      () =>
-        useAppSelector(
-          (state) =>
-            state.reactFlowObjects.nodes.filter(
-              (node: Node) => node.id === id
-            )[0].width
-        ),
-      []
-    ),
-  };
+  const nodeHeight = useAppSelector(
+    (state) =>
+      state.reactFlowObjects.nodes.filter((node: Node) => node.id === id)[0]
+        .height
+  );
+  const nodeWidth = useAppSelector(
+    (state) =>
+      state.reactFlowObjects.nodes.filter((node: Node) => node.id === id)[0]
+        .width
+  );
 
   const onDeleteButtonClicked = useCallback(() => {}, []);
 
@@ -81,8 +46,13 @@ export default memo((props: NodeProps) => {
   const handleSpacingsAndArray: Record<Position, handleSpacingAndArray> =
     useMemo(
       () =>
-        getHandleSpacingAndArrayPerNodeSide(nodeDimensions, data.handleTypes),
-      [nodeDimensions, data.handleTypes]
+        // getHandleSpacingAndArrayPerNodeSide(nodeDimensions, data.handleTypes),
+        // [nodeDimensions, data.handleTypes]
+        getHandleSpacingAndArrayPerNodeSide(
+          { height: nodeHeight, width: nodeWidth },
+          data.handleTypes
+        ),
+      [nodeHeight, nodeWidth, data.handleTypes]
     );
 
   const createArrayOfHandlesWithSpreadPositions =
@@ -104,18 +74,19 @@ export default memo((props: NodeProps) => {
 
         // establish styleKey for this Variant
         const styleKey: string = convertHandlePositionToStyleKey(handlePos);
+        console.log(`style for handle ${handleName}`, styleKey);
 
         // get spacing for this handleVariant
         const handleSpacing: number =
           handleSpacingsAndArray[handlePos as Position].spacing;
-        console.log(handleSpacing);
+        console.log(`handleSpacing:`, handleSpacing);
 
         for (let j = 0; j < data.handleTypes[i].quantity; j++) {
           // j is the index of each <Handle> of this handleVariant}
 
           // get styling offset for this 1 handle, using maxHandleCountPerSide
           const offset: number = handleSpacing * (j + 1);
-          console.log(offset);
+          console.log(`offset for handle ${handleName}-${j}`, offset);
           const handleStyle: CSSProperties = { [styleKey]: offset };
 
           finalArr.push(
@@ -140,7 +111,7 @@ export default memo((props: NodeProps) => {
 
   const createHandles = useMemo(
     () => createArrayOfHandlesWithSpreadPositions(),
-    [nodeDimensions, data.handleTypes]
+    [nodeHeight, nodeWidth, data.handleTypes]
   );
 
   return (
@@ -157,7 +128,7 @@ export default memo((props: NodeProps) => {
         {data.nodeName} {data.variantIndex}
       </h2>
       <p>
-        height: {nodeDimensions.height}, width: {nodeDimensions.width}
+        height: {nodeHeight}, width: {nodeWidth}
       </p>
       <div className={`${data.isHovered ? "visible" : "invisible"}`}>
         <button
