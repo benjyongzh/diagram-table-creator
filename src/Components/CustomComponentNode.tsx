@@ -1,4 +1,4 @@
-import { CSSProperties, memo, useCallback, useMemo, useState } from "react";
+import { CSSProperties, memo, useCallback, useMemo } from "react";
 import { Handle, NodeProps, Position, HandleProps, Node } from "reactflow";
 
 //config
@@ -20,10 +20,6 @@ import defaultHandleStyles from "Styles/handle";
 
 export default memo((props: NodeProps) => {
   const { id, data } = props;
-  // const updateNodeInternals = useUpdateNodeInternals();
-  // useEffect(() => {
-  //   updateNodeInternals(id);
-  // }, [data.handleTypes]);
 
   const nodeHeight = useAppSelector(
     (state) =>
