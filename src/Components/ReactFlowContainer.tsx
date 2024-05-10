@@ -47,7 +47,7 @@ import "reactflow/dist/style.css";
 const ReactFlowContainer = () => {
   const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
   const edges = useAppSelector((state) => state.reactFlowObjects.edges);
-  const nodeTypes = useAppSelector((state) => state.nodeTypes.nodeTypes);
+  const nodeTypes = initialNodeTypes;
   const dispatch = useAppDispatch();
 
   const onNodesChange = useCallback(
@@ -64,12 +64,12 @@ const ReactFlowContainer = () => {
   );
   const onNodeMouseEnter = useCallback(
     (event: React.MouseEvent, node: Node) =>
-      dispatch(onReactFlowMouseEnter(node)),
+      dispatch(onReactFlowMouseLeave(node.id)),
     []
   );
   const onNodeMouseLeave = useCallback(
     (event: React.MouseEvent, node: Node) =>
-      dispatch(onReactFlowMouseLeave(node)),
+      dispatch(onReactFlowMouseLeave(node.id)),
     []
   );
 
@@ -78,7 +78,6 @@ const ReactFlowContainer = () => {
     if (featureFlags.USE_INITIAL_OBJECTS) {
       dispatch(setAllNodes(initialNodes));
       dispatch(setAllEdges(initialEdges));
-      dispatch(setAllNodeTypes(initialNodeTypes));
       dispatch(setAllNodeVariants(initialCustomNodeVariants));
     }
   };
