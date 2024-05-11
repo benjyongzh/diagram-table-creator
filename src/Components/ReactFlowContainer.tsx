@@ -100,9 +100,9 @@ const ReactFlowContainer = () => {
       // onEdgeMouseEnter
       // onEdgeMouseLeave
       // connectionLineComponent={}
-      // className="bg-slate-12"
+      className="bg-slate-200 dark:bg-slate-800"
       fitView
-      attributionPosition="top-right"
+      attributionPosition="bottom-left"
     >
       <MiniMap style={minimapStyle} nodeStrokeWidth={3} zoomable pannable />
       <Controls />
