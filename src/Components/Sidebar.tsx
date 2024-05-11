@@ -10,8 +10,8 @@ export const Sidebar = () => {
   );
   return (
     <div className="flex h-full w-full max-w-96 justify-start items-start">
-      <aside className="flex flex-col h-full w-full p-6 gap-6 justify-start bg-slate-50 dark:bg-slate-900">
-        <section className="flex flex-col items-start w-full gap-6">
+      <aside className="flex flex-col h-full w-full background-standard">
+        <section className="sidebar-header-section">
           <svg
             fill="none"
             height="42"
@@ -31,7 +31,7 @@ export const Sidebar = () => {
             Diagram Table Creator
           </span>
         </section>
-        <section className="flex flex-col items-start w-full gap-6">
+        <section className="sidebar-content-section">
           <nav className="flex flex-col gap-4 w-full">
             <SidebarSectionDropDown sectionName="Main menu">
               <li className="sidebar-list-menu-item hoverable-menu-item">
@@ -133,31 +133,25 @@ export const Sidebar = () => {
             </section> */}
           </nav>
         </section>
-        {/* <section className="sidebar-footer justify-end bg-gray-2 pt-2">
-          <div className="divider my-0"></div>
-          <div className="dropdown z-50 flex h-fit w-full cursor-pointer hover:bg-gray-4">
-            <label
-              className="whites mx-2 flex h-fit w-full cursor-pointer p-0 hover:bg-gray-4"
-              tabIndex={0}
-            >
-              <div className="flex flex-row gap-4 p-4">
-                <div className="avatar-square avatar avatar-md">
-                  <img src="https://i.pravatar.cc/150?img=30" alt="avatar" />
-                </div>
 
-                <div className="flex flex-col">
-                  <span>Username here</span>
-                </div>
-              </div>
-            </label>
-            <div className="dropdown-menu-right-top dropdown-menu ml-2">
-              <a className="dropdown-item text-sm">Profile</a>
-              <a tabIndex={-1} className="dropdown-item text-sm">
-                Account Settings
-              </a>
-            </div>
-          </div>
-        </section> */}
+        <section className="sidebar-footer-section ">
+          <svg
+            fill="none"
+            height="42"
+            viewBox="0 0 32 32"
+            width="42"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect height="100%" rx="16" width="100%"></rect>
+            <path
+              clipRule="evenodd"
+              d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
+              fill="currentColor"
+              fillRule="evenodd"
+            ></path>
+          </svg>
+          <span className="menu-text font-medium">footer</span>
+        </section>
       </aside>
     </div>
   );

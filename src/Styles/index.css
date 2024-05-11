@@ -36,6 +36,18 @@ body,
 }
 
 @layer components {
+  .background-standard {
+    @apply bg-slate-100 dark:bg-slate-900;
+  }
+
+  .background-low-contrast {
+    @apply bg-slate-200 dark:bg-slate-800;
+  }
+
+  .background-lower-contrast {
+    @apply bg-slate-300 dark:bg-slate-700;
+  }
+
   .menu-text {
     @apply text-slate-900 dark:text-slate-50;
   }
@@ -46,6 +58,16 @@ body,
 
   .nodeComponent {
     @apply flex rounded-md p-4 gap-3;
+  }
+
+  .sidebar-header-section {
+    @apply flex flex-col items-start w-full p-6 gap-6 background-lower-contrast;
+  }
+  .sidebar-content-section {
+    @apply flex flex-col items-start flex-auto w-full p-2 overflow-y-auto;
+  }
+  .sidebar-footer-section {
+    @apply flex flex-col items-start w-full p-6 gap-2 background-lower-contrast mb-0;
   }
 
   .sidebar-list-menu-item {

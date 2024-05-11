@@ -84,14 +84,13 @@ export const SidebarComponentListItem = (
     //     </ul>
     //   </div>
     // </li>
-    <li className="sidebar-list-menu-item hoverable-menu-item">
-      <label
-        className="hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50"
-        htmlFor={`sidebar-component-${props.variant.nodeName}`}
+    <li className="">
+      <button
+        className="sidebar-list-menu-item hoverable-menu-item menu-text"
         onClick={() => setIsOpened((state) => !state)}
       >
-        <span>{props.variant.nodeName}</span>
-      </label>
+        {props.variant.nodeName}
+      </button>
       {/* <div
         className={`absolute right-0 -m-full ${
           isOpened ? "visible" : "hidden"

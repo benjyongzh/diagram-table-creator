@@ -100,7 +100,7 @@ const ReactFlowContainer = () => {
       // onEdgeMouseEnter
       // onEdgeMouseLeave
       // connectionLineComponent={}
-      className="bg-slate-200 dark:bg-slate-800"
+      className="background-low-contrast"
       fitView
       attributionPosition="bottom-left"
     >
