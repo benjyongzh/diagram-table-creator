@@ -3,6 +3,7 @@ import { useAppSelector } from "Hooks/reduxHooks";
 import CustomNodeVariant from "Types/customNodeVariant";
 import { SidebarSectionDropDown } from "./SidebarSectionDropDown";
 import { Separator } from "./ui/separator";
+import { AccordionContent } from "./ui/accordion";
 
 export const Sidebar = () => {
   const variants: Array<CustomNodeVariant> = useAppSelector(
@@ -32,14 +33,14 @@ export const Sidebar = () => {
           </span>
         </section>
         <section className="sidebar-content-section">
-          <nav className="flex flex-col gap-4 w-full">
+          <nav className="flex flex-col gap-2 w-full">
             <SidebarSectionDropDown sectionName="Main menu">
-              <li className="sidebar-list-menu-item hoverable-menu-item">
-                <span className="menu-text ">General</span>
-              </li>
+              <AccordionContent className="pl-8 py-2 text-base sidebar-list-menu-item hoverable-menu-item menu-text">
+                General
+              </AccordionContent>
             </SidebarSectionDropDown>
 
-            <Separator />
+            {/* <Separator /> */}
             <SidebarSectionDropDown sectionName="Components">
               {variants.map((variant: CustomNodeVariant) => (
                 <SidebarComponentListItem

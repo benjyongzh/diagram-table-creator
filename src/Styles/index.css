@@ -64,7 +64,7 @@ body,
     @apply flex flex-col items-start w-full p-6 gap-6 background-lower-contrast;
   }
   .sidebar-content-section {
-    @apply flex flex-col items-start flex-auto w-full p-2 overflow-y-auto;
+    @apply flex flex-col items-start flex-auto w-full p-3 overflow-y-auto;
   }
   .sidebar-footer-section {
     @apply flex flex-col items-start w-full p-6 gap-2 background-lower-contrast mb-0;
