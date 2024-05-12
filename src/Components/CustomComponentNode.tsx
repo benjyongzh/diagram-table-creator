@@ -70,19 +70,19 @@ export default memo((props: NodeProps) => {
 
         // establish styleKey for this Variant
         const styleKey: string = convertHandlePositionToStyleKey(handlePos);
-        console.log(`style for handle ${handleName}`, styleKey);
+        // console.log(`style for handle ${handleName}`, styleKey);
 
         // get spacing for this handleVariant
         const handleSpacing: number =
           handleSpacingsAndArray[handlePos as Position].spacing;
-        console.log(`handleSpacing:`, handleSpacing);
+        // console.log(`handleSpacing:`, handleSpacing);
 
         for (let j = 0; j < data.handleTypes[i].quantity; j++) {
           // j is the index of each <Handle> of this handleVariant}
 
           // get styling offset for this 1 handle, using maxHandleCountPerSide
           const offset: number = handleSpacing * (j + 1);
-          console.log(`offset for handle ${handleName}-${j}`, offset);
+          // console.log(`offset for handle ${handleName}-${j}`, offset);
           const handleStyle: CSSProperties = { [styleKey]: offset };
 
           finalArr.push(
