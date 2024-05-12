@@ -2,7 +2,6 @@ import CustomNodeVariant from "Types/customNodeVariant";
 import { useAppDispatch } from "Hooks/reduxHooks";
 import { addNode } from "Features/reactFlowSlice";
 import { createNodeFromData } from "Utilities/reactFlowNodes";
-import { useState } from "react";
 import { AccordionContent } from "./ui/accordion";
 import { ChevronDown } from "lucide-react";
 
@@ -40,11 +39,22 @@ export const SidebarComponentListItem = (
         <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 -rotate-90" />
       </button>
       <div
-        className={`transition-all ease-in-out text-slate-900 overflow-hidden rounded-e-md bg-slate-400 ${
+        className={`flex background-lower-contrast rounded-e-md overflow-hidden transition-all ease-in-out ${
           isOpened ? "w-48" : "w-0"
         }`}
       >
-        hello there
+        <button
+          className="flex items-center justify-center flex-1 bg-red-400 menu-text"
+          onClick={onAdd}
+        >
+          Add
+        </button>
+        <button
+          className="flex items-center justify-center flex-1 background-lower-contrast menu-text"
+          onClick={onEdit}
+        >
+          Edit
+        </button>
       </div>
     </AccordionContent>
   );
