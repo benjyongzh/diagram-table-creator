@@ -52,6 +52,10 @@ body,
     @apply text-slate-900 dark:text-slate-50;
   }
 
+  .menu-text-low-contrast {
+    @apply text-slate-700 dark:text-slate-200;
+  }
+
   .menu-text-lg {
     @apply text-slate-900 dark:text-slate-50 text-lg;
   }
