@@ -44,13 +44,13 @@ export const SidebarComponentListItem = (
         }`}
       >
         <button
-          className="flex items-center justify-center flex-1 bg-red-400 menu-text"
+          className="flex items-center justify-center flex-1 menu-text bg-red-400"
           onClick={onAdd}
         >
           Add
         </button>
         <button
-          className="flex items-center justify-center flex-1 background-lower-contrast menu-text"
+          className="flex items-center justify-center flex-1 menu-text background-lower-contrast"
           onClick={onEdit}
         >
           Edit

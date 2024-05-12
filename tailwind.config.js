@@ -30,9 +30,12 @@ for (const colorName in tailwindColors) {
   }
 }
 
+console.log(colorSafeList);
+
 module.exports = {
+  safelist: colorSafeList,
   darkMode: ["class"],
-  content: ["./src/**/*.{ts,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   prefix: "",
   theme: {
     container: {
