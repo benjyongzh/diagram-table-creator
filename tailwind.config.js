@@ -44,6 +44,9 @@ module.exports = {
     },
     extend: {
       colors: tailwindColors,
+      transitionProperty: {
+        multiple: "width , height , backgroundColor , border-radius",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

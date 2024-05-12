@@ -4,11 +4,22 @@ import CustomNodeVariant from "Types/customNodeVariant";
 import { SidebarSectionDropDown } from "./SidebarSectionDropDown";
 import { Separator } from "./ui/separator";
 import { AccordionContent } from "./ui/accordion";
+import { useState } from "react";
+useState;
 
 export const Sidebar = () => {
   const variants: Array<CustomNodeVariant> = useAppSelector(
     (state) => state.customNodeVariants.variants
   );
+  const [openedComponent, setOpenedComponent] =
+    useState<CustomNodeVariant | null>(null);
+
+  const onComponentItemClick = (variant: CustomNodeVariant) => {
+    openedComponent === variant
+      ? setOpenedComponent(null)
+      : setOpenedComponent(variant);
+  };
+
   return (
     <div className="flex h-full w-full max-w-96 justify-start items-start">
       <aside className="flex flex-col h-full w-full background-standard">
@@ -46,6 +57,8 @@ export const Sidebar = () => {
                 <SidebarComponentListItem
                   variant={variant}
                   key={variant.nodeName}
+                  onComponentItemClick={onComponentItemClick}
+                  isOpened={openedComponent === variant}
                 />
               ))}
             </SidebarSectionDropDown>
