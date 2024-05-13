@@ -47,15 +47,15 @@ body,
 
 @layer components {
   .background-standard {
-    @apply bg-slate-100 dark:bg-slate-900;
+    @apply bg-slate-100 dark:bg-slate-800;
   }
 
   .background-low-contrast {
-    @apply bg-slate-200 dark:bg-slate-800;
+    @apply bg-slate-200 dark:bg-slate-900;
   }
 
   .background-lower-contrast {
-    @apply bg-slate-300 dark:bg-slate-700;
+    @apply bg-slate-300 dark:bg-slate-950;
   }
 
   .menu-text {
@@ -89,6 +89,6 @@ body,
   }
 
   .hoverable-menu-item {
-    @apply cursor-pointer transition-colors ease-in-out hover:bg-slate-200 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50;
+    @apply cursor-pointer transition-colors ease-in-out hover:bg-slate-200 hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-slate-50;
   }
 }
