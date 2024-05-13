@@ -5,6 +5,7 @@ import { createNodeFromData } from "Utilities/reactFlowNodes";
 import { AccordionContent } from "./ui/accordion";
 import { Plus, Pencil } from "lucide-react";
 import { Button } from "./ui/button";
+import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 
 type sidebarComponentListItemProps = {
   variant: CustomNodeVariant;
@@ -57,23 +58,12 @@ export const SidebarComponentListItem = (
           isOpened ? "w-36" : "w-0"
         }`}
       >
-        <Button
-          onClick={onAdd}
-          className="menu-text-low-contrast hover:bg-transparent dark:hover:bg-transparent hover:text-sky-600 dark:hover:text-sky-500 aspect-square rounded-full hover:scale-125"
-          variant="ghost"
-          size="icon"
-        >
+        <ButtonStyledIcon onButtonClick={onAdd}>
           <Plus className="h-6 w-6" />
-        </Button>
-
-        <Button
-          onClick={onEdit}
-          className="menu-text-low-contrast hover:bg-transparent dark:hover:bg-transparent hover:text-sky-600 dark:hover:text-sky-500 aspect-square rounded-full hover:scale-110"
-          variant="ghost"
-          size="icon"
-        >
+        </ButtonStyledIcon>
+        <ButtonStyledIcon onButtonClick={onEdit}>
           <Pencil className="h-5 w-5" />
-        </Button>
+        </ButtonStyledIcon>
       </div>
     </AccordionContent>
   );
