@@ -3,16 +3,19 @@ import ReactFlowContainer from "./ReactFlowContainer";
 import { store } from "Objects/store";
 import { Provider as ReduxProvider } from "react-redux";
 import { Sidebar } from "./Sidebar";
+import { ThemeProvider } from "./providers/ThemeProvider";
 
 const App = () => {
   return (
     <ReactFlowProvider>
-      <ReduxProvider store={store}>
-        <div className="main">
-          <Sidebar />
-          <ReactFlowContainer />
-        </div>
-      </ReduxProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <ReduxProvider store={store}>
+          <div className="main">
+            <Sidebar />
+            <ReactFlowContainer />
+          </div>
+        </ReduxProvider>
+      </ThemeProvider>
     </ReactFlowProvider>
   );
 };
