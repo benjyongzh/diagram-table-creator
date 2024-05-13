@@ -35,6 +35,16 @@ body,
   justify-content: center;
 }
 
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 @layer components {
   .background-standard {
     @apply bg-slate-100 dark:bg-slate-900;
@@ -49,15 +59,15 @@ body,
   }
 
   .menu-text {
-    @apply text-slate-900 dark:text-slate-50;
+    @apply text-slate-900 dark:text-slate-100 noselect;
   }
 
   .menu-text-low-contrast {
-    @apply text-slate-700 dark:text-slate-200;
+    @apply text-slate-700 dark:text-slate-200 noselect;
   }
 
   .menu-text-lg {
-    @apply text-slate-900 dark:text-slate-50 text-lg;
+    @apply text-slate-900 dark:text-slate-100 text-lg noselect;
   }
 
   .nodeComponent {
@@ -75,7 +85,7 @@ body,
   }
 
   .sidebar-list-menu-item {
-    @apply px-4 py-3 w-full flex rounded-md justify-between items-center;
+    @apply px-4 py-3 w-full flex rounded-md justify-between items-center noselect;
   }
 
   .hoverable-menu-item {
