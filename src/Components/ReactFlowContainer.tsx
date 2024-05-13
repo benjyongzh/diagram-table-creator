@@ -10,6 +10,7 @@ import {
   Connection,
   Panel,
   Node,
+  ConnectionMode,
 } from "reactflow";
 //components
 import DevTools from "./DevTools";
@@ -97,9 +98,7 @@ const ReactFlowContainer = () => {
       onInit={onInit}
       onNodeMouseEnter={onNodeMouseEnter}
       onNodeMouseLeave={onNodeMouseLeave}
-      // onEdgeMouseEnter
-      // onEdgeMouseLeave
-      // connectionLineComponent={}
+      connectionMode={ConnectionMode.Loose}
       className="background-low-contrast"
       fitView
       attributionPosition="bottom-left"
