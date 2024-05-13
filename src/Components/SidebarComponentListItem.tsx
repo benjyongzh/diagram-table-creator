@@ -40,22 +40,26 @@ export const SidebarComponentListItem = (
     >
       <div
         className={`cursor-default sidebar-list-menu-item hoverable-menu-item pl-8 flex transition-all ${
-          isOpened ? "rounded-e-none" : ""
+          isOpened ? "rounded-e-none bg-slate-200 dark:bg-slate-700" : ""
         }`}
         // onClick={onItemClick}
       >
-        <span className="menu-text text-base text-ellipsis">
+        <span
+          className={`menu-text text-base text-ellipsis ${
+            isOpened ? "font-medium" : ""
+          }`}
+        >
           {props.variant.nodeName}
         </span>
       </div>
       <div
-        className={`flex items-center justify-evenly background-lower-contrast rounded-e-md overflow-hidden transition-all ease-in-out ${
+        className={`flex items-center justify-evenly background-lower-contrast dark:bg-slate-900 rounded-e-md overflow-hidden transition-all ease-in-out ${
           isOpened ? "w-36" : "w-0"
         }`}
       >
         <Button
           onClick={onAdd}
-          className="menu-text-low-contrast aspect-square rounded-full hover:bg-transparent dark:hover:bg-transparent hover:text-sky-600"
+          className="menu-text-low-contrast hover:bg-transparent dark:hover:bg-transparent hover:text-sky-600 dark:hover:text-sky-500 aspect-square rounded-full hover:scale-125"
           variant="ghost"
           size="icon"
         >
@@ -64,7 +68,7 @@ export const SidebarComponentListItem = (
 
         <Button
           onClick={onEdit}
-          className="menu-text-low-contrast aspect-square rounded-full hover:bg-transparent dark:hover:bg-transparent hover:text-sky-600"
+          className="menu-text-low-contrast hover:bg-transparent dark:hover:bg-transparent hover:text-sky-600 dark:hover:text-sky-500 aspect-square rounded-full hover:scale-110"
           variant="ghost"
           size="icon"
         >
