@@ -4,10 +4,11 @@ import { SidebarSectionDropDown } from "./SidebarSectionDropDown";
 import { useAppSelector } from "Hooks/reduxHooks";
 import CustomNodeVariant from "Types/customNodeVariant";
 import { Separator } from "./ui/separator";
-import { Button } from "./ui/button";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { AccordionContent } from "./ui/accordion";
+import { Dialog, DialogTrigger } from "./ui/dialog";
 import { Settings } from "lucide-react";
+import { ModalSettings } from "./ModalSettings";
 
 export const Sidebar = () => {
   const variants: Array<CustomNodeVariant> = useAppSelector(
@@ -26,7 +27,9 @@ export const Sidebar = () => {
       : setOpenedComponent(variant);
   };
 
-  const onSettingsButtonClicked = () => {};
+  const onSettingsButtonClicked = () => {
+    // open settings modal
+  };
 
   return (
     <div className="flex h-full w-full max-w-96 justify-start items-start">
@@ -75,9 +78,14 @@ export const Sidebar = () => {
 
         <section className="sidebar-footer-section flex-row justify-between">
           <span className="menu-text font-medium">footer</span>
-          <ButtonStyledIcon onButtonClick={onSettingsButtonClicked}>
-            <Settings />
-          </ButtonStyledIcon>
+          <Dialog>
+            <DialogTrigger>
+              <ButtonStyledIcon onButtonClick={onSettingsButtonClicked}>
+                <Settings />
+              </ButtonStyledIcon>
+            </DialogTrigger>
+            <ModalSettings />
+          </Dialog>
         </section>
       </aside>
     </div>
