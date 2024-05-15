@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import displayConfig from "Configs/displayConfig";
 
-type Theme = "dark" | "light" | "system";
+export type Theme = "dark" | "light" | "system";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -14,7 +15,7 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-  theme: "system",
+  theme: displayConfig.DEFAULT_THEME,
   setTheme: () => null,
 };
 
@@ -22,7 +23,7 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
   children,
-  defaultTheme = "system",
+  defaultTheme = displayConfig.DEFAULT_THEME,
   storageKey = "vite-ui-theme",
   ...props
 }: ThemeProviderProps) {
