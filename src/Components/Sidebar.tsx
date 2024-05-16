@@ -33,7 +33,7 @@ export const Sidebar = () => {
 
   return (
     <div className="flex h-full w-full max-w-96 justify-start items-start">
-      <aside className="flex flex-col h-full w-full background-standard">
+      <aside className="flex flex-col h-full w-full background-gradient-standard">
         <section className="sidebar-header-section">
           <svg
             fill="none"

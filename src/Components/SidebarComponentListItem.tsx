@@ -41,7 +41,7 @@ export const SidebarComponentListItem = (
     >
       <div
         className={`cursor-default sidebar-list-menu-item hoverable-menu-item pl-8 flex transition-all ${
-          isOpened ? "rounded-e-none bg-slate-200 dark:bg-slate-700" : ""
+          isOpened ? "rounded-e-none bg-slate-300 dark:bg-slate-700" : ""
         }`}
         // onClick={onItemClick}
       >
@@ -54,7 +54,7 @@ export const SidebarComponentListItem = (
         </span>
       </div>
       <div
-        className={`flex items-center justify-evenly background-lower-contrast dark:bg-slate-900 rounded-e-md overflow-hidden transition-all ease-in-out ${
+        className={`flex items-center justify-evenly background-lower-contrast bg-slate-400 rounded-e-md overflow-hidden transition-all ease-in-out ${
           isOpened ? "w-36" : "w-0"
         }`}
       >

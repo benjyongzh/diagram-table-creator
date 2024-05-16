@@ -50,12 +50,24 @@ body,
     @apply bg-slate-100 dark:bg-slate-800;
   }
 
+  .background-gradient-standard {
+    @apply bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900;
+  }
+
   .background-low-contrast {
     @apply bg-slate-200 dark:bg-slate-900;
   }
 
+  .background-gradient-low-contrast {
+    @apply bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-900 dark:to-slate-950;
+  }
+
   .background-lower-contrast {
     @apply bg-slate-300 dark:bg-slate-950;
+  }
+
+  .background-gradient-lower-contrast {
+    @apply bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-900 dark:to-slate-950;
   }
 
   .menu-text {
@@ -63,7 +75,7 @@ body,
   }
 
   .menu-text-low-contrast {
-    @apply text-slate-700 dark:text-slate-200 noselect;
+    @apply text-slate-800 dark:text-slate-200 noselect;
   }
 
   .menu-text-lg {
@@ -89,6 +101,10 @@ body,
   }
 
   .hoverable-menu-item {
-    @apply cursor-pointer transition-colors ease-in-out hover:bg-slate-200 hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-slate-50;
+    @apply cursor-pointer transition-colors ease-in-out hover:bg-slate-300 hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-slate-50;
+  }
+
+  .glassmorph {
+    @apply bg-slate-900 dark:bg-slate-900 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20;
   }
 }

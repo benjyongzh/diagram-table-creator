@@ -99,7 +99,7 @@ const ReactFlowContainer = () => {
       onNodeMouseEnter={onNodeMouseEnter}
       onNodeMouseLeave={onNodeMouseLeave}
       connectionMode={ConnectionMode.Loose}
-      className="background-low-contrast"
+      className="background-gradient-low-contrast"
       fitView
       attributionPosition="bottom-left"
     >
