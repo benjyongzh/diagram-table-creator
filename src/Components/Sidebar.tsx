@@ -9,6 +9,7 @@ import { AccordionContent } from "./ui/accordion";
 import { Dialog, DialogTrigger } from "./ui/dialog";
 import { Settings } from "lucide-react";
 import { ModalSettings } from "./ModalSettings";
+import { SidebarListItem } from "./SidebarListItem";
 
 export const Sidebar = () => {
   const variants: Array<CustomNodeVariant> = useAppSelector(
@@ -17,7 +18,7 @@ export const Sidebar = () => {
   const [openedComponent, setOpenedComponent] =
     useState<CustomNodeVariant | null>(null);
 
-  const onComponentItemClick = (variant: CustomNodeVariant | null) => {
+  const onComponentItemHover = (variant: CustomNodeVariant | null) => {
     if (variant === null) {
       setOpenedComponent(null);
       return;
@@ -64,12 +65,13 @@ export const Sidebar = () => {
 
             {/* <Separator /> */}
             <SidebarSectionDropDown sectionName="Components">
+              <SidebarListItem onHover={() => {}} text="Add New Node" />
               {variants.map((variant: CustomNodeVariant) => (
                 <SidebarComponentListItem
                   variant={variant}
                   key={variant.nodeName}
-                  onComponentItemClick={onComponentItemClick}
-                  isOpened={openedComponent === variant}
+                  onHover={onComponentItemHover}
+                  isFocused={openedComponent === variant}
                 />
               ))}
             </SidebarSectionDropDown>

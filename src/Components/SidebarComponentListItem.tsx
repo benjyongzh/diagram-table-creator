@@ -9,14 +9,14 @@ import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 
 type sidebarComponentListItemProps = {
   variant: CustomNodeVariant;
-  onComponentItemClick: Function;
-  isOpened: boolean;
+  onHover: Function;
+  isFocused: boolean;
 };
 
 export const SidebarComponentListItem = (
   props: sidebarComponentListItemProps
 ) => {
-  const { variant, onComponentItemClick, isOpened } = props;
+  const { variant, onHover, isFocused } = props;
   const dispatch = useAppDispatch();
 
   // const onItemClick = () => {
@@ -24,7 +24,7 @@ export const SidebarComponentListItem = (
   // };
 
   const isHovered = (bool: boolean) => {
-    onComponentItemClick(bool ? variant : null);
+    onHover(bool ? variant : null);
   };
 
   const onAdd = () => {
@@ -41,13 +41,13 @@ export const SidebarComponentListItem = (
     >
       <div
         className={`cursor-default sidebar-list-menu-item hoverable-menu-item pl-8 flex transition-all ${
-          isOpened ? "rounded-e-none bg-slate-300 dark:bg-slate-700" : ""
+          isFocused ? "rounded-e-none bg-slate-300 dark:bg-slate-700" : ""
         }`}
         // onClick={onItemClick}
       >
         <span
           className={`menu-text text-base text-ellipsis ${
-            isOpened ? "font-medium" : ""
+            isFocused ? "font-medium" : ""
           }`}
         >
           {props.variant.nodeName}
@@ -55,7 +55,7 @@ export const SidebarComponentListItem = (
       </div>
       <div
         className={`flex items-center justify-evenly background-lower-contrast bg-slate-400 rounded-e-md overflow-hidden transition-all ease-in-out ${
-          isOpened ? "w-36" : "w-0"
+          isFocused ? "w-36" : "w-0"
         }`}
       >
         <ButtonStyledIcon onButtonClick={onAdd}>
