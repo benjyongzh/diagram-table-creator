@@ -19,11 +19,13 @@ export const Modal = ({
   width: number;
 }) => {
   return (
-    <DialogContent className="max-w-fit">
+    <DialogContent className="max-w-fit bg-slate-100">
       <DialogHeader>
-        <DialogTitle className="text-xl">{title}</DialogTitle>
+        <DialogTitle className="menu-text font-bold text-xl">
+          {title}
+        </DialogTitle>
         <DialogDescription style={{ width: `${width}px` }}>
-          <Separator className="mt-2 mb-4" />
+          <Separator className="mt-2 mb-4 bg-slate-900 dark:bg-slate-200" />
           {children}
         </DialogDescription>
       </DialogHeader>
