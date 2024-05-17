@@ -1,16 +1,21 @@
-import { useState } from "react";
+// components
 import { SidebarComponentListItem } from "./SidebarComponentListItem";
 import { SidebarSectionDropDown } from "./SidebarSectionDropDown";
-import { useAppSelector } from "Hooks/reduxHooks";
-import CustomNodeVariant from "Types/customNodeVariant";
-import { Separator } from "./ui/separator";
+import { ModalSettings } from "./ModalSettings";
+import { SidebarListItem } from "./SidebarListItem";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { AccordionContent } from "./ui/accordion";
 import { Dialog, DialogTrigger } from "./ui/dialog";
-import { Settings } from "lucide-react";
-import { ModalSettings } from "./ModalSettings";
-import { SidebarListItem } from "./SidebarListItem";
+import { Separator } from "./ui/separator";
+
+// ui
+import { Settings, CirclePlus } from "lucide-react";
+
+//hooks
+import { useAppSelector } from "Hooks/reduxHooks";
 import { useComponentListItem } from "Hooks/useComponentListItem";
+
+import CustomNodeVariant from "Types/customNodeVariant";
 
 export const Sidebar = () => {
   const variants: Array<CustomNodeVariant> = useAppSelector(
@@ -56,7 +61,12 @@ export const Sidebar = () => {
 
             {/* <Separator /> */}
             <SidebarSectionDropDown sectionName="Components">
-              <SidebarListItem onHover={() => {}} text="Add New Node" />
+              <SidebarListItem onListItemClick={() => {}}>
+                <div className="w-full flex items-center justify-between">
+                  <span>Add New Node</span>
+                  <CirclePlus />
+                </div>
+              </SidebarListItem>
               {variants.map((variant: CustomNodeVariant) => (
                 <SidebarComponentListItem
                   variant={variant}
