@@ -2,6 +2,7 @@
 import { SidebarComponentListItem } from "./SidebarComponentListItem";
 import { SidebarSectionDropDown } from "./SidebarSectionDropDown";
 import { ModalSettings } from "./ModalSettings";
+import { ModalForm } from "./ModalForm";
 import { SidebarListItem } from "./SidebarListItem";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { AccordionContent } from "./ui/accordion";
@@ -16,6 +17,8 @@ import { useAppSelector } from "Hooks/reduxHooks";
 import { useComponentListItem } from "Hooks/useComponentListItem";
 
 import CustomNodeVariant from "Types/customNodeVariant";
+
+import featureFlags from "Configs/featureFlags";
 
 export const Sidebar = () => {
   const variants: Array<CustomNodeVariant> = useAppSelector(
@@ -57,12 +60,20 @@ export const Sidebar = () => {
 
             {/* <Separator /> */}
             <SidebarSectionDropDown sectionName="Components">
-              <SidebarListItem onListItemClick={() => {}}>
-                <div className="w-full flex items-center justify-between">
-                  <span>Add New Node</span>
-                  <CirclePlus />
-                </div>
-              </SidebarListItem>
+              {featureFlags.CAN_CREATE_NEW_NODES && (
+                <Dialog>
+                  <DialogTrigger className="w-full">
+                    <SidebarListItem onListItemClick={() => {}}>
+                      <div className="flex items-center justify-between">
+                        <span>Add New Component</span>
+                        <CirclePlus />
+                      </div>
+                    </SidebarListItem>
+                  </DialogTrigger>
+                  <ModalForm title="Create New Component" />
+                </Dialog>
+              )}
+
               {variants.map((variant: CustomNodeVariant) => (
                 <SidebarComponentListItem
                   variant={variant}
