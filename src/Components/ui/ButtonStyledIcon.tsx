@@ -5,11 +5,11 @@ const ButtonStyledIcon = ({
   onButtonClick,
 }: {
   children: React.ReactNode;
-  onButtonClick: Function;
+  onButtonClick?: Function;
 }) => {
   return (
     <Button
-      onClick={() => onButtonClick()}
+      onClick={() => (onButtonClick ? onButtonClick : {})}
       size="icon"
       variant="ghost"
       className="menu-text-low-contrast hover:bg-transparent dark:hover:bg-transparent hover:text-sky-500 dark:hover:text-sky-500 aspect-square rounded-full"

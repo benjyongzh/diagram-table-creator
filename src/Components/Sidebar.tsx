@@ -24,10 +24,6 @@ export const Sidebar = () => {
 
   const { openedComponent, onComponentItemHover } = useComponentListItem();
 
-  const onSettingsButtonClicked = () => {
-    // open settings modal
-  };
-
   return (
     <div className="flex h-full w-full max-w-96 justify-start items-start">
       <aside className="flex flex-col h-full w-full background-gradient-standard">
@@ -83,7 +79,7 @@ export const Sidebar = () => {
           <span className="menu-text font-medium">footer</span>
           <Dialog>
             <DialogTrigger>
-              <ButtonStyledIcon onButtonClick={onSettingsButtonClicked}>
+              <ButtonStyledIcon>
                 <Settings />
               </ButtonStyledIcon>
             </DialogTrigger>
