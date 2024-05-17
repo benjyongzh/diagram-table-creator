@@ -2,7 +2,7 @@ import React, { MouseEvent } from "react";
 import { AccordionContent } from "./ui/accordion";
 
 type sidebarComponentListItemProps = {
-  text: string;
+  children?: React.ReactNode;
   onHover?: Function;
   onListItemClick?: Function;
   isFocused?: boolean;
@@ -12,7 +12,7 @@ type sidebarComponentListItemProps = {
 
 export const SidebarListItem = (props: sidebarComponentListItemProps) => {
   const {
-    text,
+    children,
     onHover,
     onListItemClick,
     isFocused,
@@ -38,11 +38,11 @@ export const SidebarListItem = (props: sidebarComponentListItemProps) => {
         onClick={handleClick}
       >
         <span
-          className={`menu-text text-base text-ellipsis ${
+          className={`w-full menu-text text-base text-ellipsis ${
             isFocused ? "font-medium" : ""
           }`}
         >
-          {text}
+          {children}
         </span>
       </div>
       {rightSideChildren}

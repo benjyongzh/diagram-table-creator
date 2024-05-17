@@ -30,7 +30,7 @@ export const SidebarComponentListItem = (
 
   return (
     <SidebarListItem
-      text={props.variant.nodeName}
+      children={props.variant.nodeName}
       onHover={() => isHovered(true)}
       isFocused={isFocused}
       rightSideChildren={
