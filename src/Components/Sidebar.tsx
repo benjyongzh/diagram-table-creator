@@ -10,23 +10,14 @@ import { Dialog, DialogTrigger } from "./ui/dialog";
 import { Settings } from "lucide-react";
 import { ModalSettings } from "./ModalSettings";
 import { SidebarListItem } from "./SidebarListItem";
+import { useComponentListItem } from "Hooks/useComponentListItem";
 
 export const Sidebar = () => {
   const variants: Array<CustomNodeVariant> = useAppSelector(
     (state) => state.customNodeVariants.variants
   );
-  const [openedComponent, setOpenedComponent] =
-    useState<CustomNodeVariant | null>(null);
 
-  const onComponentItemHover = (variant: CustomNodeVariant | null) => {
-    if (variant === null) {
-      setOpenedComponent(null);
-      return;
-    }
-    openedComponent === variant
-      ? setOpenedComponent(null)
-      : setOpenedComponent(variant);
-  };
+  const { openedComponent, onComponentItemHover } = useComponentListItem();
 
   const onSettingsButtonClicked = () => {
     // open settings modal
