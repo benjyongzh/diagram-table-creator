@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -11,6 +11,7 @@ import {
   Panel,
   Node,
   ConnectionMode,
+  // useReactFlow,
 } from "reactflow";
 //components
 import DevTools from "./DevTools";
@@ -43,10 +44,14 @@ import initialEdges from "Objects/initialEdges";
 //styles
 import { minimapStyle } from "Styles/minimap";
 import "reactflow/dist/style.css";
+import { useTheme } from "./providers/ThemeProvider";
 
 const nodeTypes = initialNodeTypes;
 
 const ReactFlowContainer = () => {
+  const { theme } = useTheme();
+  // const reactFlowInstance = useReactFlow();
+  // const zoom = reactFlowInstance.getZoom();
   const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
   const edges = useAppSelector((state) => state.reactFlowObjects.edges);
 
@@ -106,8 +111,9 @@ const ReactFlowContainer = () => {
       <MiniMap style={minimapStyle} nodeStrokeWidth={3} zoomable pannable />
       <Controls />
       <Background
-        color="#555"
-        size={6}
+        color={`${theme === "light" ? "#94a3b8" : "#475569"}`}
+        // size={6}
+        size={5}
         variant={BackgroundVariant.Cross}
         gap={40}
       />
