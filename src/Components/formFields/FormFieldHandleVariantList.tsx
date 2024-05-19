@@ -8,7 +8,7 @@ import { Position } from "reactflow";
 import nodeConfig from "Configs/nodeConfig";
 
 type FormFieldHandleVariantListProps = {
-  field: ControllerRenderProps<FieldValues, any>;
+  field: ControllerRenderProps<FieldValues, "handle_variants">;
 };
 export const FormFieldHandleVariantList = (
   props: FormFieldHandleVariantListProps
@@ -37,7 +37,7 @@ export const FormFieldHandleVariantList = (
       {handleVariants.map((handleVariant, i) => (
         <FormFieldHandleVariantItem
           key={`handleVariant-${i}`}
-          field={field}
+          field={field.value[i]}
           handleVariant={handleVariant}
         />
       ))}
