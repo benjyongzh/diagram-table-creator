@@ -116,6 +116,6 @@ body,
     @apply space-y-0.5;
   }
   .formLabel {
-    @apply flex text-base items-center py-1;
+    @apply flex menu-text-lg font-medium items-center py-1;
   }
 }
