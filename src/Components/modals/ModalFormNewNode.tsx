@@ -20,7 +20,7 @@ export const ModalFormNewNode = () => {
   return (
     <ModalForm
       title="Create New Node"
-      width={640}
+      width={540}
       schema={schema}
       onSubmit={onNewNodeFormSubmit}
     >

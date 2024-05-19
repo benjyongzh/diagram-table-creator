@@ -109,13 +109,13 @@ body,
   }
 
   .formItem {
-    @apply flex flex-row items-center justify-between p-4;
+    @apply flex py-1;
   }
 
   .formLabelContainer {
     @apply space-y-0.5;
   }
   .formLabel {
-    @apply text-base;
+    @apply flex text-base items-center;
   }
 }

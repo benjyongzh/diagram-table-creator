@@ -36,10 +36,7 @@ export const ModalForm = (props: modalFormProps) => {
           onSubmit={form.handleSubmit(onFormSubmit)}
           className="w-full space-y-6"
         >
-          <div>
-            {/* <h3 className="mb-4 text-lg font-medium">{title}</h3> */}
-            <FormProvider {...form}>{children}</FormProvider>
-          </div>
+          <FormProvider {...form}>{children}</FormProvider>
           <div className="w-full flex items-center justify-end gap-4">
             <Button type="submit" className="px-8">
               Submit

@@ -5,7 +5,7 @@ import { FormFieldInput } from "Components/formFields/FormFieldInput";
 export const FormFieldsNewNode = () => {
   const form = useFormContext();
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <FormField
         control={form.control}
         name="marketing_emails"
