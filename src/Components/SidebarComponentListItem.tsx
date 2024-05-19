@@ -23,10 +23,13 @@ export const SidebarComponentListItem = (
   };
 
   const onAdd = () => {
+    console.log("node-add clicked");
     dispatch(addNode(createNodeFromData(variant)));
   };
 
-  const onEdit = () => {};
+  const onEdit = () => {
+    console.log("node-edit clicked");
+  };
 
   return (
     <SidebarListItem
