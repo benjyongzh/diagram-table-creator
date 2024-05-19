@@ -12,17 +12,16 @@ type modalFormProps = {
   title: string;
   width: number;
   schema: z.ZodObject<any>;
+  defaultValues: object;
   children: React.ReactNode;
   onSubmit: Function;
 };
 
 export const ModalForm = (props: modalFormProps) => {
-  const { title, width, schema, children, onSubmit } = props;
+  const { title, width, schema, defaultValues, children, onSubmit } = props;
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      security_emails: true,
-    },
+    defaultValues,
   });
 
   function onFormSubmit(data: z.infer<typeof schema>) {
