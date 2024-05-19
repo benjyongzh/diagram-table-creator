@@ -109,7 +109,7 @@ body,
   }
 
   .formItem {
-    @apply flex flex-row items-center justify-between rounded-lg border p-4;
+    @apply flex flex-row items-center justify-between p-4;
   }
 
   .formLabelContainer {

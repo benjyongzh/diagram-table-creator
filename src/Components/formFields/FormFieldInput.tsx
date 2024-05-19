@@ -13,9 +13,10 @@ type FormFieldInputProps = {
   name: string;
   labelText: string;
   description: string;
+  placeholder: string;
 };
 export const FormFieldInput = (props: FormFieldInputProps) => {
-  const { control, name, labelText, description } = props;
+  const { control, name, labelText, description, placeholder } = props;
   return (
     <FormField
       control={control}
@@ -27,7 +28,7 @@ export const FormFieldInput = (props: FormFieldInputProps) => {
             <FormDescription>{description}</FormDescription>
           </div>
           <FormControl>
-            <Input placeholder="shadcn" {...field} />
+            <Input placeholder={placeholder} {...field} />
           </FormControl>
         </FormItem>
       )}

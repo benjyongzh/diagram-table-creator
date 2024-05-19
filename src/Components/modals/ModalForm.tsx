@@ -37,7 +37,7 @@ export const ModalForm = (props: modalFormProps) => {
           className="w-full space-y-6"
         >
           <div>
-            <h3 className="mb-4 text-lg font-medium">{title}</h3>
+            {/* <h3 className="mb-4 text-lg font-medium">{title}</h3> */}
             <FormProvider {...form}>{children}</FormProvider>
           </div>
           <div className="w-full flex items-center justify-end gap-4">

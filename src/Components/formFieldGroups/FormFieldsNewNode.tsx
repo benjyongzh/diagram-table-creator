@@ -8,6 +8,7 @@ import {
 } from "../ui/form";
 import { Switch } from "Components/ui/switch";
 import { FormFieldSwitch } from "Components/formFields/FormFieldSwitch";
+import { FormFieldInput } from "Components/formFields/FormFieldInput";
 export const FormFieldsNewNode = () => {
   const form = useFormContext();
   return (
@@ -18,22 +19,12 @@ export const FormFieldsNewNode = () => {
         labelText="Marketing emails"
         description="Receive emails about new products, features, and more."
       />
-      <FormField
+      <FormFieldInput
         control={form.control}
-        name="marketing_emails"
-        render={({ field }) => (
-          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-            <div className="space-y-0.5">
-              <FormLabel className="text-base">Marketing emails</FormLabel>
-              <FormDescription>
-                Receive emails about new products, features, and more.
-              </FormDescription>
-            </div>
-            <FormControl>
-              <Switch checked={field.value} onCheckedChange={field.onChange} />
-            </FormControl>
-          </FormItem>
-        )}
+        name="username"
+        labelText="Username"
+        description="Specifies the username of your account."
+        placeholder="test placeholder"
       />
     </div>
   );
