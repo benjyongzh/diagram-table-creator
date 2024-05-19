@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   DialogClose,
   DialogContent,
@@ -6,8 +6,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "./ui/dialog";
-import { Separator } from "./ui/separator";
+} from "../ui/dialog";
+import { Separator } from "../ui/separator";
 
 type modalProps = {
   children: React.ReactNode;

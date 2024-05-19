@@ -107,4 +107,15 @@ body,
   .glassmorph {
     @apply bg-slate-900 dark:bg-slate-900 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20;
   }
+
+  .formItem {
+    @apply flex flex-row items-center justify-between rounded-lg border p-4;
+  }
+
+  .formLabelContainer {
+    @apply space-y-0.5;
+  }
+  .formLabel {
+    @apply text-base;
+  }
 }

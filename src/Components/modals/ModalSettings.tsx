@@ -1,8 +1,8 @@
 import { Modal } from "./Modal";
-import { RowItemWithTitleDescContent } from "./RowItemWithTitleDescContent";
-import { Switch } from "./ui/switch";
+import { RowItemWithTitleDescContent } from "../RowItemWithTitleDescContent";
+import { Switch } from "../ui/switch";
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "./providers/ThemeProvider";
+import { useTheme } from "../providers/ThemeProvider";
 import featureFlags from "Configs/featureFlags";
 
 export const ModalSettings = () => {

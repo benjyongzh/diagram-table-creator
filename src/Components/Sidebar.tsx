@@ -1,8 +1,8 @@
 // components
 import { SidebarComponentListItem } from "./SidebarComponentListItem";
 import { SidebarSectionDropDown } from "./SidebarSectionDropDown";
-import { ModalSettings } from "./ModalSettings";
-import { ModalForm } from "./ModalForm";
+import { ModalSettings } from "./modals/ModalSettings";
+import { ModalFormNewNode } from "./modals/ModalFormNewNode";
 import { SidebarListItem } from "./SidebarListItem";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { AccordionContent } from "./ui/accordion";
@@ -70,7 +70,7 @@ export const Sidebar = () => {
                       </div>
                     </SidebarListItem>
                   </DialogTrigger>
-                  <ModalForm title="Create New Component" />
+                  <ModalFormNewNode />
                 </Dialog>
               )}
 
