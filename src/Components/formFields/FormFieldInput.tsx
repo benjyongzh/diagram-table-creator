@@ -1,37 +1,23 @@
 import { Input } from "Components/ui/input";
-import { Control } from "react-hook-form";
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "../ui/form";
+import { ControllerRenderProps, FieldValues } from "react-hook-form";
+import { FormFieldWrapper } from "./FormFieldWrapper";
 
 type FormFieldInputProps = {
-  control: Control;
-  name: string;
+  field: ControllerRenderProps<FieldValues, any>;
+  layout?: "horizontal" | "vertical";
   labelText: string;
   description: string;
   placeholder: string;
 };
 export const FormFieldInput = (props: FormFieldInputProps) => {
-  const { control, name, labelText, description, placeholder } = props;
+  const { field, layout, labelText, description, placeholder } = props;
   return (
-    <FormField
-      control={control}
-      name={name}
-      render={({ field }) => (
-        <FormItem className="formItem">
-          <div className="formLabelContainer">
-            <FormLabel className="formLabel">{labelText}</FormLabel>
-            <FormDescription>{description}</FormDescription>
-          </div>
-          <FormControl>
-            <Input placeholder={placeholder} {...field} />
-          </FormControl>
-        </FormItem>
-      )}
-    />
+    <FormFieldWrapper
+      layout={layout}
+      labelText={labelText}
+      description={description}
+    >
+      <Input placeholder={placeholder} {...field} />
+    </FormFieldWrapper>
   );
 };

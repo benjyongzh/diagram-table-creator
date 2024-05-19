@@ -1,30 +1,33 @@
 import { useFormContext } from "react-hook-form";
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "../ui/form";
-import { Switch } from "Components/ui/switch";
+import { FormField } from "../ui/form";
 import { FormFieldSwitch } from "Components/formFields/FormFieldSwitch";
 import { FormFieldInput } from "Components/formFields/FormFieldInput";
 export const FormFieldsNewNode = () => {
   const form = useFormContext();
   return (
-    <div className="space-y-4">
-      <FormFieldSwitch
+    <div>
+      <FormField
         control={form.control}
         name="marketing_emails"
-        labelText="Marketing emails"
-        description="Receive emails about new products, features, and more."
+        render={({ field }) => (
+          <FormFieldSwitch
+            field={field}
+            labelText="Marketing emails"
+            description="Receive emails about new products, features, and more."
+          />
+        )}
       />
-      <FormFieldInput
+      <FormField
         control={form.control}
         name="username"
-        labelText="Username"
-        description="Specifies the username of your account."
-        placeholder="test placeholder"
+        render={({ field }) => (
+          <FormFieldInput
+            field={field}
+            labelText="Username"
+            description="Specifies the username of your account."
+            placeholder="test placeholder"
+          />
+        )}
       />
     </div>
   );
