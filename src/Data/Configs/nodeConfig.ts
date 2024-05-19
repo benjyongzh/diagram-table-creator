@@ -3,6 +3,8 @@ const nodeConfig = {
   STARTING_X_POS: 0,
   STARTING_Y_POS: 0,
   ID_LENGTH: 5,
+  HANDLETYPE_QUANTITY_MIN: 1,
+  HANDLETYPE_QUANTITY_MAX: 20,
 };
 
 export default nodeConfig;

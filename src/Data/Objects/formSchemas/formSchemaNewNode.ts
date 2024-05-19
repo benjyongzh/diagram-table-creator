@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 const formSchemaNewNode = z.object({
-  marketing_emails: z.boolean().default(false).optional(),
-  security_emails: z.boolean(),
+  component_name: z.boolean().default(false),
+  handle_variants: z.boolean(),
 });
 
 export default formSchemaNewNode;
