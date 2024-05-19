@@ -4,16 +4,19 @@ import { store } from "Objects/store";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import ReactFlowContainer from "./ReactFlowContainer";
 import { Sidebar } from "./Sidebar";
+import { TooltipProvider } from "./ui/tooltip";
 
 const App = () => {
   return (
     <ReactFlowProvider>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <ReduxProvider store={store}>
-          <div className="main">
-            <Sidebar />
-            <ReactFlowContainer />
-          </div>
+          <TooltipProvider>
+            <div className="main">
+              <Sidebar />
+              <ReactFlowContainer />
+            </div>
+          </TooltipProvider>
         </ReduxProvider>
       </ThemeProvider>
     </ReactFlowProvider>
