@@ -13,7 +13,10 @@ export const FormFieldLabelTooltip = (props: FormFieldLabelTooltipProps) => {
         <TooltipTrigger asChild>
           <FormLabel className="formLabel">{props.labelText}</FormLabel>
         </TooltipTrigger>
-        <TooltipContent className="bg-white text-black dark:bg-white dark:text-black">
+        <TooltipContent
+          side="right"
+          className="bg-white text-black dark:bg-white dark:text-black"
+        >
           <FormDescription>{props.description}</FormDescription>
         </TooltipContent>
       </Tooltip>

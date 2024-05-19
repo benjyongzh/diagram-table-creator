@@ -12,13 +12,17 @@ type FormFieldWrapperProps = {
 export const FormFieldWrapper = (props: FormFieldWrapperProps) => {
   return (
     <FormItem
-      className={`formItem ${props.layout === "vertical" ? "flex-col" : ""}`}
+      className={`formItem ${
+        props.layout === "horizontal"
+          ? "flex-row items-center justify-between"
+          : "flex-col items-start justify-start"
+      }`}
     >
       <FormFieldLabelTooltip
         labelText={props.labelText}
         description={props.description}
       />
-      <FormControl className="my-0">{props.children}</FormControl>
+      <FormControl>{props.children}</FormControl>
     </FormItem>
   );
 };
