@@ -6,6 +6,7 @@ type FormFieldSwitchProps = {
   field: ControllerRenderProps<FieldValues, any>;
   layout?: "horizontal" | "vertical";
   labelText: string;
+  labelTextSize?: "normal" | "large";
   description: string;
 };
 
@@ -15,6 +16,7 @@ export const FormFieldSwitch = (props: FormFieldSwitchProps) => {
     <FormFieldWrapper
       layout={layout}
       labelText={labelText}
+      labelTextSize={props.labelTextSize}
       description={description}
     >
       <Switch checked={field.value} onCheckedChange={field.onChange} />

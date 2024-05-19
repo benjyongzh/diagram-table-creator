@@ -5,6 +5,7 @@ import { FormFieldLabelTooltip } from "./FormFieldLabelTooltip";
 type FormFieldWrapperProps = {
   layout?: "horizontal" | "vertical";
   labelText: string;
+  labelTextSize?: "normal" | "large";
   description: string;
   children: React.ReactNode;
 };
@@ -20,6 +21,7 @@ export const FormFieldWrapper = (props: FormFieldWrapperProps) => {
     >
       <FormFieldLabelTooltip
         labelText={props.labelText}
+        labelTextSize={props.labelTextSize}
         description={props.description}
       />
       <FormControl>{props.children}</FormControl>
