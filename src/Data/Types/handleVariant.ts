@@ -1,6 +1,7 @@
 import { HandleType, Position } from "reactflow";
 import { isPosition } from "./position";
 import { isHandleType } from "./handleType";
+import nodeConfig from "Configs/nodeConfig";
 
 export type HandleVariant = {
   handleType: HandleType; //source | target
@@ -21,4 +22,11 @@ export const isHandleVariant = (arg: any): arg is HandleVariant => {
     arg.quantity &&
     typeof arg.quantity === "number"
   );
+};
+
+export const handleVariantDefaultValue: HandleVariant = {
+  handleType: "source", //source | target
+  handleName: "",
+  position: Position.Top,
+  quantity: nodeConfig.HANDLETYPE_QUANTITY_MIN,
 };
