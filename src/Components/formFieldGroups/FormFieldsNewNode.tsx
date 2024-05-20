@@ -1,12 +1,24 @@
-import { useFormContext } from "react-hook-form";
+import { useForm, useFormContext, useFieldArray } from "react-hook-form";
 import { FormField } from "../ui/form";
 import { FormFieldInput } from "Components/formFields/FormFieldInput";
 import { formFieldInputTypes } from "Types/formFieldInputTypes";
-import { FormFieldHandleVariantList } from "Components/formFields/FormFieldHandleVariantList";
+import { FormFieldHandleVariantItem } from "Components/formFields/FormFieldHandleVariantItem";
 import { Separator } from "Components/ui/separator";
+import { Button } from "Components/ui/button";
+import { handleVariantDefaultValue } from "Types/handleVariant";
 
 export const FormFieldsNewNode = () => {
   const form = useFormContext();
+  const { control } = useForm();
+  const { fields, append, prepend, remove } = useFieldArray({
+    name: "handle_variants", // unique name for your Field Array
+    control,
+  });
+
+  const addHandleVariant = () => {
+    append(handleVariantDefaultValue);
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <FormField
@@ -29,11 +41,20 @@ export const FormFieldsNewNode = () => {
         )}
       />
       <Separator />
-      <FormField
-        control={form.control}
-        name="handle_variants"
-        render={({ field }) => <FormFieldHandleVariantList field={field} />}
-      />
+      <div className="flex flex-col gap-3">
+        <div className="flex justify-between items-center">
+          <span className="formLabel">Handle Types</span>
+          <Button onClick={addHandleVariant}>Add Handle Type</Button>
+        </div>
+
+        {fields.map((field, index) => (
+          <FormFieldHandleVariantItem
+            key={field.id}
+            form={form}
+            indexNumber={index}
+          />
+        ))}
+      </div>
     </div>
   );
 };
