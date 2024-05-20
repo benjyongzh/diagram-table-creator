@@ -2,9 +2,9 @@ import { z } from "zod";
 import { HandleVariant } from "Types/handleVariant";
 import { isHandleVariant } from "Types/handleVariant";
 
-const handleVariantSchema = z.custom<HandleVariant>((value) => {
-  return isHandleVariant(value);
-});
+const handleVariantSchema = z.custom<HandleVariant>((value) =>
+  isHandleVariant(value)
+);
 
 const formSchemaNewNode = z.object({
   component_name: z.string(),
