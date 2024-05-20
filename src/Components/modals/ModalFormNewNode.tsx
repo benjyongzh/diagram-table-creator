@@ -3,15 +3,15 @@ import { ModalForm } from "./ModalForm";
 import { FormFieldsNewNode } from "../formFieldGroups/FormFieldsNewNode";
 import { z } from "zod";
 import formSchemaNewNode from "Objects/formSchemas/formSchemaNewNode";
+import { useForm } from "react-hook-form";
 
 const schema = formSchemaNewNode;
-export const ModalFormNewNode = () => {
-  const defaultValues = {
-    component_name: "MyComponent",
-    handle_variants: [],
-  };
 
+export const ModalFormNewNode = () => {
+  const form = useForm();
   const onNewNodeFormSubmit = (data: z.infer<typeof schema>) => {
+    console.log("onNewNodeFormSubmit is run");
+    console.log(form.getValues());
     // toast({
     //   title: "You submitted the following values:",
     //   description: (
@@ -27,7 +27,6 @@ export const ModalFormNewNode = () => {
       title="Create New Node"
       width={540}
       schema={schema}
-      defaultValues={defaultValues}
       onSubmit={onNewNodeFormSubmit}
     >
       <FormFieldsNewNode />

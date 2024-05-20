@@ -12,27 +12,28 @@ type modalFormProps = {
   title: string;
   width: number;
   schema: z.ZodObject<any>;
-  defaultValues: object;
   children: React.ReactNode;
   onSubmit: Function;
 };
 
 export const ModalForm = (props: modalFormProps) => {
-  const { title, width, schema, defaultValues, children, onSubmit } = props;
+  const { title, width, schema, children, onSubmit } = props;
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    defaultValues,
   });
 
-  function onFormSubmit(data: z.infer<typeof schema>) {
-    onSubmit(data);
-  }
+  const onFormSubmit = (data: z.infer<typeof schema>) => {
+    console.log("onFormSubmit is run");
+    console.log(data);
+    // onSubmit(data);
+  };
 
   return (
     <Modal title={title} width={width} isForm>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onFormSubmit)}
+          // onSubmit={form.handleSubmit(onFormSubmit)}
+          onSubmit={onFormSubmit}
           className="w-full space-y-6"
         >
           <FormProvider {...form}>{children}</FormProvider>

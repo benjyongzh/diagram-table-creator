@@ -7,8 +7,8 @@ const handleVariantSchema = z.custom<HandleVariant>((value) =>
 );
 
 const formSchemaNewNode = z.object({
-  component_name: z.string(),
-  handle_variants: z.array(handleVariantSchema),
+  component_name: z.string().default("MyComponent"),
+  handle_variants: z.array(handleVariantSchema).default([]),
 });
 
 export default formSchemaNewNode;
