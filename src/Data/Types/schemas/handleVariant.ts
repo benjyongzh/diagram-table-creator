@@ -5,7 +5,7 @@ import { HandleVariant } from "Types/handleVariant";
 
 export const handleVariantSchema = z.object({
   handleType: z.enum(["source", "target"]).default("source"),
-  handleName: z.string().min(1),
+  handleName: z.string().min(1, "Handle name must not be empty"),
   position: z.nativeEnum(Position).default(Position.Left),
   quantity: z
     .number()
