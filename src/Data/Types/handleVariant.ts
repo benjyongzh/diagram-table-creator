@@ -31,6 +31,6 @@ export const isHandleVariant = (arg: any): arg is HandleVariant => {
 export const handleVariantDefaultValue: HandleVariant = {
   handleType: "source", //source | target
   handleName: "",
-  position: Position.Top,
+  position: Position.Left,
   quantity: nodeConfig.HANDLETYPE_QUANTITY_MIN,
 };

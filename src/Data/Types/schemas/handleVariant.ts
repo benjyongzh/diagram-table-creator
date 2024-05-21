@@ -5,8 +5,8 @@ import { HandleVariant } from "Types/handleVariant";
 
 export const handleVariantSchema = z.object({
   handleType: z.enum(["source", "target"]).default("source"),
-  handleName: z.string().min(1).default("myHandleType"),
-  position: z.nativeEnum(Position).default(Position.Top),
+  handleName: z.string().min(1),
+  position: z.nativeEnum(Position).default(Position.Left),
   quantity: z
     .number()
     .min(nodeConfig.HANDLETYPE_QUANTITY_MIN)
