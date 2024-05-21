@@ -2,7 +2,7 @@ import { ModalForm } from "./ModalForm";
 // import { toast } from "@/components/ui/use-toast";
 import { FormFieldsNewNode } from "../formFieldGroups/FormFieldsNewNode";
 import { z } from "zod";
-import formSchemaNewNode from "Objects/formSchemas/formSchemaNewNode";
+import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
 import { useForm } from "react-hook-form";
 
 const schema = formSchemaNewNode;

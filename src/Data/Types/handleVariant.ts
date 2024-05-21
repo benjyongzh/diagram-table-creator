@@ -2,13 +2,17 @@ import { HandleType, Position } from "reactflow";
 import { isPosition } from "./position";
 import { isHandleType } from "./handleType";
 import nodeConfig from "Configs/nodeConfig";
+import { z } from "zod";
+import { handleVariantSchema } from "./schemas/handleVariant";
 
-export type HandleVariant = {
-  handleType: HandleType; //source | target
-  handleName: string;
-  position: Position;
-  quantity: number;
-};
+// export type HandleVariant = {
+//   handleType: HandleType; //source | target
+//   handleName: string;
+//   position: Position;
+//   quantity: number;
+// };
+
+export type HandleVariant = z.infer<typeof handleVariantSchema>;
 
 export const isHandleVariant = (arg: any): arg is HandleVariant => {
   return (
