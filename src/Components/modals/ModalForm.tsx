@@ -18,14 +18,15 @@ type modalFormProps = {
 
 export const ModalForm = (props: modalFormProps) => {
   const { title, width, schema, children, onSubmit } = props;
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
-  });
+  // const form = useForm<z.infer<typeof schema>>({
+  //   resolver: zodResolver(schema),
+  // });
+  const form = useForm<z.infer<typeof schema>>();
 
   const onFormSubmit = (data: z.infer<typeof schema>) => {
     console.log("onFormSubmit is run");
     console.log(data);
-    // onSubmit(data);
+    onSubmit(data);
   };
 
   return (

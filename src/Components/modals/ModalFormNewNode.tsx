@@ -3,15 +3,13 @@ import { ModalForm } from "./ModalForm";
 import { FormFieldsNewNode } from "../formFieldGroups/FormFieldsNewNode";
 import { z } from "zod";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
-import { useForm } from "react-hook-form";
 
 const schema = formSchemaNewNode;
 
 export const ModalFormNewNode = () => {
-  const form = useForm();
   const onNewNodeFormSubmit = (data: z.infer<typeof schema>) => {
     console.log("onNewNodeFormSubmit is run");
-    console.log(form.getValues());
+    console.log(data);
     // toast({
     //   title: "You submitted the following values:",
     //   description: (
