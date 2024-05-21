@@ -18,14 +18,12 @@ type modalFormProps = {
 
 export const ModalForm = (props: modalFormProps) => {
   const { title, width, schema, children, onSubmit } = props;
-  // const form = useForm<z.infer<typeof schema>>({
-  //   resolver: zodResolver(schema),
-  // });
-  const form = useForm<z.infer<typeof schema>>();
+  const form = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+  });
+  // const form = useForm<z.infer<typeof schema>>();
 
   const onFormSubmit = (data: z.infer<typeof schema>) => {
-    console.log("onFormSubmit is run");
-    console.log(data);
     onSubmit(data);
   };
 
@@ -33,8 +31,7 @@ export const ModalForm = (props: modalFormProps) => {
     <Modal title={title} width={width} isForm>
       <Form {...form}>
         <form
-          // onSubmit={form.handleSubmit(onFormSubmit)}
-          onSubmit={onFormSubmit}
+          onSubmit={form.handleSubmit(onFormSubmit)}
           className="w-full space-y-6"
         >
           <FormProvider {...form}>{children}</FormProvider>
