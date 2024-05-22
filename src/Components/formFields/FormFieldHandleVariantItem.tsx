@@ -15,8 +15,12 @@ import nodeConfig from "Configs/nodeConfig";
 import { Position } from "reactflow";
 // import { Slider } from "Components/ui/slider";
 
+import { X } from "lucide-react";
+import ButtonStyledIcon from "Components/ui/ButtonStyledIcon";
+
 type FormFieldHandleVariantItemProps = {
   indexNumber: number;
+  onRemove: Function;
 };
 export const FormFieldHandleVariantItem = (
   props: FormFieldHandleVariantItemProps
@@ -107,6 +111,12 @@ export const FormFieldHandleVariantItem = (
           </FormItem>
         )}
       />
+      <ButtonStyledIcon
+        className="absolute right-4 top-4 rounded-sm"
+        onButtonClick={props.onRemove(props.indexNumber)}
+      >
+        <X className="h-4 w-4" />
+      </ButtonStyledIcon>
     </div>
   );
 };

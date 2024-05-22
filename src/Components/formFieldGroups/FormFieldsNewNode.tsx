@@ -18,6 +18,11 @@ export const FormFieldsNewNode = () => {
     append(handleVariantDefaultValue);
   };
 
+  const removeHandleVariant = (index: number) => {
+    console.log("variant index to remove", index);
+    // remove();
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <FormField
@@ -49,7 +54,11 @@ export const FormFieldsNewNode = () => {
         </div>
 
         {fields.map((field, index) => (
-          <FormFieldHandleVariantItem key={field.id} indexNumber={index} />
+          <FormFieldHandleVariantItem
+            key={field.id}
+            indexNumber={index}
+            onRemove={removeHandleVariant}
+          />
         ))}
       </div>
     </div>
