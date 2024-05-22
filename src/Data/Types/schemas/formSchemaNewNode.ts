@@ -8,10 +8,7 @@ import { isHandleVariant } from "Types/handleVariant";
 // );
 
 const formSchemaNewNode = z.object({
-  component_name: z
-    .string()
-    .min(1, "Component name must not be empty")
-    .default("MyComponent"),
+  component_name: z.string().min(1, "Component name must not be empty"),
   handle_variants: z.array(handleVariantSchema).default([]),
 });
 
