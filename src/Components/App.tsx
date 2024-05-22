@@ -16,7 +16,7 @@ const App = () => {
             <div className="main">
               <Sidebar />
               <ReactFlowContainer />
-              <Toaster />
+              <Toaster expand={true} />
             </div>
           </TooltipProvider>
         </ReduxProvider>

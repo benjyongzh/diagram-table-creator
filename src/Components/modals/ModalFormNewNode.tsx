@@ -1,5 +1,5 @@
 import { ModalForm } from "./ModalForm";
-// import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { FormFieldsNewNode } from "../formFieldGroups/FormFieldsNewNode";
 import { z } from "zod";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
@@ -10,6 +10,17 @@ export const ModalFormNewNode = () => {
   const onNewNodeFormSubmit = (data: z.infer<typeof schema>) => {
     console.log("onNewNodeFormSubmit is run");
     console.log(data);
+
+    toast.success("New component created", {
+      description: data.component_name,
+      // action: {
+      //   label: "Close",
+      //   onClick: () => {},
+      // },
+    });
+
+    //close modal
+
     // toast({
     //   title: "You submitted the following values:",
     //   description: (
