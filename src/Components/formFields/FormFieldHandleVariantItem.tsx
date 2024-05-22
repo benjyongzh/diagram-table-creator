@@ -28,7 +28,7 @@ export const FormFieldHandleVariantItem = (
   const { control, getValues } = useFormContext();
   return (
     <div
-      className="grid grid-cols-8 gap-6 p-4 rounded-lg border-2
+      className="relative grid grid-cols-8 gap-6 p-4 rounded-lg border-2
     border-slate-300 dark:border-slate-900"
     >
       <FormField
@@ -112,8 +112,9 @@ export const FormFieldHandleVariantItem = (
         )}
       />
       <ButtonStyledIcon
-        className="absolute right-4 top-4 rounded-sm"
+        className="absolute right-2 top-2 rounded-sm"
         onButtonClick={props.onRemove(props.indexNumber)}
+        type="button"
       >
         <X className="h-4 w-4" />
       </ButtonStyledIcon>
