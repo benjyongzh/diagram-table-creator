@@ -1,5 +1,5 @@
 import { HandleVariant } from "./handleVariant";
-import colorName from "./colorString";
+import colors from "./colorString";
 
 type CustomNodeVariant = {
   nodeName: string;
@@ -7,7 +7,7 @@ type CustomNodeVariant = {
   handleTypes: HandleVariant[];
   isHovered?: boolean;
   isSelected?: boolean;
-  color: colorName;
+  color: colors;
 };
 
 export default CustomNodeVariant;
