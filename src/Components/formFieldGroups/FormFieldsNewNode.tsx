@@ -10,7 +10,7 @@ import { Input } from "Components/ui/input";
 
 export const FormFieldsNewNode = () => {
   const { control } = useFormContext();
-  const { fields, append, prepend, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     name: "handle_variants", // unique name for your Field Array
     control,
   });

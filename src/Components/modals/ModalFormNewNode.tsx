@@ -11,20 +11,24 @@ type ModalFormNewNodeProps = {
 const schema = formSchemaNewNode;
 
 export const ModalFormNewNode = (props: ModalFormNewNodeProps) => {
-  const onNewNodeFormSubmit = (data: z.infer<typeof schema>) => {
+  const onNewNodeFormSubmit = async (data: z.infer<typeof schema>) => {
     console.log("onNewNodeFormSubmit is run");
     console.log(data);
 
-    toast.success("New component created", {
-      description: data.component_name,
-      // action: {
-      //   label: "Close",
-      //   onClick: () => {},
-      // },
-    });
+    try {
+      // await inserting data into DB
 
-    //close modal
-    props.setModalOpen(false);
+      toast.success("New component created", {
+        description: data.component_name,
+        // action: {
+        //   label: "Close",
+        //   onClick: () => {},
+        // },
+      });
+
+      //close modal
+      props.setModalOpen(false);
+    } catch (e) {}
 
     // toast({
     //   title: "You submitted the following values:",

@@ -23,10 +23,13 @@ export const ModalForm = (props: modalFormProps) => {
   });
 
   const onFormSubmit = async (data: z.infer<typeof schema>) => {
-    const submissionStatus = await form.formState.isSubmitted;
-    if (form.formState.isSubmitSuccessful) {
-      onSubmit(data);
+    // async request which may result error
+    try {
+      // await fetch()
+      await onSubmit(data);
       form.reset();
+    } catch (e) {
+      // handle your error
     }
   };
 
