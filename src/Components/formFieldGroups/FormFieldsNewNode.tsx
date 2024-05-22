@@ -6,6 +6,7 @@ import { FormFieldHandleVariantItem } from "Components/formFields/FormFieldHandl
 import { Separator } from "Components/ui/separator";
 import { Button } from "Components/ui/button";
 import { handleVariantDefaultValue } from "Types/handleVariant";
+import { useCallback } from "react";
 
 export const FormFieldsNewNode = () => {
   const { control } = useFormContext();
@@ -14,14 +15,15 @@ export const FormFieldsNewNode = () => {
     control,
   });
 
-  const addHandleVariant = () => {
+  const addHandleVariant = useCallback(() => {
     append(handleVariantDefaultValue);
-  };
+  }, []);
 
-  const removeHandleVariant = (index: number) => {
-    console.log("variant index to remove", index);
-    // remove();
-  };
+  const removeHandleVariant = (index: number) =>
+    useCallback(() => {
+      console.log("variant index to remove", index);
+      // remove();
+    }, []);
 
   return (
     <div className="flex flex-col gap-4">
