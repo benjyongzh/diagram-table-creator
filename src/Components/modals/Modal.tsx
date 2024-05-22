@@ -2,16 +2,20 @@ import React from "react";
 import { Dialog } from "Components/ui/dialog";
 
 type modalProps = {
-  setOpenState: Function;
+  openState?: { open: boolean; setOpen: Function };
   triggerElement: React.ReactNode;
   modalContent: React.ReactNode;
 };
 
 export const Modal = (props: modalProps) => {
+  const { openState, triggerElement, modalContent } = props;
   return (
-    <Dialog>
-      {props.triggerElement}
-      {props.modalContent}
+    <Dialog
+      open={openState && openState.open}
+      onOpenChange={(bool: boolean) => openState && openState.setOpen(bool)}
+    >
+      {triggerElement}
+      {modalContent}
     </Dialog>
   );
 };

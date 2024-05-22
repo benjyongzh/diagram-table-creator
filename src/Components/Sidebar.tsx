@@ -8,6 +8,7 @@ import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { AccordionContent } from "./ui/accordion";
 import { Dialog, DialogTrigger } from "./ui/dialog";
 import { Separator } from "./ui/separator";
+import { useState } from "react";
 
 // ui
 import { Settings, CirclePlus } from "lucide-react";
@@ -27,6 +28,8 @@ export const Sidebar = () => {
   );
 
   const { openedComponent, onComponentItemHover } = useComponentListItem();
+
+  const [modalNewNodeIsOpen, setModalNewNodeIsOpen] = useState(false);
 
   return (
     <div className="flex h-full w-full max-w-96 justify-start items-start">
@@ -63,7 +66,10 @@ export const Sidebar = () => {
             <SidebarSectionDropDown sectionName="Components">
               {featureFlags.CAN_CREATE_NEW_NODES && (
                 <Modal
-                  setOpenState={() => {}}
+                  openState={{
+                    open: modalNewNodeIsOpen,
+                    setOpen: setModalNewNodeIsOpen,
+                  }}
                   triggerElement={
                     <DialogTrigger className="w-full">
                       <SidebarListItem onListItemClick={() => {}}>
@@ -74,7 +80,9 @@ export const Sidebar = () => {
                       </SidebarListItem>
                     </DialogTrigger>
                   }
-                  modalContent={<ModalFormNewNode />}
+                  modalContent={
+                    <ModalFormNewNode setModalOpen={setModalNewNodeIsOpen} />
+                  }
                 />
               )}
 
@@ -93,7 +101,6 @@ export const Sidebar = () => {
         <section className="sidebar-footer-section flex-row justify-between">
           <span className="menu-text font-medium">footer</span>
           <Modal
-            setOpenState={() => {}}
             triggerElement={
               <DialogTrigger>
                 <ButtonStyledIcon>

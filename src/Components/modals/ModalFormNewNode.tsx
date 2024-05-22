@@ -4,9 +4,13 @@ import { FormFieldsNewNode } from "../formFieldGroups/FormFieldsNewNode";
 import { z } from "zod";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
 
+type ModalFormNewNodeProps = {
+  setModalOpen: Function;
+};
+
 const schema = formSchemaNewNode;
 
-export const ModalFormNewNode = () => {
+export const ModalFormNewNode = (props: ModalFormNewNodeProps) => {
   const onNewNodeFormSubmit = (data: z.infer<typeof schema>) => {
     console.log("onNewNodeFormSubmit is run");
     console.log(data);
@@ -20,6 +24,7 @@ export const ModalFormNewNode = () => {
     });
 
     //close modal
+    props.setModalOpen(false);
 
     // toast({
     //   title: "You submitted the following values:",
