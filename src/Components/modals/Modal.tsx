@@ -1,42 +1,17 @@
-import { Button } from "../ui/button";
-import {
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "../ui/dialog";
-import { Separator } from "../ui/separator";
+import React from "react";
+import { Dialog } from "Components/ui/dialog";
 
 type modalProps = {
-  children: React.ReactNode;
-  title: string;
-  width: number;
-  isForm?: boolean;
+  setOpenState: Function;
+  triggerElement: React.ReactNode;
+  modalContent: React.ReactNode;
 };
 
 export const Modal = (props: modalProps) => {
   return (
-    <DialogContent className="max-w-fit bg-slate-100">
-      <DialogHeader>
-        <DialogTitle className="menu-text font-bold text-xl">
-          {props.title}
-        </DialogTitle>
-        <DialogDescription style={{ width: `${props.width}px` }}>
-          <Separator className="mt-2 mb-4 bg-slate-900 dark:bg-slate-200" />
-          {props.children}
-        </DialogDescription>
-      </DialogHeader>
-      {!props.isForm && (
-        <DialogFooter className="mt-8 mb-1">
-          <DialogClose asChild>
-            <Button type="button" className="px-8">
-              OK
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      )}
-    </DialogContent>
+    <Dialog>
+      {props.triggerElement}
+      {props.modalContent}
+    </Dialog>
   );
 };

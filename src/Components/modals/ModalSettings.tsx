@@ -1,4 +1,4 @@
-import { Modal } from "./Modal";
+import { ModalContentWrapper } from "./ModalContentWrapper";
 import { RowItemWithTitleDescContent } from "../RowItemWithTitleDescContent";
 import { Switch } from "../ui/switch";
 import { Moon, Sun } from "lucide-react";
@@ -13,7 +13,7 @@ export const ModalSettings = () => {
   };
 
   return (
-    <Modal title="Settings" width={540}>
+    <ModalContentWrapper title="Settings" width={540}>
       <div className="flex flex-col gap-7">
         {featureFlags.CAN_SET_THEME && (
           <RowItemWithTitleDescContent
@@ -40,6 +40,6 @@ export const ModalSettings = () => {
           </RowItemWithTitleDescContent>
         )}
       </div>
-    </Modal>
+    </ModalContentWrapper>
   );
 };

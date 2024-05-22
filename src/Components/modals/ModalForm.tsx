@@ -1,4 +1,4 @@
-import { Modal } from "./Modal";
+import { ModalContentWrapper } from "./ModalContentWrapper";
 import { Button } from "../ui/button";
 import { DialogClose } from "../ui/dialog";
 import { Form } from "../ui/form";
@@ -21,14 +21,17 @@ export const ModalForm = (props: modalFormProps) => {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
-  // const form = useForm<z.infer<typeof schema>>();
 
-  const onFormSubmit = (data: z.infer<typeof schema>) => {
-    onSubmit(data);
+  const onFormSubmit = async (data: z.infer<typeof schema>) => {
+    const submissionStatus = await form.formState.isSubmitted;
+    if (form.formState.isSubmitSuccessful) {
+      onSubmit(data);
+      form.reset();
+    }
   };
 
   return (
-    <Modal title={title} width={width} isForm>
+    <ModalContentWrapper title={title} width={width} isForm>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onFormSubmit)}
@@ -47,6 +50,6 @@ export const ModalForm = (props: modalFormProps) => {
           </div>
         </form>
       </Form>
-    </Modal>
+    </ModalContentWrapper>
   );
 };

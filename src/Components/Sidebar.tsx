@@ -19,6 +19,7 @@ import { useComponentListItem } from "Hooks/useComponentListItem";
 import CustomNodeVariant from "Types/customNodeVariant";
 
 import featureFlags from "Configs/featureFlags";
+import { Modal } from "./modals/Modal";
 
 export const Sidebar = () => {
   const variants: Array<CustomNodeVariant> = useAppSelector(
@@ -61,17 +62,20 @@ export const Sidebar = () => {
             {/* <Separator /> */}
             <SidebarSectionDropDown sectionName="Components">
               {featureFlags.CAN_CREATE_NEW_NODES && (
-                <Dialog>
-                  <DialogTrigger className="w-full">
-                    <SidebarListItem onListItemClick={() => {}}>
-                      <div className="flex items-center justify-between">
-                        <span>Add New Component</span>
-                        <CirclePlus />
-                      </div>
-                    </SidebarListItem>
-                  </DialogTrigger>
-                  <ModalFormNewNode />
-                </Dialog>
+                <Modal
+                  setOpenState={() => {}}
+                  triggerElement={
+                    <DialogTrigger className="w-full">
+                      <SidebarListItem onListItemClick={() => {}}>
+                        <div className="flex items-center justify-between">
+                          <span>Add New Component</span>
+                          <CirclePlus />
+                        </div>
+                      </SidebarListItem>
+                    </DialogTrigger>
+                  }
+                  modalContent={<ModalFormNewNode />}
+                />
               )}
 
               {variants.map((variant: CustomNodeVariant) => (
@@ -88,14 +92,17 @@ export const Sidebar = () => {
 
         <section className="sidebar-footer-section flex-row justify-between">
           <span className="menu-text font-medium">footer</span>
-          <Dialog>
-            <DialogTrigger>
-              <ButtonStyledIcon>
-                <Settings />
-              </ButtonStyledIcon>
-            </DialogTrigger>
-            <ModalSettings />
-          </Dialog>
+          <Modal
+            setOpenState={() => {}}
+            triggerElement={
+              <DialogTrigger>
+                <ButtonStyledIcon>
+                  <Settings />
+                </ButtonStyledIcon>
+              </DialogTrigger>
+            }
+            modalContent={<ModalSettings />}
+          />
         </section>
       </aside>
     </div>
