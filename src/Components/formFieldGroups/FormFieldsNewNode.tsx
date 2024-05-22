@@ -21,9 +21,8 @@ export const FormFieldsNewNode = () => {
 
   const removeHandleVariant = (index: number) =>
     useCallback(() => {
-      console.log("variant index to remove", index);
-      // remove();
-    }, []);
+      remove(index);
+    }, [index]);
 
   return (
     <div className="flex flex-col gap-4">
