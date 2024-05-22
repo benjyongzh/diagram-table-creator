@@ -5,6 +5,7 @@ import { ThemeProvider } from "./providers/ThemeProvider";
 import ReactFlowContainer from "./ReactFlowContainer";
 import { Sidebar } from "./Sidebar";
 import { TooltipProvider } from "./ui/tooltip";
+import { Toaster } from "./ui/sonner";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
             <div className="main">
               <Sidebar />
               <ReactFlowContainer />
+              <Toaster />
             </div>
           </TooltipProvider>
         </ReduxProvider>
