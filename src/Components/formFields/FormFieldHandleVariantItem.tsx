@@ -13,7 +13,7 @@ import { formFieldInputTypes } from "Types/formFieldInputTypes";
 import { FormItem, FormControl } from "Components/ui/form";
 import nodeConfig from "Configs/nodeConfig";
 import { Position } from "reactflow";
-// import { Slider } from "Components/ui/slider";
+// import { useState } from "react";
 
 import { X } from "lucide-react";
 import ButtonStyledIcon from "Components/ui/ButtonStyledIcon";
@@ -25,11 +25,17 @@ type FormFieldHandleVariantItemProps = {
 export const FormFieldHandleVariantItem = (
   props: FormFieldHandleVariantItemProps
 ) => {
-  const { control, getValues } = useFormContext();
+  const { control } = useFormContext();
+  // const [isHovered, setIsHovered] = useState(false);
+
+  // const handleHover = (bool: boolean) => setIsHovered(bool);
+
   return (
     <div
       className="relative grid grid-cols-8 gap-6 p-4 rounded-lg border-2
     border-slate-300 dark:border-slate-900"
+      // onMouseEnter={() => handleHover(true)}
+      // onMouseLeave={() => handleHover(false)}
     >
       <FormField
         control={control}
@@ -62,22 +68,11 @@ export const FormFieldHandleVariantItem = (
             <FormControl>
               <Input
                 type={formFieldInputTypes[formFieldInputTypes.number]}
-                defaultValue={nodeConfig.HANDLETYPE_QUANTITY_MIN}
+                // defaultValue={nodeConfig.HANDLETYPE_QUANTITY_MIN}
                 min={nodeConfig.HANDLETYPE_QUANTITY_MIN}
                 max={nodeConfig.HANDLETYPE_QUANTITY_MAX}
                 {...field}
               />
-              {/* <div className="w-full h-full flex items-center justify-between gap-2">
-                {getValues(`handle_variants.${props.indexNumber}.quantity`)}
-                <Slider
-                  defaultValue={[nodeConfig.HANDLETYPE_QUANTITY_MIN]}
-                  min={nodeConfig.HANDLETYPE_QUANTITY_MIN}
-                  max={nodeConfig.HANDLETYPE_QUANTITY_MAX}
-                  className="w-full h-full"
-                  value={field.value}
-                  onValueChange={field.onChange}
-                />
-              </div> */}
             </FormControl>
           </FormItem>
         )}
@@ -110,13 +105,15 @@ export const FormFieldHandleVariantItem = (
           </FormItem>
         )}
       />
+      {/* {isHovered && ( */}
       <ButtonStyledIcon
-        className="absolute right-2 top-2 rounded-sm"
+        className="absolute right-2 top-2 rounded-sm -mt-2 -mr-2"
         onButtonClick={props.onRemove(props.indexNumber)}
         type="button"
       >
         <X className="h-4 w-4" />
       </ButtonStyledIcon>
+      {/* )} */}
     </div>
   );
 };
