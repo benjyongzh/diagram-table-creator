@@ -1,12 +1,12 @@
 import { useFormContext, useFieldArray } from "react-hook-form";
-import { FormField } from "../ui/form";
-import { FormFieldInput } from "Components/formFields/FormFieldInput";
-import { formFieldInputTypes } from "Types/formFieldInputTypes";
+import { FormField, FormMessage } from "../ui/form";
 import { FormFieldHandleVariantItem } from "Components/formFields/FormFieldHandleVariantItem";
 import { Separator } from "Components/ui/separator";
 import { Button } from "Components/ui/button";
 import { handleVariantDefaultValue } from "Types/handleVariant";
 import { useCallback } from "react";
+import { FormFieldWrapper } from "Components/formFields/FormFieldWrapper";
+import { Input } from "Components/ui/input";
 
 export const FormFieldsNewNode = () => {
   const { control } = useFormContext();
@@ -29,20 +29,15 @@ export const FormFieldsNewNode = () => {
       <FormField
         control={control}
         name="component_name"
-        render={({ field }) => (
-          // <FormFieldSwitch
-          //   field={field}
-          //   labelText="Marketing emails"
-          //   description="Receive emails about new products, features, and more."
-          // />
-          <FormFieldInput
-            field={field}
+        render={({ field, fieldState: { error } }) => (
+          <FormFieldWrapper
             labelTextSize="large"
             labelText="Component Name"
             description="Specifies the name of this new component."
-            inputType={formFieldInputTypes.text}
-            placeholder="MyComponent"
-          />
+            errorMessage={error && <FormMessage>{error.message}</FormMessage>}
+          >
+            <Input type="text" placeholder="MyComponent" {...field} />
+          </FormFieldWrapper>
         )}
       />
       <Separator />

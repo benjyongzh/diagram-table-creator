@@ -8,6 +8,7 @@ type FormFieldWrapperProps = {
   labelTextSize?: "normal" | "large";
   description: string;
   children: React.ReactNode;
+  errorMessage?: React.ReactNode;
 };
 
 export const FormFieldWrapper = (props: FormFieldWrapperProps) => {
@@ -25,6 +26,7 @@ export const FormFieldWrapper = (props: FormFieldWrapperProps) => {
         description={props.description}
       />
       <FormControl>{props.children}</FormControl>
+      {props.errorMessage}
     </FormItem>
   );
 };
