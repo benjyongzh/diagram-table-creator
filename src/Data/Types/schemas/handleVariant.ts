@@ -1,7 +1,6 @@
 import { Position } from "reactflow";
-import { z, ZodType } from "zod";
+import { z } from "zod";
 import nodeConfig from "Configs/nodeConfig";
-import { HandleVariant } from "Types/handleVariant";
 
 export const handleVariantSchema = z.object({
   handleType: z.enum(["source", "target"]).default("source"),
@@ -9,8 +8,14 @@ export const handleVariantSchema = z.object({
   position: z.nativeEnum(Position).default(Position.Left),
   quantity: z
     .number()
-    .min(nodeConfig.HANDLETYPE_QUANTITY_MIN)
-    .max(nodeConfig.HANDLETYPE_QUANTITY_MAX)
+    .min(
+      nodeConfig.HANDLETYPE_QUANTITY_MIN,
+      `Minimum quantity of ${nodeConfig.HANDLETYPE_QUANTITY_MIN}`
+    )
+    .max(
+      nodeConfig.HANDLETYPE_QUANTITY_MAX,
+      `Maximum quantity of ${nodeConfig.HANDLETYPE_QUANTITY_MAX}`
+    )
     .default(nodeConfig.HANDLETYPE_QUANTITY_MIN),
 });
 
