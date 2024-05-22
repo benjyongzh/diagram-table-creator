@@ -62,7 +62,6 @@ export const FormFieldHandleVariantItem = (
             <FormControl>
               <Input
                 type={formFieldInputTypes[formFieldInputTypes.number]}
-                placeholder="MyHandleName"
                 defaultValue={nodeConfig.HANDLETYPE_QUANTITY_MIN}
                 min={nodeConfig.HANDLETYPE_QUANTITY_MIN}
                 max={nodeConfig.HANDLETYPE_QUANTITY_MAX}
