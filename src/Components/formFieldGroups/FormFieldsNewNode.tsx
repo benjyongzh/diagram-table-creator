@@ -78,7 +78,7 @@ export const FormFieldsNewNode = () => {
                     <SelectContent>
                       {Object.keys(colors).map((key) => (
                         // <SelectItem value={colors[key as keyof typeof colors]}>
-                        <SelectItem value={key}>
+                        <SelectItem value={colors[key as keyof typeof colors]}>
                           <div className="flex items-center justify-start gap-2">
                             <div
                               className={`w-8 h-6 border-slate-700 dark:border-slate-300 border-2 bg-${key}-500`}
