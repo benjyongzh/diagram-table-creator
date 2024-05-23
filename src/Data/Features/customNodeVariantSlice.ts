@@ -13,7 +13,7 @@ export const nodeVariantSlice = createSlice({
   reducers: {
     // node types
     addNewNodeVariant: (state, action: PayloadAction<CustomNodeVariant>) => {
-      state.variants = { ...state.variants, ...action.payload };
+      state.variants.push(action.payload);
     },
     removeNodeVariant: (state, action: PayloadAction<CustomNodeVariant>) => {
       state.variants = state.variants.filter(

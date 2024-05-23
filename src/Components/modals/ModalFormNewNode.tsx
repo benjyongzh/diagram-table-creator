@@ -4,6 +4,11 @@ import { FormFieldsNewNode } from "../formFieldGroups/FormFieldsNewNode";
 import { z } from "zod";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
 
+//redux
+import { useAppDispatch } from "Hooks/reduxHooks";
+import { addNewNodeVariant } from "Features/customNodeVariantSlice";
+import CustomNodeVariant from "Types/customNodeVariant";
+
 type ModalFormNewNodeProps = {
   setModalOpen: Function;
 };
@@ -11,12 +16,18 @@ type ModalFormNewNodeProps = {
 const schema = formSchemaNewNode;
 
 export const ModalFormNewNode = (props: ModalFormNewNodeProps) => {
+  const dispatch = useAppDispatch();
   const onNewNodeFormSubmit = async (data: z.infer<typeof schema>) => {
-    console.log("onNewNodeFormSubmit is run");
     console.log(data);
 
     try {
       // await inserting data into DB
+      const newNodeVariant: CustomNodeVariant = {
+        nodeName: data.component_name,
+        handleTypes: data.handle_variants,
+        color: data.color,
+      };
+      dispatch(addNewNodeVariant(newNodeVariant));
 
       toast.success("New component created", {
         description: data.component_name,
