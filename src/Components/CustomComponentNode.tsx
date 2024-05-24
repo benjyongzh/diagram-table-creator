@@ -1,5 +1,12 @@
 import { CSSProperties, memo, useCallback, useMemo } from "react";
-import { Handle, NodeProps, Position, HandleProps, Node } from "reactflow";
+import {
+  Handle,
+  NodeProps,
+  Position,
+  HandleProps,
+  Node,
+  useUpdateNodeInternals,
+} from "reactflow";
 
 //config
 import { nodeBackgroundBrightnessTailwind } from "Configs/nodeConfig";
@@ -20,6 +27,7 @@ import defaultHandleStyles from "Styles/handle";
 
 export default memo((props: NodeProps) => {
   const { id, data } = props;
+  const updateNodeInternals = useUpdateNodeInternals();
 
   const nodeHeight = useAppSelector(
     (state) =>
@@ -42,8 +50,6 @@ export default memo((props: NodeProps) => {
   const handleSpacingsAndArray: Record<Position, handleSpacingAndArray> =
     useMemo(
       () =>
-        // getHandleSpacingAndArrayPerNodeSide(nodeDimensions, data.handleTypes),
-        // [nodeDimensions, data.handleTypes]
         getHandleSpacingAndArrayPerNodeSide(
           { height: nodeHeight, width: nodeWidth },
           data.handleTypes
@@ -101,7 +107,7 @@ export default memo((props: NodeProps) => {
           maxHandleCountPerSide[handlePos] -= 1;
         }
       }
-
+      updateNodeInternals(id);
       return finalArr;
     };
 
