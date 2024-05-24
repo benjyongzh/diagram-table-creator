@@ -114,8 +114,10 @@ export default memo((props: NodeProps) => {
     <div
       className={`nodeComponent flex-col ${
         data.isHovered
-          ? `bg-${colors[data.color]}-${nodeBackgroundBrightnessTailwind.hover}`
-          : `bg-${colors[data.color]}-${
+          ? `bg-${colors[data.color as keyof typeof colors]}-${
+              nodeBackgroundBrightnessTailwind.hover
+            }`
+          : `bg-${colors[data.color as keyof typeof colors]}-${
               nodeBackgroundBrightnessTailwind.normal
             }`
       }`}
