@@ -17,7 +17,7 @@ import {
 } from "Components/ui/select";
 import { FormFieldLabelTooltip } from "Components/formFields/FormFieldLabelTooltip";
 
-export const FormFieldsNewNode = () => {
+export const FormFieldGroupNode = () => {
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     name: "handle_variants", // unique name for your Field Array

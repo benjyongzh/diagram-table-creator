@@ -5,6 +5,10 @@ import { createNodeFromData } from "Utilities/reactFlowNodes";
 import { Plus, Pencil } from "lucide-react";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { SidebarListItem } from "./SidebarListItem";
+import { Modal } from "./modals/Modal";
+import { DialogTrigger } from "./ui/dialog";
+import { useState } from "react";
+import { ModalFormNode } from "./modals/ModalFormNode";
 
 type sidebarComponentListItemProps = {
   variant: CustomNodeVariant;
@@ -17,6 +21,7 @@ export const SidebarComponentListItem = (
 ) => {
   const { variant, onHover, isFocused } = props;
   const dispatch = useAppDispatch();
+  const [modalEditNodeIsOpen, setModalEditNodeIsOpen] = useState(false);
 
   const isHovered = (bool: boolean) => {
     onHover(bool ? variant : null);
@@ -25,10 +30,6 @@ export const SidebarComponentListItem = (
   const onAdd = () => {
     console.log("node-add clicked");
     dispatch(addNode(createNodeFromData(variant)));
-  };
-
-  const onEdit = () => {
-    console.log("node-edit clicked");
   };
 
   return (
@@ -45,9 +46,25 @@ export const SidebarComponentListItem = (
           <ButtonStyledIcon onButtonClick={onAdd}>
             <Plus className="h-6 w-6" />
           </ButtonStyledIcon>
-          <ButtonStyledIcon onButtonClick={onEdit}>
-            <Pencil className="h-5 w-5" />
-          </ButtonStyledIcon>
+          <Modal
+            openState={{
+              open: modalEditNodeIsOpen,
+              setOpen: setModalEditNodeIsOpen,
+            }}
+            triggerElement={
+              <DialogTrigger>
+                <ButtonStyledIcon>
+                  <Pencil className="h-5 w-5" />
+                </ButtonStyledIcon>
+              </DialogTrigger>
+            }
+            modalContent={
+              <ModalFormNode
+                setModalOpen={setModalEditNodeIsOpen}
+                variant={variant}
+              />
+            }
+          />
         </div>
       }
     ></SidebarListItem>

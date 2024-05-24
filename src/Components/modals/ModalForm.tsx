@@ -27,7 +27,6 @@ export const ModalForm = (props: modalFormProps) => {
     try {
       // await fetch()
       await onSubmit(data);
-      form.reset();
     } catch (e) {
       // handle your error
     }

@@ -2,7 +2,7 @@
 import { SidebarComponentListItem } from "./SidebarComponentListItem";
 import { SidebarSectionDropDown } from "./SidebarSectionDropDown";
 import { ModalSettings } from "./modals/ModalSettings";
-import { ModalFormNewNode } from "./modals/ModalFormNewNode";
+import { ModalFormNode } from "./modals/ModalFormNode";
 import { SidebarListItem } from "./SidebarListItem";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { AccordionContent } from "./ui/accordion";
@@ -81,7 +81,7 @@ export const Sidebar = () => {
                     </DialogTrigger>
                   }
                   modalContent={
-                    <ModalFormNewNode setModalOpen={setModalNewNodeIsOpen} />
+                    <ModalFormNode setModalOpen={setModalNewNodeIsOpen} />
                   }
                 />
               )}
