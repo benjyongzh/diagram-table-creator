@@ -36,7 +36,7 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
           (node) => node.nodeName === data.component_name
         );
         if (nodesWithSameName.length > 0)
-          throw `A component called ${data.component_name} already exists`;
+          throw `"${data.component_name}" already exists.`;
 
         // await inserting data into DB
         const newNodeVariant: CustomNodeVariant = {
