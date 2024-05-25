@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { StoreCustomNodeVariants } from "Types/storeCustomNodeVariants";
-import CustomNodeVariant from "Types/customNodeVariant";
+import CustomNodeVariant, { EditVariant } from "Types/customNodeVariant";
 
 // Define the initial state using that type
 const initialState: StoreCustomNodeVariants = {
@@ -20,6 +20,14 @@ export const nodeVariantSlice = createSlice({
         (variant) => !(variant.nodeName !== action.payload.nodeName)
       );
     },
+    editNodeVariant: (state, action: PayloadAction<EditVariant>) => {
+      state.variants = state.variants.map((variant) => {
+        if (JSON.stringify(variant) === JSON.stringify(action.payload.old)) {
+          variant = action.payload.new;
+        }
+        return variant;
+      });
+    },
     setAllNodeVariants: (state, action: PayloadAction<CustomNodeVariant[]>) => {
       state.variants = action.payload;
     },
@@ -27,7 +35,11 @@ export const nodeVariantSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addNewNodeVariant, removeNodeVariant, setAllNodeVariants } =
-  nodeVariantSlice.actions;
+export const {
+  addNewNodeVariant,
+  removeNodeVariant,
+  editNodeVariant,
+  setAllNodeVariants,
+} = nodeVariantSlice.actions;
 
 export default nodeVariantSlice.reducer;
