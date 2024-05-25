@@ -6,7 +6,10 @@ import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
 
 //redux
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
-import { addNewNodeVariant } from "Features/customNodeVariantSlice";
+import {
+  addNewNodeVariant,
+  editNodeVariant,
+} from "Features/customNodeVariantSlice";
 import CustomNodeVariant from "Types/customNodeVariant";
 import { useFormContext } from "react-hook-form";
 
@@ -29,6 +32,26 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
 
     if (props.variant) {
       // edit redux node variant slice
+      try {
+        // await inserting data into DB
+        const newNodeVariant: CustomNodeVariant = {
+          nodeName: data.component_name,
+          handleTypes: data.handle_variants,
+          color: data.color,
+        };
+        dispatch(editNodeVariant({ old: props.variant, new: newNodeVariant }));
+        toast.success("Component edited", {
+          description: data.component_name,
+        });
+
+        //close modal
+        props.setModalOpen(false);
+        form.reset();
+      } catch (error) {
+        toast.error("Error editing node", {
+          description: `${error}`,
+        });
+      }
     } else {
       try {
         // check to make sure there are no other variants of this name
@@ -68,7 +91,7 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
       schema={schema}
       onSubmit={onNodeFormSubmit}
     >
-      <FormFieldGroupNode />
+      <FormFieldGroupNode variant={props.variant && props.variant} />
     </ModalForm>
   );
 };

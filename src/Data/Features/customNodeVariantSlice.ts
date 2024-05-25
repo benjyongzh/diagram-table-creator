@@ -23,7 +23,7 @@ export const nodeVariantSlice = createSlice({
     editNodeVariant: (state, action: PayloadAction<EditVariant>) => {
       state.variants = state.variants.map((variant) => {
         if (JSON.stringify(variant) === JSON.stringify(action.payload.old)) {
-          variant = action.payload.new;
+          variant = { ...variant, ...action.payload.new };
         }
         return variant;
       });
