@@ -11,3 +11,8 @@ type CustomNodeVariant = {
 };
 
 export default CustomNodeVariant;
+
+export type EditVariant = {
+  old: CustomNodeVariant;
+  new: CustomNodeVariant;
+};
