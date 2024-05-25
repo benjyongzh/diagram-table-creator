@@ -16,13 +16,28 @@ import {
   SelectItem,
 } from "Components/ui/select";
 import { FormFieldLabelTooltip } from "Components/formFields/FormFieldLabelTooltip";
+import CustomNodeVariant from "Types/customNodeVariant";
+import { useEffect } from "react";
 
-export const FormFieldGroupNode = () => {
-  const { control } = useFormContext();
-  const { fields, append, remove } = useFieldArray({
+type FormFieldGroupNodeProps = {
+  variant?: CustomNodeVariant;
+};
+
+export const FormFieldGroupNode = (props: FormFieldGroupNodeProps) => {
+  const { control, setValue, getValues } = useFormContext();
+  const { fields, append, remove, replace } = useFieldArray({
     name: "handle_variants", // unique name for your Field Array
     control,
   });
+
+  const setFormValuesBasedOnExistingVariant = (variant: CustomNodeVariant) => {
+    console.log(variant);
+    setValue("component_name", variant.nodeName);
+    // setValue("color", colors[variant.color as keyof typeof colors]);
+    setValue("color", variant.color);
+    replace(variant.handleTypes);
+    console.log(getValues());
+  };
 
   const addHandleVariant = useCallback(() => {
     append(handleVariantDefaultValue);
@@ -32,6 +47,10 @@ export const FormFieldGroupNode = () => {
     useCallback(() => {
       remove(index);
     }, [index]);
+
+  useEffect(() => {
+    if (props.variant) setFormValuesBasedOnExistingVariant(props.variant);
+  }, []);
 
   return (
     <div className="flex flex-col gap-4">
