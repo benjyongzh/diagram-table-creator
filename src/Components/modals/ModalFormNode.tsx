@@ -5,13 +5,10 @@ import { z } from "zod";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
 
 //redux
-import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
-import {
-  addNewNodeVariant,
-  editNodeVariant,
-} from "Features/customNodeVariantSlice";
 import CustomNodeVariant from "Types/customNodeVariant";
-import { useFormContext } from "react-hook-form";
+
+// hooks
+import { useStoreNodeVariants } from "Hooks/useStoreNodeVariants";
 
 type ModalFormNodeProps = {
   setModalOpen: Function;
@@ -21,11 +18,7 @@ type ModalFormNodeProps = {
 const schema = formSchemaNewNode;
 
 export const ModalFormNode = (props: ModalFormNodeProps) => {
-  const form = useFormContext();
-  const dispatch = useAppDispatch();
-  const nodeVariants = useAppSelector(
-    (state) => state.customNodeVariants.variants
-  );
+  const { addVariant, editVariant } = useStoreNodeVariants();
 
   const onNodeFormSubmit = async (data: z.infer<typeof schema>) => {
     console.log(data);
@@ -39,14 +32,14 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
           handleTypes: data.handle_variants,
           color: data.color,
         };
-        dispatch(editNodeVariant({ old: props.variant, new: newNodeVariant }));
+        editVariant({ old: props.variant, new: newNodeVariant });
         toast.success("Component edited", {
           description: data.component_name,
         });
 
         //close modal
+        // form.reset();
         props.setModalOpen(false);
-        form.reset();
       } catch (error) {
         toast.error("Error editing node", {
           description: `${error}`,
@@ -54,28 +47,20 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
       }
     } else {
       try {
-        // check to make sure there are no other variants of this name
-        const nodesWithSameName = nodeVariants.filter(
-          (node) => node.nodeName === data.component_name
-        );
-        if (nodesWithSameName.length > 0)
-          throw `"${data.component_name}" already exists.`;
-
-        // await inserting data into DB
         const newNodeVariant: CustomNodeVariant = {
           nodeName: data.component_name,
           handleTypes: data.handle_variants,
           color: data.color,
         };
-        dispatch(addNewNodeVariant(newNodeVariant));
+        addVariant(newNodeVariant);
 
         toast.success("New component created", {
           description: data.component_name,
         });
 
         //close modal
+        // form.reset();
         props.setModalOpen(false);
-        form.reset();
       } catch (err) {
         toast.error("Error creating node", {
           description: `${err}`,
