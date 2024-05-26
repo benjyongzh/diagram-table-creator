@@ -37,11 +37,11 @@ export const FormFieldHandleVariantItem = (
 
   return (
     <div
-      className="flex flex-col p-4 rounded-lg border-2
+      className="relative flex flex-col p-4 rounded-lg border-2
     border-slate-300 dark:border-slate-900 gap-2"
     >
       <div
-        className="relative grid grid-cols-8 gap-6"
+        className="grid grid-cols-8 gap-6"
         // onMouseEnter={() => handleHover(true)}
         // onMouseLeave={() => handleHover(false)}
       >
