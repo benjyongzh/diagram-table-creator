@@ -2,7 +2,7 @@ import { ModalContentWrapper } from "./ModalContentWrapper";
 import { Button } from "../ui/button";
 import { DialogClose } from "../ui/dialog";
 import { Form } from "../ui/form";
-// import { toast } from "@/components/ui/use-toast";
+import { useEffect } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
@@ -31,6 +31,10 @@ export const ModalForm = (props: modalFormProps) => {
       // handle your error
     }
   };
+
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) form.reset();
+  }, [form.formState, form.reset]);
 
   return (
     <ModalContentWrapper title={title} width={width} isForm>

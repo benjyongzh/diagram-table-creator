@@ -1,9 +1,6 @@
-import { useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 
 export const useModalForm = () => {
-  const { reset } = useFormContext();
-
   const formSubmitSuccess = (
     toastMessage: string,
     toastDescription?: string,
@@ -12,7 +9,6 @@ export const useModalForm = () => {
     toast.success(toastMessage, {
       description: toastDescription && toastDescription,
     });
-    reset();
     callback && callback();
   };
 

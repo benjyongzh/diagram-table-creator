@@ -27,12 +27,12 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
     if (props.variant) {
       // edit redux node variant slice
       try {
-        // await inserting data into DB
         const newNodeVariant: CustomNodeVariant = {
           nodeName: data.component_name,
           handleTypes: data.handle_variants,
           color: data.color,
         };
+        // await inserting data into DB
         editVariant({ old: props.variant, new: newNodeVariant });
         formSubmitSuccess("Component edited", data.component_name, () =>
           props.setModalOpen(false)
