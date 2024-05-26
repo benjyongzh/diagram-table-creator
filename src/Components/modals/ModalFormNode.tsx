@@ -1,5 +1,4 @@
 import { ModalForm } from "./ModalForm";
-import { toast } from "sonner";
 import { FormFieldGroupNode } from "../formFieldGroups/FormFieldGroupNode";
 import { z } from "zod";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
@@ -9,6 +8,7 @@ import CustomNodeVariant from "Types/customNodeVariant";
 
 // hooks
 import { useStoreNodeVariants } from "Hooks/useStoreNodeVariants";
+import { useModalForm } from "Hooks/useModalForm";
 
 type ModalFormNodeProps = {
   setModalOpen: Function;
@@ -19,6 +19,7 @@ const schema = formSchemaNewNode;
 
 export const ModalFormNode = (props: ModalFormNodeProps) => {
   const { addVariant, editVariant } = useStoreNodeVariants();
+  const { formSubmitSuccess, formSubmitFailure } = useModalForm();
 
   const onNodeFormSubmit = async (data: z.infer<typeof schema>) => {
     console.log(data);
@@ -33,17 +34,11 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
           color: data.color,
         };
         editVariant({ old: props.variant, new: newNodeVariant });
-        toast.success("Component edited", {
-          description: data.component_name,
-        });
-
-        //close modal
-        // form.reset();
-        props.setModalOpen(false);
+        formSubmitSuccess("Component edited", data.component_name, () =>
+          props.setModalOpen(false)
+        );
       } catch (error) {
-        toast.error("Error editing node", {
-          description: `${error}`,
-        });
+        formSubmitFailure("Error editing node", `${error}`);
       }
     } else {
       try {
@@ -53,18 +48,11 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
           color: data.color,
         };
         addVariant(newNodeVariant);
-
-        toast.success("New component created", {
-          description: data.component_name,
-        });
-
-        //close modal
-        // form.reset();
-        props.setModalOpen(false);
-      } catch (err) {
-        toast.error("Error creating node", {
-          description: `${err}`,
-        });
+        formSubmitSuccess("Component created", data.component_name, () =>
+          props.setModalOpen(false)
+        );
+      } catch (error) {
+        formSubmitFailure("Error editing node", `${error}`);
       }
     }
   };
