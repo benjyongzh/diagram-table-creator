@@ -18,9 +18,11 @@ import {
   checkNodeType,
   createNodeCountLibrary,
   addIndexNumberToNodesBasedOnCountLibrary,
+  nodeIsOfThisVariant,
 } from "Utilities/reactFlowNodes";
 import { countLibraryEdit } from "Utilities/objects";
 import nodeConfigs from "Configs/nodeConfig";
+import { EditVariant } from "Types/customNodeVariant";
 
 // Define the initial state using that type
 const initialState: StoreReactFlowObjects = {
@@ -84,6 +86,16 @@ export const reactFlowSlice: Slice = createSlice({
       updateVariantCount(state, {
         action: updateVariantCountAction.remove,
         node: action.payload,
+      });
+    },
+
+    editNodesByVariant: (state, action: PayloadAction<EditVariant>) => {
+      state.nodes = state.nodes.map((node: Node) => {
+        if (nodeIsOfThisVariant(node, action.payload.old)) {
+          node = { ...node, data: { ...node.data, ...action.payload.new } };
+        }
+
+        return node;
       });
     },
     // onNodeDataChange: (
@@ -163,6 +175,7 @@ export const {
   setAllNodes,
   addNode,
   removeNode,
+  editNodesByVariant,
   onNodeMouseEnter,
   onNodeMouseLeave,
   onEdgesChange,

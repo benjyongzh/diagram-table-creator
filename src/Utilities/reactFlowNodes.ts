@@ -2,6 +2,7 @@ import { standardNodeData } from "Objects/nodes";
 import { Node } from "reactflow";
 import { randomStringGenerator } from "./strings";
 import nodeConfigs from "Configs/nodeConfig";
+import CustomNodeVariant from "Types/customNodeVariant";
 
 export const createNodeFromData = <T>(data: T): Node => {
   const newNodeId: string = randomStringGenerator(nodeConfigs.ID_LENGTH);
@@ -54,3 +55,15 @@ export function getNodeCenter(node: Node) {
     y: node.positionAbsolute.y + node.height / 2,
   };
 }
+
+export const nodeIsOfThisVariant = (
+  node: Node,
+  data: CustomNodeVariant
+): boolean => {
+  const nodeData = node.data;
+  return (
+    nodeData.nodeName === data.nodeName &&
+    nodeData.color === data.color &&
+    JSON.stringify(nodeData.handleTypes) === JSON.stringify(data.handleTypes)
+  );
+};

@@ -1,8 +1,12 @@
 //redux
 import { useAppDispatch } from "Hooks/reduxHooks";
 import CustomNodeVariant from "Types/customNodeVariant";
-import { addNode as addNewNode } from "Features/reactFlowSlice";
+import {
+  addNode as addNewNode,
+  editNodesByVariant,
+} from "Features/reactFlowSlice";
 import { createNodeFromData } from "Utilities/reactFlowNodes";
+import { EditVariant } from "Types/customNodeVariant";
 
 export const useStoreNodes = () => {
   const dispatch = useAppDispatch();
@@ -12,5 +16,9 @@ export const useStoreNodes = () => {
     dispatch(addNewNode(node));
   };
 
-  return { addNode };
+  const editNodesOfVariant = (change: EditVariant) => {
+    dispatch(editNodesByVariant(change));
+  };
+
+  return { addNode, editNodesOfVariant };
 };
