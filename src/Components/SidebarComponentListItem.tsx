@@ -58,7 +58,7 @@ export const SidebarComponentListItem = (
             }}
             triggerElement={
               <DialogTrigger>
-                <ButtonStyledIcon>
+                <ButtonStyledIcon onButtonClick={() => isHovered(false)}>
                   <Pencil className="h-5 w-5" />
                 </ButtonStyledIcon>
               </DialogTrigger>
