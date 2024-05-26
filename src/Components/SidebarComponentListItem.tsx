@@ -1,14 +1,20 @@
-import CustomNodeVariant from "Types/customNodeVariant";
-import { useAppDispatch } from "Hooks/reduxHooks";
-import { addNode } from "Features/reactFlowSlice";
-import { createNodeFromData } from "Utilities/reactFlowNodes";
-import { Plus, Pencil } from "lucide-react";
+import { useState } from "react";
+
+// components
+import { Modal } from "./modals/Modal";
+import { ModalFormNode } from "./modals/ModalFormNode";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { SidebarListItem } from "./SidebarListItem";
-import { Modal } from "./modals/Modal";
 import { DialogTrigger } from "./ui/dialog";
-import { useState } from "react";
-import { ModalFormNode } from "./modals/ModalFormNode";
+
+// types
+import CustomNodeVariant from "Types/customNodeVariant";
+
+// hooks
+import { useStoreNodes } from "Hooks/useStoreNodes";
+
+// ui
+import { Plus, Pencil } from "lucide-react";
 
 type sidebarComponentListItemProps = {
   variant: CustomNodeVariant;
@@ -20,7 +26,7 @@ export const SidebarComponentListItem = (
   props: sidebarComponentListItemProps
 ) => {
   const { variant, onHover, isFocused } = props;
-  const dispatch = useAppDispatch();
+  const { addNode } = useStoreNodes();
   const [modalEditNodeIsOpen, setModalEditNodeIsOpen] = useState(false);
 
   const isHovered = (bool: boolean) => {
@@ -28,8 +34,7 @@ export const SidebarComponentListItem = (
   };
 
   const onAdd = () => {
-    console.log("node-add clicked");
-    dispatch(addNode(createNodeFromData(variant)));
+    addNode(variant);
   };
 
   return (
