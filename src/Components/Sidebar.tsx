@@ -1,5 +1,6 @@
 // components
 import { SidebarComponentListItem } from "./SidebarComponentListItem";
+import { SidebarEdgeListItem } from "./SidebarEdgeListItem";
 import { SidebarSectionDropDown } from "./SidebarSectionDropDown";
 import { ModalSettings } from "./modals/ModalSettings";
 import { ModalFormNode } from "./modals/ModalFormNode";
@@ -15,21 +16,31 @@ import { Settings, CirclePlus } from "lucide-react";
 
 //hooks
 import { useAppSelector } from "Hooks/reduxHooks";
-import { useComponentListItem } from "Hooks/useComponentListItem";
+import { useSidebarListItemState } from "Hooks/useSidebarListItemState";
 
 import CustomNodeVariant from "Types/customNodeVariant";
+import CustomEdgeVariant from "Types/customEdgeVariant";
 
 import featureFlags from "Configs/featureFlags";
 import { Modal } from "./modals/Modal";
 
 export const Sidebar = () => {
-  const variants: Array<CustomNodeVariant> = useAppSelector(
+  const nodeVariants: Array<CustomNodeVariant> = useAppSelector(
     (state) => state.customNodeVariants.variants
   );
+  const edgeVariants: Array<CustomEdgeVariant> = useAppSelector(
+    (state) => state.customEdgeVariants.variants
+  );
 
-  const { openedComponent, onComponentItemHover } = useComponentListItem();
+  const {
+    openedListItem: openedComponent,
+    onListtItemHover: onComponentItemHover,
+  } = useSidebarListItemState<CustomNodeVariant>();
+  const { openedListItem: openedEdge, onListtItemHover: onEdgeItemHover } =
+    useSidebarListItemState<CustomEdgeVariant>();
 
   const [modalNewNodeIsOpen, setModalNewNodeIsOpen] = useState(false);
+  const [modalNewEdgeIsOpen, setModalNewEdgeIsOpen] = useState(false);
 
   return (
     <div className="flex h-full w-full max-w-96 justify-start items-start">
@@ -86,12 +97,44 @@ export const Sidebar = () => {
                 />
               )}
 
-              {variants.map((variant: CustomNodeVariant) => (
+              {nodeVariants.map((variant: CustomNodeVariant) => (
                 <SidebarComponentListItem
                   variant={variant}
                   key={variant.nodeName}
                   onHover={onComponentItemHover}
                   isFocused={openedComponent === variant}
+                />
+              ))}
+            </SidebarSectionDropDown>
+            <SidebarSectionDropDown sectionName="Connections">
+              {featureFlags.CAN_CREATE_NEW_EDGES && (
+                // <Modal
+                //   openState={{
+                //     open: modalNewEdgeIsOpen,
+                //     setOpen: setModalNewEdgeIsOpen,
+                //   }}
+                //   triggerElement={
+                //     <DialogTrigger className="w-full">
+                <SidebarListItem onListItemClick={() => {}}>
+                  <div className="flex items-center justify-between">
+                    <span>Add New Connection Type</span>
+                    <CirclePlus />
+                  </div>
+                </SidebarListItem>
+                //     </DialogTrigger>
+                //   }
+                //   modalContent={
+                //     <ModalFormEdge setModalOpen={setModalNewEdgeIsOpen} />
+                //   }
+                // />
+              )}
+
+              {edgeVariants.map((variant: CustomEdgeVariant) => (
+                <SidebarEdgeListItem
+                  variant={variant}
+                  key={variant.edgeName}
+                  onHover={onEdgeItemHover}
+                  isFocused={openedEdge === variant}
                 />
               ))}
             </SidebarSectionDropDown>
