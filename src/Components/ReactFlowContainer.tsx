@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -33,13 +33,20 @@ import {
   setAllEdges,
 } from "Features/reactFlowSlice";
 import { setAllNodeVariants } from "Features/customNodeVariantSlice";
+import { setAllEdgeVariants } from "Features/customEdgeVariantSlice";
+
+//hooks
+import { useConnectionValidation } from "Hooks/useConnectionValidation";
 
 //initial
 import initialNodes, {
   initialCustomNodeVariants,
   initialNodeTypes,
 } from "Objects/initialNodes";
-import initialEdges from "Objects/initialEdges";
+import initialEdges, {
+  initialCustomEdgeVariants,
+  initialEdgeTypes,
+} from "Objects/initialEdges";
 
 //styles
 import { minimapStyle } from "Styles/minimap";
@@ -47,6 +54,7 @@ import "reactflow/dist/style.css";
 import { useTheme } from "./providers/ThemeProvider";
 
 const nodeTypes = initialNodeTypes;
+const edgeTypes = initialEdgeTypes;
 
 const ReactFlowContainer = () => {
   const { theme } = useTheme();
@@ -54,8 +62,8 @@ const ReactFlowContainer = () => {
   // const zoom = reactFlowInstance.getZoom();
   const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
   const edges = useAppSelector((state) => state.reactFlowObjects.edges);
-
   const dispatch = useAppDispatch();
+  const { validateConnection } = useConnectionValidation();
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => dispatch(onReactFlowNodesChange(changes)),
@@ -67,6 +75,11 @@ const ReactFlowContainer = () => {
   );
   const onConnect = useCallback(
     (connection: Connection) => dispatch(onReactFlowConnect(connection)),
+    []
+  );
+
+  const isValidConnection = useCallback(
+    (connection: Connection) => validateConnection(connection),
     []
   );
   const onNodeMouseEnter = useCallback(
@@ -87,9 +100,10 @@ const ReactFlowContainer = () => {
   const onInit = () => {
     console.log("hello! reactflow initialized");
     if (featureFlags.USE_INITIAL_OBJECTS) {
-      dispatch(setAllNodes(initialNodes));
-      dispatch(setAllEdges(initialEdges));
+      // dispatch(setAllNodes(initialNodes));
+      // dispatch(setAllEdges(initialEdges));
       dispatch(setAllNodeVariants(initialCustomNodeVariants));
+      dispatch(setAllEdgeVariants(initialCustomEdgeVariants));
     }
   };
   return (
@@ -97,9 +111,11 @@ const ReactFlowContainer = () => {
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
+      edgeTypes={edgeTypes}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
+      isValidConnection={isValidConnection}
       onInit={onInit}
       onNodeMouseEnter={onNodeMouseEnter}
       onNodeMouseLeave={onNodeMouseLeave}

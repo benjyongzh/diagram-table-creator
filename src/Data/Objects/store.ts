@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import reactFlowReducer from "Features/reactFlowSlice";
 import customNodeVariantsReducer from "Features/customNodeVariantSlice";
+import customEdgeVariantSReducer from "Features/customEdgeVariantSlice";
 
 export const store = configureStore({
   reducer: {
     reactFlowObjects: reactFlowReducer,
     customNodeVariants: customNodeVariantsReducer,
+    customEdgeVariants: customEdgeVariantSReducer,
   },
 });
 
