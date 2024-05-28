@@ -63,7 +63,7 @@ const ReactFlowContainer = () => {
   const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
   const edges = useAppSelector((state) => state.reactFlowObjects.edges);
   const dispatch = useAppDispatch();
-  const { validateConnection } = useConnectionValidation();
+  const { connectionIsValid } = useConnectionValidation();
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => dispatch(onReactFlowNodesChange(changes)),
@@ -78,8 +78,9 @@ const ReactFlowContainer = () => {
     []
   );
 
+  //isValidConnection runs when hovering mouse over a handle during connecting
   const isValidConnection = useCallback(
-    (connection: Connection) => validateConnection(connection),
+    (connection: Connection) => connectionIsValid(connection),
     []
   );
   const onNodeMouseEnter = useCallback(

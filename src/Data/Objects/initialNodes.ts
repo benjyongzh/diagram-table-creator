@@ -26,22 +26,25 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
     handleTypes: [
       {
         handleType: "source", //source | target
-        handleName: "handle name bleh",
+        handleName: "bleh",
         position: Position.Right,
         quantity: 4,
+        connectionType: "",
       },
       {
         handleType: "source", //source | target
-        handleName: "handle name bla",
+        handleName: "bla",
         position: Position.Top,
         quantity: 2,
+        connectionType: "ET",
       },
 
       {
         handleType: "source", //source | target
-        handleName: "handle name blu",
+        handleName: "blu",
         position: Position.Bottom,
         quantity: 8,
+        connectionType: "FO",
       },
     ],
     color: colors.orange,
@@ -51,9 +54,10 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
     handleTypes: [
       {
         handleType: "source", //source | target
-        handleName: "handle name bleh",
+        handleName: "blihhh",
         position: Position.Right,
         quantity: 7,
+        connectionType: "ET",
       },
     ],
     color: colors.blue,

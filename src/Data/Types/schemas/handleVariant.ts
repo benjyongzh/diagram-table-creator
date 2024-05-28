@@ -1,6 +1,7 @@
 import { Position } from "reactflow";
 import { z } from "zod";
 import nodeConfig from "Configs/nodeConfig";
+import edgeIdentifierSchema from "./edgeIdentifier";
 
 export const handleVariantSchema = z.object({
   handleType: z.enum(["source", "target"]).default("source"),
@@ -17,6 +18,7 @@ export const handleVariantSchema = z.object({
       `Maximum quantity of ${nodeConfig.HANDLETYPE_QUANTITY_MAX}`
     )
     .default(nodeConfig.HANDLETYPE_QUANTITY_MIN),
+  connectionType: edgeIdentifierSchema,
 });
 
 // export const handleVariantSchema = z.object({

@@ -17,6 +17,7 @@ import {
   getHandlePropsGroupingByKey,
   getHandleSpacingAndArrayPerNodeSide,
   handleSpacingAndArray,
+  formatHandleId,
 } from "Utilities/reactFlowHandles";
 import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 
@@ -72,6 +73,7 @@ export default memo((props: NodeProps) => {
           handleType,
           handleName,
           position: handlePos,
+          connectionType,
         } = data.handleTypes[i];
 
         // establish styleKey for this Variant
@@ -94,7 +96,12 @@ export default memo((props: NodeProps) => {
           finalArr.push(
             <Handle
               key={`${handleName}-${j}`}
-              id={`${data.nodeName}-${data.variantIndex}-${handleName}-${j}`}
+              id={formatHandleId(
+                data.nodeName,
+                data.variantIndex,
+                data.handleTypes[i],
+                j
+              )}
               type={handleType}
               position={handlePos} //position should depend on value of handleCount
               isConnectableStart={true}

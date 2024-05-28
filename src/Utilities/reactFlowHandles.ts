@@ -1,12 +1,12 @@
 import { HandleVariant } from "Types/handleVariant";
-import { HandleProps, Position } from "reactflow";
+import { Node, Connection, HandleProps, Position } from "reactflow";
 import {
   groupBy,
   convertObjectGroupingOfArraysToCountLibrary,
 } from "./objects";
 import { getSpacing } from "Utilities/numbers";
 import nodeDimensions from "Types/nodeDimensions";
-import React from "react";
+import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
 
 export const flattenHandleVariantArrayIntoHandlePropsArray = <
   T extends HandleVariant
@@ -101,34 +101,6 @@ export const getHandleSpacingAndArrayPerNodeSide = (
     ),
   };
 
-  // return handleSpacings;
-
-  // const handleGroups: Record<Position, Array<HandleProps>> = {
-  //   [Position.Left]: positionGrouping[Position.Left],
-  //   [Position.Right]: positionGrouping[Position.Right],
-  //   [Position.Top]: positionGrouping[Position.Top],
-  //   [Position.Bottom]: positionGrouping[Position.Bottom],
-  // };
-
-  // for (const side in handleGroups) {
-  //   const handleArray: Array<HandleProps> = handleGroups[side as Position];
-  //   const sideStyle = side.toString().toLocaleLowerCase();
-  //   for (let i = 0; i < handleArray.length; i++) {
-  //     const spacing = (i + 1) * handleSpacings[side as Position];
-  //     finalArr.push(
-  //       <Handle
-  //         key={i}
-  //         id={handleArray[i].id}
-  //         type={handleArray[i].type}
-  //         position={handleArray[i].position} //position should depend on value of handleCount
-  //         isConnectableStart={true}
-  //         isConnectableEnd={true}
-  //         style={{ [sideStyle]: spacing }}
-  //       />
-  //     );
-  //   }
-  // }
-
   return {
     [Position.Left]: {
       spacing: handleSpacings[Position.Left],
@@ -147,4 +119,19 @@ export const getHandleSpacingAndArrayPerNodeSide = (
       array: positionGrouping[Position.Bottom],
     },
   };
+};
+
+export const formatHandleId = (
+  nodeName: string,
+  nodeVariantIndex: number,
+  handleVariant: HandleVariant,
+  index: number
+) => {
+  return `${nodeName}-${nodeVariantIndex}-${handleVariant.handleName}-${handleVariant.connectionType}-${index}`;
+};
+
+export const getConnectionTypeFromConnectionHandleString = (
+  connectionHandleString: string
+): EdgeIdentifier => {
+  return connectionHandleString.split("-").reverse()[1];
 };

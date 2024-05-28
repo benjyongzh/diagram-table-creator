@@ -4,13 +4,7 @@ import { isHandleType } from "./handleType";
 import nodeConfig from "Configs/nodeConfig";
 import { z } from "zod";
 import { handleVariantSchema } from "./schemas/handleVariant";
-
-// export type HandleVariant = {
-//   handleType: HandleType; //source | target
-//   handleName: string;
-//   position: Position;
-//   quantity: number;
-// };
+import { isEdgeIdentifier } from "./edgeIdentifier";
 
 export type HandleVariant = z.infer<typeof handleVariantSchema>;
 
@@ -18,13 +12,15 @@ export const isHandleVariant = (arg: any): arg is HandleVariant => {
   return (
     arg &&
     arg.handleType &&
-    typeof isHandleType(arg.handleType) &&
+    isHandleType(arg.handleType) &&
     arg.handleName &&
     typeof arg.handleName === "string" &&
     arg.position &&
-    typeof isPosition(arg.position) &&
+    isPosition(arg.position) &&
     arg.quantity &&
-    typeof arg.quantity === "number"
+    typeof arg.quantity === "number" &&
+    arg.connectionType &&
+    isEdgeIdentifier(arg.connectionType)
   );
 };
 
@@ -33,4 +29,5 @@ export const handleVariantDefaultValue: HandleVariant = {
   handleName: "",
   position: Position.Left,
   quantity: nodeConfig.HANDLETYPE_QUANTITY_MIN,
+  connectionType: "", //blank = accept any connectionType
 };
