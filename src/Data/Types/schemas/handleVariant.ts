@@ -5,7 +5,13 @@ import edgeIdentifierSchema from "./edgeIdentifier";
 
 export const handleVariantSchema = z.object({
   handleType: z.enum(["source", "target"]).default("source"),
-  handleName: z.string().min(1, "Handle name must not be empty"),
+  handleName: z
+    .string()
+    .min(1, "Handle name must not be empty")
+    .regex(
+      /^[\w\s]+$/,
+      "Handle name can only contain alphanumeric characters, spaces and/or underscores"
+    ),
   position: z.nativeEnum(Position).default(Position.Left),
   quantity: z.coerce
     .number()

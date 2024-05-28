@@ -7,7 +7,13 @@ import colors from "Types/colorString";
 // );
 
 const formSchemaNewNode = z.object({
-  component_name: z.string().min(1, "Component name must not be empty"),
+  component_name: z
+    .string()
+    .min(1, "Component name must not be empty")
+    .regex(
+      /^[\w\s]+$/,
+      "Component name can only contain alphanumeric characters, spaces and/or underscores"
+    ),
   handle_variants: z.array(handleVariantSchema).default([]),
   color: z.nativeEnum(colors).default(colors.blue),
 });
