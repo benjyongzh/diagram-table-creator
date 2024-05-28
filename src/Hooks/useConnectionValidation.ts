@@ -1,21 +1,17 @@
-import { Node, Connection } from "reactflow";
+import { Connection } from "reactflow";
 
 //redux
 
 // types
-import { HandleVariant } from "Types/handleVariant";
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
 
 // hooks
-import { useAppSelector } from "Hooks/reduxHooks";
+// import { useAppSelector } from "Hooks/reduxHooks";
 
 // util
 import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
 
 export const useConnectionValidation = () => {
-  const allNodes: Node[] = useAppSelector(
-    (state) => state.reactFlowObjects.nodes
-  );
   const connectionIsValid = (connection: Connection): boolean => {
     console.log(connection);
     //   source: string | null;
