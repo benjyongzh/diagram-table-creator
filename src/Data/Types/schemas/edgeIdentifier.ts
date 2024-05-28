@@ -6,3 +6,5 @@ const edgeIdentifierSchema = z
   .max(2, "Identifier must not be more than 2 characters long");
 
 export default edgeIdentifierSchema;
+
+export type EdgeIdentifier = z.infer<typeof edgeIdentifierSchema>;

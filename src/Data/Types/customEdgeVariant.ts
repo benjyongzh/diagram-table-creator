@@ -1,6 +1,4 @@
-import edgeIdentifierSchema from "./schemas/edgeIdentifier";
-import { z } from "zod";
-type EdgeIdentifier = z.infer<typeof edgeIdentifierSchema>;
+import { EdgeIdentifier } from "./schemas/edgeIdentifier";
 
 type CustomEdgeVariant = {
   edgeName: string;
