@@ -5,7 +5,7 @@ import {
   convertObjectGroupingOfArraysToCountLibrary,
 } from "./objects";
 import { getSpacing } from "Utilities/numbers";
-import nodeDimensions from "Types/nodeDimenions";
+import nodeDimensions from "Types/nodeDimensions";
 import React from "react";
 
 export const flattenHandleVariantArrayIntoHandlePropsArray = <
