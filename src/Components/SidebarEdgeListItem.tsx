@@ -30,7 +30,7 @@ export const SidebarEdgeListItem = (props: sidebarEdgeListItemProps) => {
 
   return (
     <SidebarListItem
-      children={`${props.variant.edgeName} (${props.variant.edgeIdentifier})`}
+      children={`${props.variant.edgeIdentifier} - ${props.variant.edgeName}`}
       onHover={() => isHovered(true)}
       isFocused={isFocused}
       rightSideChildren={

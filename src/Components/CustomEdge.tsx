@@ -7,7 +7,7 @@ import {
   // useReactFlow,
 } from "reactflow";
 
-import "./buttonedge.css";
+// import "./buttonedge.css";
 //styles
 import colors from "Types/colorString";
 
@@ -51,11 +51,9 @@ export default memo(
               // if you have an interactive element, set pointer-events: all
               pointerEvents: "all",
             }}
-            className="nodrag nopan"
+            // className="nodrag nopan"
           >
-            <button className="edgebutton" onClick={onEdgeClick}>
-              ×
-            </button>
+            <button onClick={onEdgeClick}>×</button>
           </div>
         </EdgeLabelRenderer>
       </>
