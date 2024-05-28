@@ -1,13 +1,11 @@
-import { useFormContext, useFieldArray } from "react-hook-form";
-import { FormField, FormMessage, FormControl, FormItem } from "../ui/form";
+// components
+import { FormFieldWrapper } from "Components/formFields/FormFieldWrapper";
+import { FormFieldLabelTooltip } from "Components/formFields/FormFieldLabelTooltip";
 import { FormFieldHandleVariantItem } from "Components/formFields/FormFieldHandleVariantItem";
+import { Input } from "Components/ui/input";
+import { FormField, FormMessage, FormControl, FormItem } from "../ui/form";
 import { Separator } from "Components/ui/separator";
 import { Button } from "Components/ui/button";
-import { handleVariantDefaultValue } from "Types/handleVariant";
-import { useCallback } from "react";
-import { FormFieldWrapper } from "Components/formFields/FormFieldWrapper";
-import { Input } from "Components/ui/input";
-import colors from "Types/colorString";
 import {
   Select,
   SelectTrigger,
@@ -15,9 +13,17 @@ import {
   SelectContent,
   SelectItem,
 } from "Components/ui/select";
-import { FormFieldLabelTooltip } from "Components/formFields/FormFieldLabelTooltip";
+
+// hooks
+import { useCallback, useEffect } from "react";
+import { useFormContext, useFieldArray } from "react-hook-form";
+import { z } from "zod";
+
+// types
+import { handleVariantDefaultValue } from "Types/handleVariant";
+import colors from "Types/colorString";
 import CustomNodeVariant from "Types/customNodeVariant";
-import { useEffect } from "react";
+import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
 
 type FormFieldGroupNodeProps = {
   variant?: CustomNodeVariant;
@@ -37,6 +43,8 @@ export const FormFieldGroupNode = (props: FormFieldGroupNodeProps) => {
       handle_variants: props.variant!.handleTypes,
       color: props.variant!.color,
     };
+    reset(fieldValues);
+  }, [reset]);
 
   const addHandleVariant = useCallback(() => {
     append(handleVariantDefaultValue);
