@@ -24,20 +24,19 @@ type FormFieldGroupNodeProps = {
 };
 
 export const FormFieldGroupNode = (props: FormFieldGroupNodeProps) => {
-  const { control, setValue, getValues } = useFormContext();
-  const { fields, append, remove, replace } = useFieldArray({
+  const { control, reset } = useFormContext();
+  const { fields, append, remove } = useFieldArray({
     name: "handle_variants", // unique name for your Field Array
     control,
   });
 
-  const setFormValuesBasedOnExistingVariant = (variant: CustomNodeVariant) => {
-    console.log(variant);
-    setValue("component_name", variant.nodeName);
-    // setValue("color", colors[variant.color as keyof typeof colors]);
-    setValue("color", variant.color);
-    replace(variant.handleTypes);
-    console.log(getValues());
-  };
+  const setFormValuesBasedOnExistingVariant = useCallback(() => {
+    console.log(props.variant);
+    const fieldValues: z.infer<typeof formSchemaNewNode> = {
+      component_name: props.variant!.nodeName,
+      handle_variants: props.variant!.handleTypes,
+      color: props.variant!.color,
+    };
 
   const addHandleVariant = useCallback(() => {
     append(handleVariantDefaultValue);
@@ -49,8 +48,8 @@ export const FormFieldGroupNode = (props: FormFieldGroupNodeProps) => {
     }, [index]);
 
   useEffect(() => {
-    if (props.variant) setFormValuesBasedOnExistingVariant(props.variant);
-  }, []);
+    if (props.variant) setFormValuesBasedOnExistingVariant();
+  }, [setFormValuesBasedOnExistingVariant]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -87,7 +86,9 @@ export const FormFieldGroupNode = (props: FormFieldGroupNodeProps) => {
                 <FormControl>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    defaultValue={
+                      props.variant ? props.variant!.color : field.value
+                    }
                   >
                     <FormControl>
                       <SelectTrigger>
