@@ -64,7 +64,7 @@ export const reactFlowSlice: Slice = createSlice({
     },
     setAllNodes: (state, action: PayloadAction<Array<Node>>) => {
       state.nodes = action.payload;
-      state.variantCount = updateVariantCount(state);
+      state.nodeVariantCount = updateVariantCount(state);
       updateVariantIndexsOnNodes(state);
     },
     addNode: (state, action: PayloadAction<Node>) => {
@@ -74,7 +74,7 @@ export const reactFlowSlice: Slice = createSlice({
       });
       //add index number
       const indexNumber: number =
-        state.variantCount[action.payload.data.nodeName];
+        state.nodeVariantCount[action.payload.data.nodeName];
       const newData = { ...action.payload.data, variantIndex: indexNumber };
       const realNode: Node = { ...action.payload, data: { ...newData } };
       state.nodes.push(realNode);
