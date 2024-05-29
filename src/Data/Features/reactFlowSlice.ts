@@ -28,14 +28,14 @@ import { EditVariant } from "Types/customNodeVariant";
 const initialState: StoreReactFlowObjects = {
   nodes: [],
   edges: [],
-  variantCount: {},
+  nodeVariantCount: {},
 };
 
 const updateVariantCount = (
   state: StoreReactFlowObjects,
   options?: updateVariantCountOptions
 ): Record<string, number> => {
-  const { nodes, variantCount } = state;
+  const { nodes, nodeVariantCount } = state;
 
   if (!options) {
     //redo entire library
@@ -44,8 +44,8 @@ const updateVariantCount = (
     //only change library according to options stated
     const { action, node } = options;
     const nodeName: string = node.data.nodeName;
-    countLibraryEdit(variantCount, nodeName, action);
-    return variantCount;
+    countLibraryEdit(nodeVariantCount, nodeName, action);
+    return nodeVariantCount;
   }
 };
 
