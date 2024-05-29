@@ -50,8 +50,8 @@ const updateVariantCount = (
 };
 
 const updateVariantIndexsOnNodes = (state: StoreReactFlowObjects) => {
-  const { nodes, variantCount } = state;
-  addIndexNumberToNodesBasedOnCountLibrary(nodes, variantCount);
+  const { nodes, nodeVariantCount } = state;
+  addIndexNumberToNodesBasedOnCountLibrary(nodes, nodeVariantCount);
 };
 
 export const reactFlowSlice: Slice = createSlice({
@@ -155,7 +155,7 @@ export const reactFlowSlice: Slice = createSlice({
     onEdgesChange: (state, action: PayloadAction<EdgeChange[]>) => {
       state.edges = applyEdgeChanges(action.payload, state.edges);
     },
-    onConnect: (state, action: PayloadAction<Connection>) => {
+    onConnect: (state, action: PayloadAction<Connection | Edge>) => {
       state.edges = addEdge(action.payload, state.edges);
     },
     setAllEdges: (state, action: PayloadAction<Array<Edge>>) => {
