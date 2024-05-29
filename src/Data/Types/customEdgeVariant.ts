@@ -3,8 +3,7 @@ import { EdgeIdentifier } from "./schemas/edgeIdentifier";
 type CustomEdgeVariant = {
   edgeName: string;
   edgeIdentifier: EdgeIdentifier;
-  variantIndex?: number;
-  isSelected?: boolean;
+  connectionTypeIndex?: number;
 };
 
 export default CustomEdgeVariant;

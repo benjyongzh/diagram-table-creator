@@ -10,6 +10,7 @@ import {
   Connection,
   Panel,
   Node,
+  Edge,
   ConnectionMode,
   // useReactFlow,
 } from "reactflow";
@@ -63,7 +64,8 @@ const ReactFlowContainer = () => {
   const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
   const edges = useAppSelector((state) => state.reactFlowObjects.edges);
   const dispatch = useAppDispatch();
-  const { connectionIsValid } = useConnectionValidation();
+  const { connectionIsValid, createValidEdgeConnection } =
+    useConnectionValidation();
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => dispatch(onReactFlowNodesChange(changes)),
@@ -73,10 +75,10 @@ const ReactFlowContainer = () => {
     (changes: EdgeChange[]) => dispatch(onReactFlowEdgesChange(changes)),
     []
   );
-  const onConnect = useCallback(
-    (connection: Connection) => dispatch(onReactFlowConnect(connection)),
-    []
-  );
+  const onConnect = useCallback((connection: Connection) => {
+    const newEdge: Edge = createValidEdgeConnection(connection);
+    dispatch(onReactFlowConnect(newEdge));
+  }, []);
 
   //isValidConnection runs when hovering mouse over a handle during connecting
   const isValidConnection = useCallback(
