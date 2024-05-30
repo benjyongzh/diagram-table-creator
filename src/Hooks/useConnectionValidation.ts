@@ -8,20 +8,15 @@ import { createEdgeId } from "Utilities/reactFlowEdges";
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
 
 // hooks
-import { useAppSelector } from "Hooks/reduxHooks";
 
 // util
 import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
 import CustomEdgeVariant from "Types/customEdgeVariant";
 
-export const useConnectionValidation = () => {
-  const allEdgeVariants: CustomEdgeVariant[] = useAppSelector(
-    (state) => state.customEdgeVariants.variants
-  );
-  const allEdges: Edge[] = useAppSelector(
-    (state) => state.reactFlowObjects.edges
-  );
-
+export const useConnectionValidation = (
+  allEdges: Edge[],
+  allEdgeVariants: CustomEdgeVariant[]
+) => {
   const connectionIsValid = (connection: Connection): boolean => {
     if (
       !connection ||
@@ -44,6 +39,27 @@ export const useConnectionValidation = () => {
     return result;
   };
 
+  const getLargestConnectionTypeIndex = (
+    edges: Edge[],
+    edgeId: EdgeIdentifier
+  ): number | null => {
+    const sortedIndexes: number[] = edges
+      .filter((edge) => edge.data.edgeIdentifier === edgeId)
+      .map((edge) => edge.data.connectionTypeIndex)
+      .sort();
+    return sortedIndexes.length
+      ? sortedIndexes[sortedIndexes.length - 1]
+      : null;
+  };
+
+  const createNewConnectionTypeIndex = (
+    edges: Edge[],
+    edgeId: EdgeIdentifier
+  ): number => {
+    const largest: number | null = getLargestConnectionTypeIndex(edges, edgeId);
+    return largest === null ? 1 : largest + 1;
+  };
+
   const createValidEdgeConnection = (connection: Connection): Edge => {
     const { source, target, sourceHandle, targetHandle } = connection;
     // get edgeIdentifier of target
@@ -51,23 +67,19 @@ export const useConnectionValidation = () => {
       getConnectionTypeFromConnectionHandleString(connection.targetHandle!);
 
     // get new connectionTypeIndex. bsaed on next highest index of this connectionType
-    const sortedIndexes: number[] = allEdges
-      .filter((edge) => edge.data.edgeIdentifier === edgeIdentifier)
-      .map((edge) => edge.data.connectionTypeIndex)
-      .sort();
-    const connectionTypeIndex: number = sortedIndexes.length
-      ? sortedIndexes[sortedIndexes.length - 1]
-      : 1;
-    console.log(connectionTypeIndex);
+    const connectionTypeIndex: number = createNewConnectionTypeIndex(
+      allEdges,
+      edgeIdentifier
+    );
 
     // create a CustomEdgeVariant with a connectionTypeIndex value
     const edgeVariant: CustomEdgeVariant = allEdgeVariants.filter(
       (variant) => variant.edgeIdentifier === edgeIdentifier
     )[0];
-    //!allEdgeVariants is returning empty array
-    console.log("allEdgeVariants", allEdgeVariants);
-    console.log("edgeVariant", edgeVariant);
-    const edgeData = { ...edgeVariant, connectionTypeIndex };
+    const edgeData = {
+      ...edgeVariant,
+      connectionTypeIndex,
+    };
 
     // create id
     const id: string = createEdgeId(

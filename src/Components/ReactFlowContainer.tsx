@@ -63,9 +63,12 @@ const ReactFlowContainer = () => {
   // const zoom = reactFlowInstance.getZoom();
   const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
   const edges = useAppSelector((state) => state.reactFlowObjects.edges);
+  const edgeVariants = useAppSelector(
+    (state) => state.customEdgeVariants.variants
+  );
   const dispatch = useAppDispatch();
   const { connectionIsValid, createValidEdgeConnection } =
-    useConnectionValidation();
+    useConnectionValidation(edges, edgeVariants);
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => dispatch(onReactFlowNodesChange(changes)),
@@ -75,10 +78,13 @@ const ReactFlowContainer = () => {
     (changes: EdgeChange[]) => dispatch(onReactFlowEdgesChange(changes)),
     []
   );
-  const onConnect = useCallback((connection: Connection) => {
-    const newEdge: Edge = createValidEdgeConnection(connection);
-    dispatch(onReactFlowConnect(newEdge));
-  }, []);
+  const onConnect = useCallback(
+    (connection: Connection) => {
+      const newEdge: Edge = createValidEdgeConnection(connection);
+      dispatch(onReactFlowConnect(newEdge));
+    },
+    [edges, edgeVariants]
+  );
 
   //isValidConnection runs when hovering mouse over a handle during connecting
   const isValidConnection = useCallback(
