@@ -1,6 +1,10 @@
 import { Connection, Edge } from "reactflow";
 import { standardEdgeData } from "Objects/edges";
-import { createEdgeId } from "Utilities/reactFlowEdges";
+import {
+  createEdgeId,
+  createNewConnectionTypeIndex,
+  getUsableEdgeIdentifierFromConnection,
+} from "Utilities/reactFlowEdges";
 
 //redux
 
@@ -11,7 +15,7 @@ import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
 
 // util
 import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
-import CustomEdgeVariant from "Types/customEdgeVariant";
+import CustomEdgeVariant, { emptyEdgeVariant } from "Types/customEdgeVariant";
 
 export const useConnectionValidation = (
   allEdges: Edge[],
@@ -39,32 +43,11 @@ export const useConnectionValidation = (
     return result;
   };
 
-  const getLargestConnectionTypeIndex = (
-    edges: Edge[],
-    edgeId: EdgeIdentifier
-  ): number | null => {
-    const sortedIndexes: number[] = edges
-      .filter((edge) => edge.data.edgeIdentifier === edgeId)
-      .map((edge) => edge.data.connectionTypeIndex)
-      .sort();
-    return sortedIndexes.length
-      ? sortedIndexes[sortedIndexes.length - 1]
-      : null;
-  };
-
-  const createNewConnectionTypeIndex = (
-    edges: Edge[],
-    edgeId: EdgeIdentifier
-  ): number => {
-    const largest: number | null = getLargestConnectionTypeIndex(edges, edgeId);
-    return largest === null ? 1 : largest + 1;
-  };
-
   const createValidEdgeConnection = (connection: Connection): Edge => {
     const { source, target, sourceHandle, targetHandle } = connection;
-    // get edgeIdentifier of target
+    // get edgeIdentifier of connection
     const edgeIdentifier: EdgeIdentifier =
-      getConnectionTypeFromConnectionHandleString(connection.targetHandle!);
+      getUsableEdgeIdentifierFromConnection(connection);
 
     // get new connectionTypeIndex. bsaed on next highest index of this connectionType
     const connectionTypeIndex: number = createNewConnectionTypeIndex(
@@ -73,9 +56,10 @@ export const useConnectionValidation = (
     );
 
     // create a CustomEdgeVariant with a connectionTypeIndex value
-    const edgeVariant: CustomEdgeVariant = allEdgeVariants.filter(
-      (variant) => variant.edgeIdentifier === edgeIdentifier
-    )[0];
+    const edgeVariant: CustomEdgeVariant =
+      allEdgeVariants.filter(
+        (variant) => variant.edgeIdentifier === edgeIdentifier
+      )[0] || emptyEdgeVariant;
     const edgeData = {
       ...edgeVariant,
       connectionTypeIndex,

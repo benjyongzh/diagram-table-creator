@@ -7,3 +7,8 @@ type CustomEdgeVariant = {
 };
 
 export default CustomEdgeVariant;
+
+export const emptyEdgeVariant: CustomEdgeVariant = {
+  edgeName: "",
+  edgeIdentifier: "",
+};
