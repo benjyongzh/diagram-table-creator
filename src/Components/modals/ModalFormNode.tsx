@@ -60,7 +60,7 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
   return (
     <ModalForm
       title={props.variant ? "Edit Node" : "Create New Node"}
-      width={540}
+      width={760}
       schema={schema}
       onSubmit={onNodeFormSubmit}
     >

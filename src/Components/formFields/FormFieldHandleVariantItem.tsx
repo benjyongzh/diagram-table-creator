@@ -1,3 +1,7 @@
+import { Position } from "reactflow";
+
+// components
+import { FormFieldLabelTooltip } from "./FormFieldLabelTooltip";
 import { FormField } from "Components/ui/form";
 import { Input } from "Components/ui/input";
 import {
@@ -7,17 +11,20 @@ import {
   SelectContent,
   SelectItem,
 } from "Components/ui/select";
-import { useFormContext } from "react-hook-form";
-import { FormFieldLabelTooltip } from "./FormFieldLabelTooltip";
 import { FormItem, FormControl, FormMessage } from "Components/ui/form";
+import ButtonStyledIcon from "Components/ui/ButtonStyledIcon";
+
+// config
 import nodeConfig from "Configs/nodeConfig";
-import { Position } from "reactflow";
 // import { useState } from "react";
 
+// hooks
 import { ErrorMessage } from "@hookform/error-message";
+import { useFormContext } from "react-hook-form";
+import { useAppSelector } from "Hooks/reduxHooks";
 
+// ui
 import { X } from "lucide-react";
-import ButtonStyledIcon from "Components/ui/ButtonStyledIcon";
 
 type FormFieldHandleVariantItemProps = {
   indexNumber: number;
@@ -30,6 +37,9 @@ export const FormFieldHandleVariantItem = (
     control,
     formState: { errors },
   } = useFormContext();
+  const edgeVariants = useAppSelector(
+    (state) => state.customEdgeVariants.variants
+  );
 
   // const [isHovered, setIsHovered] = useState(false);
 
@@ -41,7 +51,7 @@ export const FormFieldHandleVariantItem = (
     border-slate-300 dark:border-slate-900 gap-2"
     >
       <div
-        className="grid grid-cols-8 gap-6"
+        className="grid grid-cols-10 gap-6"
         // onMouseEnter={() => handleHover(true)}
         // onMouseLeave={() => handleHover(false)}
       >
@@ -51,7 +61,7 @@ export const FormFieldHandleVariantItem = (
           render={({ field }) => (
             <FormItem className="flex flex-col justify-stretch col-span-3">
               <FormFieldLabelTooltip
-                labelText="Handle Name"
+                labelText="Name"
                 description="Input the name of this handle type."
               />
               <FormControl>
@@ -85,9 +95,9 @@ export const FormFieldHandleVariantItem = (
           control={control}
           name={`handle_variants.${props.indexNumber}.position`}
           render={({ field }) => (
-            <FormItem className="flex flex-col justify-stretch col-span-3">
+            <FormItem className="flex flex-col justify-stretch col-span-2">
               <FormFieldLabelTooltip
-                labelText="Handle Position"
+                labelText="Position"
                 description="Choose the visual positioning of this handle type on this component."
               />
               <FormControl>
@@ -114,6 +124,43 @@ export const FormFieldHandleVariantItem = (
             </FormItem>
           )}
         />
+        <FormField
+          control={control}
+          name={`handle_variants.${props.indexNumber}.connectionType`}
+          render={({ field }) => (
+            <FormItem className="flex flex-col justify-stretch col-span-3">
+              <FormFieldLabelTooltip
+                labelText="Connection Type"
+                description="Choose the type of connection for this handle."
+              />
+              <FormControl>
+                <Select
+                  onValueChange={() =>
+                    field.value === "any" ? "" : field.value
+                  }
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select connection type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="any">Any</SelectItem>
+                    {edgeVariants.map((variant) => (
+                      <SelectItem
+                        key={variant.edgeIdentifier}
+                        value={variant.edgeIdentifier}
+                      >
+                        {variant.edgeName}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+            </FormItem>
+          )}
+        />
         {/* {isHovered && ( */}
         <ButtonStyledIcon
           className="absolute right-2 top-2 rounded-sm -mt-2 -mr-2"
@@ -128,9 +175,7 @@ export const FormFieldHandleVariantItem = (
         <ErrorMessage
           errors={errors}
           name={`handle_variants.${props.indexNumber}.handleName`}
-          render={({ message }) => (
-            <FormMessage>Handle Name: {message}</FormMessage>
-          )}
+          render={({ message }) => <FormMessage>Name: {message}</FormMessage>}
         />
         <ErrorMessage
           errors={errors}
@@ -143,7 +188,14 @@ export const FormFieldHandleVariantItem = (
           errors={errors}
           name={`handle_variants.${props.indexNumber}.position`}
           render={({ message }) => (
-            <FormMessage>Handle Position: {message}</FormMessage>
+            <FormMessage>Position: {message}</FormMessage>
+          )}
+        />
+        <ErrorMessage
+          errors={errors}
+          name={`handle_variants.${props.indexNumber}.connectionType`}
+          render={({ message }) => (
+            <FormMessage>Connection Type: {message}</FormMessage>
           )}
         />
       </div>
