@@ -7,7 +7,8 @@ import {
   // useReactFlow,
 } from "reactflow";
 
-// import "./buttonedge.css";
+import ButtonStyledIcon from "./ui/ButtonStyledIcon";
+import { X } from "lucide-react";
 //styles
 import colors from "Types/colorString";
 
@@ -22,6 +23,7 @@ export default memo(
     targetPosition,
     style = {},
     markerEnd,
+    selected,
   }: EdgeProps) => {
     // const { setEdges } = useReactFlow();
     const [edgePath, labelX, labelY, offsetX, offsetY] = getSmoothStepPath({
@@ -38,11 +40,14 @@ export default memo(
       // setEdges((edges) => edges.filter((edge) => edge.id !== id));
     };
 
+    const onButtonClick = () => {};
+
     return (
       <>
         <BaseEdge path={edgePath} markerEnd={markerEnd} style={style} />
         <EdgeLabelRenderer>
           <div
+            className={selected ? "visible" : "invisible"}
             style={{
               position: "absolute",
               transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
@@ -53,7 +58,13 @@ export default memo(
             }}
             // className="nodrag nopan"
           >
-            <button onClick={onEdgeClick}>×</button>
+            <ButtonStyledIcon
+              className="bg-slate-400 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-500 border-slate-600 dark:border-slate-300 hover:border-2"
+              type="button"
+              onButtonClick={onButtonClick}
+            >
+              <X />
+            </ButtonStyledIcon>
           </div>
         </EdgeLabelRenderer>
       </>
