@@ -161,9 +161,9 @@ export const reactFlowSlice: Slice = createSlice({
     setAllEdges: (state, action: PayloadAction<Array<Edge>>) => {
       state.edges = action.payload;
     },
-    removeEdge: (state, action: PayloadAction<Edge>) => {
+    removeEdge: (state, action: PayloadAction<string>) => {
       state.edges = state.edges.filter(
-        (edge: Edge) => edge.id !== action.payload.id
+        (edge: Edge) => edge.id !== action.payload
       );
     },
   },

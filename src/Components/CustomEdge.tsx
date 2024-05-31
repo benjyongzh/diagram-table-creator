@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import {
   BaseEdge,
   EdgeLabelRenderer,
@@ -9,6 +9,9 @@ import {
 
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { X } from "lucide-react";
+
+import { useAppDispatch } from "Hooks/reduxHooks";
+import { removeEdge } from "Features/reactFlowSlice";
 //styles
 import colors from "Types/colorString";
 
@@ -35,12 +38,16 @@ export default memo(
       targetPosition,
       borderRadius: 5,
     });
+    const dispatch = useAppDispatch();
 
-    const onEdgeClick = () => {
-      // setEdges((edges) => edges.filter((edge) => edge.id !== id));
-    };
+    // const onEdgeClick = () => {
+    // setEdges((edges) => edges.filter((edge) => edge.id !== id));
+    // };
 
-    const onButtonClick = () => {};
+    // use id to call reactflowslice action to remove edge
+    const onButtonClick = useCallback(() => {
+      dispatch(removeEdge(id));
+    }, [id]);
 
     return (
       <>
