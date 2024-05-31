@@ -4,12 +4,15 @@ import {
   createEdgeId,
   createNewConnectionTypeIndex,
   getUsableEdgeIdentifierFromConnection,
+  createEdgeStartLabel,
+  createEdgeEndLabel,
 } from "Utilities/reactFlowEdges";
 
 //redux
 
 // types
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
+import EdgeData from "Types/EdgeData";
 
 // hooks
 
@@ -60,9 +63,15 @@ export const useConnectionValidation = (
       allEdgeVariants.filter(
         (variant) => variant.edgeIdentifier === edgeIdentifier
       )[0] || emptyEdgeVariant;
-    const edgeData = {
+
+    // create edge data
+    const edgeStartLabel: string = createEdgeStartLabel(connection);
+    const edgeEndLabel: string = createEdgeEndLabel(connection);
+    const edgeData: EdgeData = {
       ...edgeVariant,
       connectionTypeIndex,
+      edgeStartLabel,
+      edgeEndLabel,
     };
 
     // create id

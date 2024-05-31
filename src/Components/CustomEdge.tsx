@@ -7,6 +7,8 @@ import {
   // useReactFlow,
 } from "reactflow";
 
+import EdgeLabel from "./EdgeLabel";
+
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { X } from "lucide-react";
 
@@ -27,6 +29,7 @@ export default memo(
     style = {},
     markerEnd,
     selected,
+    data,
   }: EdgeProps) => {
     // const { setEdges } = useReactFlow();
     const [edgePath, labelX, labelY, offsetX, offsetY] = getSmoothStepPath({
@@ -53,6 +56,11 @@ export default memo(
       <>
         <BaseEdge path={edgePath} markerEnd={markerEnd} style={style} />
         <EdgeLabelRenderer>
+          <EdgeLabel
+            show={selected || false}
+            origin={{ x: sourceX, y: sourceY }}
+            label={data.edgeStartLabel}
+          />
           <div
             className={selected ? "visible" : "invisible"}
             style={{
@@ -73,6 +81,11 @@ export default memo(
               <X />
             </ButtonStyledIcon>
           </div>
+          <EdgeLabel
+            show={selected || false}
+            origin={{ x: targetX, y: targetY }}
+            label={data.edgeEndLabel}
+          />
         </EdgeLabelRenderer>
       </>
     );

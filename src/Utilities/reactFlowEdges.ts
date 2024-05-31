@@ -10,6 +10,32 @@ export const createEdgeId = (
   return `${connection.source}-${connection.target}-${edgeIdentifier}-${connectionIndex}`;
 };
 
+const getEdgeLabelFromHandleId = (handleId: string): string => {
+  const array = handleId.split("-");
+  const handleName = array[array.length - 3];
+  const handleIndex = array[array.length - 1];
+  return `${handleName}-${handleIndex}`;
+};
+
+const createEdgeLabel = (
+  connection: Connection,
+  direction: "source" | "target"
+): string => {
+  const handleText =
+    direction === "source"
+      ? connection.sourceHandle!
+      : connection.targetHandle!;
+  return getEdgeLabelFromHandleId(handleText);
+};
+
+export const createEdgeStartLabel = (connection: Connection): string => {
+  return createEdgeLabel(connection, "source");
+};
+
+export const createEdgeEndLabel = (connection: Connection): string => {
+  return createEdgeLabel(connection, "target");
+};
+
 export const getLargestConnectionTypeIndex = (
   edges: Edge[],
   edgeId: EdgeIdentifier
