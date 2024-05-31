@@ -7,11 +7,11 @@ import {
   Node,
   useUpdateNodeInternals,
 } from "reactflow";
+import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 
 //config
 import { nodeBackgroundBrightnessTailwind } from "Configs/nodeConfig";
-//redux
-import { useAppSelector } from "Hooks/reduxHooks";
+// utils
 import {
   convertHandlePositionToStyleKey,
   getHandlePropsGroupingByKey,
@@ -21,27 +21,37 @@ import {
 } from "Utilities/reactFlowHandles";
 import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 
+// hooks
+import { useAppSelector } from "Hooks/reduxHooks";
+import { useStoreNodes } from "Hooks/useStoreNodes";
+
 //styles
-import { XMarkIcon } from "@heroicons/react/16/solid";
+import { X } from "lucide-react";
 import colors from "Types/colorString";
 import defaultHandleStyles from "Styles/handle";
 
 export default memo((props: NodeProps) => {
   const { id, data } = props;
   const updateNodeInternals = useUpdateNodeInternals();
+  const { removeNodeById } = useStoreNodes();
 
-  const nodeHeight = useAppSelector(
-    (state) =>
-      state.reactFlowObjects.nodes.filter((node: Node) => node.id === id)[0]
-        .height
-  );
-  const nodeWidth = useAppSelector(
-    (state) =>
-      state.reactFlowObjects.nodes.filter((node: Node) => node.id === id)[0]
-        .width
-  );
+  const nodeHeight: number = useAppSelector((state) => {
+    const thisNode: Node | undefined = state.reactFlowObjects.nodes.filter(
+      (node: Node) => node.id === id
+    )[0];
+    return thisNode ? thisNode.height! : 0;
+  });
+  const nodeWidth = useAppSelector((state) => {
+    const thisNode: Node | undefined = state.reactFlowObjects.nodes.filter(
+      (node: Node) => node.id === id
+    )[0];
+    return thisNode ? thisNode.width! : 0;
+  });
 
-  const onDeleteButtonClicked = useCallback(() => {}, []);
+  // use id to call reactflowslice action to remove node
+  const onDeleteButtonClicked = useCallback(() => {
+    removeNodeById(id);
+  }, [id]);
 
   const handlesGroupings: Record<string, HandleProps[]> = useMemo(
     () => getHandlePropsGroupingByKey(data.handleTypes, "position"),
@@ -125,7 +135,7 @@ export default memo((props: NodeProps) => {
 
   return (
     <div
-      className={`nodeComponent flex-col ${
+      className={`relative nodeComponent flex-col ${
         data.isHovered
           ? `bg-${colors[data.color as keyof typeof colors]}-${
               nodeBackgroundBrightnessTailwind.hover
@@ -138,17 +148,18 @@ export default memo((props: NodeProps) => {
       <h2>
         {data.nodeName} {data.variantIndex}
       </h2>
-      <p>
+      {/* <p>
         height: {nodeHeight}, width: {nodeWidth}
-      </p>
-      <div className={`${data.isHovered ? "visible" : "invisible"}`}>
-        <button
-          className="btn btn-circle btn-ghost btn-xs btn-error"
-          onClick={onDeleteButtonClicked}
-        >
-          <XMarkIcon className="h-6 w-6 text-gray-500" />;
-        </button>
-      </div>
+      </p> */}
+      <ButtonStyledIcon
+        className={`absolute right-1 top-1 rounded-sm -mt-1 -mr-1 ${
+          data.isHovered ? "visible" : "invisible"
+        }`}
+        onButtonClick={onDeleteButtonClicked}
+        type="button"
+      >
+        <X className="h-4 w-4" />
+      </ButtonStyledIcon>
       {createHandles}
     </div>
   );

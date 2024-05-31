@@ -83,7 +83,7 @@ body,
   }
 
   .nodeComponent {
-    @apply flex rounded-md p-4 gap-3;
+    @apply flex rounded-md py-8 px-12 gap-3;
   }
 
   .sidebar-header-section {
