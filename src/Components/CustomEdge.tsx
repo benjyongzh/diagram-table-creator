@@ -9,8 +9,8 @@ import {
 
 import EdgeLabel from "./EdgeLabel";
 
-import ButtonStyledIcon from "./ui/ButtonStyledIcon";
-import { X } from "lucide-react";
+import { Button } from "./ui/button";
+import { Trash } from "lucide-react";
 
 import { useAppDispatch } from "Hooks/reduxHooks";
 import { removeEdge } from "Features/reactFlowSlice";
@@ -62,24 +62,26 @@ export default memo(
             label={data.edgeStartLabel}
           />
           <div
-            className={selected ? "visible" : "invisible"}
             style={{
-              position: "absolute",
               transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-              fontSize: 12,
               // everything inside EdgeLabelRenderer has no pointer events by default
               // if you have an interactive element, set pointer-events: all
               pointerEvents: "all",
             }}
-            // className="nodrag nopan"
+            className={`flex items-center justify-between gap-1 absolute ps-3 p-1 rounded-lg z-10 menu-text-low-contrast background-low-contrast text-xs nodrag nopan ${
+              selected ? "visible" : "invisible"
+            }`}
           >
-            <ButtonStyledIcon
-              className="bg-slate-400 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-500 border-slate-600 dark:border-slate-300 hover:border-2"
+            <span className="mb-1">{id}</span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onButtonClick}
               type="button"
-              onButtonClick={onButtonClick}
+              className="aspect-square p-0"
             >
-              <X />
-            </ButtonStyledIcon>
+              <Trash className="h-4 w-4 text-red-500" />
+            </Button>
           </div>
           <EdgeLabel
             show={selected || false}
