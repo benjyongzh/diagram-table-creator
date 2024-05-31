@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { memo, useMemo, useCallback } from "react";
 import {
   BaseEdge,
   EdgeLabelRenderer,
@@ -14,6 +14,7 @@ import { Trash } from "lucide-react";
 
 import { useAppDispatch } from "Hooks/reduxHooks";
 import { removeEdge } from "Features/reactFlowSlice";
+import { getEdgeLabelTextFromId } from "Utilities/reactFlowEdges";
 //styles
 import colors from "Types/colorString";
 
@@ -52,6 +53,10 @@ export default memo(
       dispatch(removeEdge(id));
     }, [id]);
 
+    const labelId: string = useMemo(() => {
+      return getEdgeLabelTextFromId(id);
+    }, [id]);
+
     return (
       <>
         <BaseEdge path={edgePath} markerEnd={markerEnd} style={style} />
@@ -68,11 +73,11 @@ export default memo(
               // if you have an interactive element, set pointer-events: all
               pointerEvents: "all",
             }}
-            className={`flex items-center justify-between gap-1 absolute ps-3 p-1 rounded-lg z-10 menu-text-low-contrast background-low-contrast text-xs nodrag nopan ${
+            className={`flex items-center justify-between gap-2 absolute ps-3 p-1 rounded-lg z-10 menu-text-low-contrast background-low-contrast text-xs nodrag nopan ${
               selected ? "visible" : "invisible"
             }`}
           >
-            <span className="mb-1">{id}</span>
+            <span className="mb-[1px]">{labelId}</span>
             <Button
               variant="ghost"
               size="sm"

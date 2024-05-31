@@ -36,6 +36,11 @@ export const createEdgeEndLabel = (connection: Connection): string => {
   return createEdgeLabel(connection, "target");
 };
 
+export const getEdgeLabelTextFromId = (edgeId: string): string => {
+  const arr = edgeId.split("-");
+  return `${arr[arr.length - 2]}-${arr[arr.length - 1]}`;
+};
+
 export const getLargestConnectionTypeIndex = (
   edges: Edge[],
   edgeId: EdgeIdentifier
