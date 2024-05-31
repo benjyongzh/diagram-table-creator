@@ -4,6 +4,7 @@ export type StoreReactFlowObjects = {
   nodes: Array<Node>;
   edges: Array<Edge>;
   nodeVariantCount: Record<string, number>;
+  nodeVariantIndexNumbers: Record<string, number[]>;
 };
 
 export enum updateVariantCountAction {

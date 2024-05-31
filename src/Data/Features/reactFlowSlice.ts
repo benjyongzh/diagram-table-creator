@@ -29,6 +29,7 @@ const initialState: StoreReactFlowObjects = {
   nodes: [],
   edges: [],
   nodeVariantCount: {},
+  nodeVariantIndexNumbers: {},
 };
 
 const updateVariantCount = (
@@ -54,6 +55,38 @@ const updateVariantIndexsOnNodes = (state: StoreReactFlowObjects) => {
   addIndexNumberToNodesBasedOnCountLibrary(nodes, nodeVariantCount);
 };
 
+const updateVariantIndexNumbers = (state: StoreReactFlowObjects) => {
+  state.nodeVariantIndexNumbers = {};
+  for (let i = 0; i < state.nodes.length; i++) {
+    const key: string = state.nodes[i].data.nodeName;
+    if (state.nodeVariantIndexNumbers[key]) {
+      state.nodeVariantIndexNumbers[key].push(state.nodes[i].data.variantIndex);
+    } else {
+      state.nodeVariantIndexNumbers[key] = [state.nodes[i].data.variantIndex];
+    }
+  }
+};
+
+const addVariantIndexNumber = (
+  state: StoreReactFlowObjects,
+  nodeName: string,
+  index: number
+) => {
+  state.nodeVariantIndexNumbers[nodeName]
+    ? state.nodeVariantIndexNumbers[nodeName].push(index)
+    : (state.nodeVariantIndexNumbers[nodeName] = [index]);
+};
+
+const removeVariantIndexNumber = (
+  state: StoreReactFlowObjects,
+  nodeName: string,
+  index: number
+) => {
+  state.nodeVariantIndexNumbers[nodeName] = state.nodeVariantIndexNumbers[
+    nodeName
+  ].filter((number) => number !== index);
+};
+
 export const reactFlowSlice: Slice = createSlice({
   name: "nodes",
   initialState,
@@ -66,16 +99,29 @@ export const reactFlowSlice: Slice = createSlice({
       state.nodes = action.payload;
       state.nodeVariantCount = updateVariantCount(state);
       updateVariantIndexsOnNodes(state);
+      updateVariantIndexNumbers(state);
     },
     addNode: (state, action: PayloadAction<Node>) => {
       updateVariantCount(state, {
         action: updateVariantCountAction.add,
         node: action.payload,
       });
-      //add index number
-      const indexNumber: number =
-        state.nodeVariantCount[action.payload.data.nodeName];
-      const newData = { ...action.payload.data, variantIndex: indexNumber };
+
+      //get next highest index number
+      const variantIndexNumbers: number[] =
+        state.nodeVariantIndexNumbers[action.payload.data.nodeName];
+      const newIndexNumber: number = variantIndexNumbers
+        ? variantIndexNumbers.sort().reverse()[0] + 1
+        : 1;
+      //add new index number to library
+      addVariantIndexNumber(
+        state,
+        action.payload.data.nodeName,
+        newIndexNumber
+      );
+
+      //add index number to new node
+      const newData = { ...action.payload.data, variantIndex: newIndexNumber };
       const realNode: Node = { ...action.payload, data: { ...newData } };
       state.nodes.push(realNode);
     },
@@ -87,6 +133,11 @@ export const reactFlowSlice: Slice = createSlice({
         action: updateVariantCountAction.remove,
         node: action.payload,
       });
+      removeVariantIndexNumber(
+        state,
+        action.payload.data.nodeName,
+        action.payload.data.variantIndex
+      );
     },
 
     editNodesByVariant: (state, action: PayloadAction<EditVariant>) => {
