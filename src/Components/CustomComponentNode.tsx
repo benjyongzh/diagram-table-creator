@@ -1,16 +1,21 @@
-import { CSSProperties, memo, useCallback, useMemo } from "react";
+import { CSSProperties, memo, useMemo } from "react";
 import {
   Handle,
   NodeProps,
   Position,
   HandleProps,
-  Node,
   useUpdateNodeInternals,
 } from "reactflow";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
+import { Modal } from "./modals/Modal";
+import { DialogTrigger } from "./ui/dialog";
+import { ModalConfirmation } from "./modals/ModalConfirmation";
 
 //config
-import { nodeBackgroundBrightnessTailwind } from "Configs/nodeConfig";
+import nodeConfig, {
+  nodeBackgroundBrightnessTailwind,
+} from "Configs/nodeConfig";
+
 // utils
 import {
   convertHandlePositionToStyleKey,
@@ -22,7 +27,6 @@ import {
 import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 
 // hooks
-import { useAppSelector } from "Hooks/reduxHooks";
 import { useStoreNodes } from "Hooks/useStoreNodes";
 
 //styles
@@ -36,9 +40,7 @@ export default memo((props: NodeProps) => {
   const { nodeHeight, nodeWidth, removeNodeById } = useStoreNodes(id);
 
   // use id to call reactflowslice action to remove node
-  const onDeleteButtonClicked = useCallback(() => {
-    removeNodeById(id);
-  }, [id]);
+  const onDeleteButtonClicked = removeNodeById;
 
   const handlesGroupings: Record<string, HandleProps[]> = useMemo(
     () => getHandlePropsGroupingByKey(data.handleTypes, "position"),
@@ -138,15 +140,41 @@ export default memo((props: NodeProps) => {
       {/* <p>
         height: {nodeHeight}, width: {nodeWidth}
       </p> */}
-      <ButtonStyledIcon
-        className={`absolute right-1 top-1 rounded-sm -mt-1 -mr-1 ${
-          data.isHovered ? "visible" : "invisible"
-        }`}
-        onButtonClick={onDeleteButtonClicked}
-        type="button"
-      >
-        <X className="h-4 w-4" />
-      </ButtonStyledIcon>
+      {nodeConfig.DELETION_REQUIRES_USER_CONFIRMATION ? (
+        <Modal
+          triggerElement={
+            <DialogTrigger>
+              <ButtonStyledIcon
+                className={`absolute right-1 top-1 rounded-sm -mt-1 -mr-1 ${
+                  data.isHovered ? "visible" : "invisible"
+                }`}
+                type="button"
+              >
+                <X className="h-4 w-4" />
+              </ButtonStyledIcon>
+            </DialogTrigger>
+          }
+          modalContent={
+            <ModalConfirmation
+              title={`Delete this component?`}
+              text={`${data.nodeName} ${data.variantIndex} will be permanently removed from your network. You cannot undo this action.`}
+              destructive
+              action={onDeleteButtonClicked}
+            />
+          }
+        />
+      ) : (
+        <ButtonStyledIcon
+          className={`absolute right-1 top-1 rounded-sm -mt-1 -mr-1 ${
+            data.isHovered ? "visible" : "invisible"
+          }`}
+          onButtonClick={onDeleteButtonClicked}
+          type="button"
+        >
+          <X className="h-4 w-4" />
+        </ButtonStyledIcon>
+      )}
+
       {createHandles}
     </div>
   );

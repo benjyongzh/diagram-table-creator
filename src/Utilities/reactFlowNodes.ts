@@ -67,3 +67,7 @@ export const nodeIsOfThisVariant = (
     JSON.stringify(nodeData.handleTypes) === JSON.stringify(data.handleTypes)
   );
 };
+
+export const getComponentNameTextFromNodeData = (node: Node): string => {
+  return `${node.data.nodeName} ${node.data.variantIndex}`;
+};

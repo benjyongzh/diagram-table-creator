@@ -1,33 +1,45 @@
+import { Node } from "reactflow";
+import { toast } from "sonner";
+
 //redux
-import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
-import CustomNodeVariant from "Types/customNodeVariant";
 import {
   addNode as addNewNode,
   removeNode,
   editNodesByVariant,
 } from "Features/reactFlowSlice";
-import { createNodeFromData } from "Utilities/reactFlowNodes";
-import { EditVariant } from "Types/customNodeVariant";
-import { Node } from "reactflow";
 
-export const useStoreNodes = () => {
+// hooks
+import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
+import { useCallback, useMemo } from "react";
+
+// types
+import CustomNodeVariant, { EditVariant } from "Types/customNodeVariant";
+
+//config
+import nodeConfig from "Configs/nodeConfig";
+
+//utils
+import {
+  createNodeFromData,
+  getComponentNameTextFromNodeData,
+} from "Utilities/reactFlowNodes";
+
+export const useStoreNodes = (nodeId: string) => {
   const dispatch = useAppDispatch();
   const allNodes: Node[] = useAppSelector(
     (state) => state.reactFlowObjects.nodes
   );
 
-  const nodeHeight: number = useAppSelector((state) => {
-    const thisNode: Node | undefined = state.reactFlowObjects.nodes.filter(
-      (node: Node) => node.id === nodeId
-    )[0];
-    return thisNode ? thisNode.height! : 0;
-  });
-  const nodeWidth = useAppSelector((state) => {
-    const thisNode: Node | undefined = state.reactFlowObjects.nodes.filter(
-      (node: Node) => node.id === nodeId
-    )[0];
-    return thisNode ? thisNode.width! : 0;
-  });
+  const thisNode: Node | undefined = useAppSelector(
+    (state) =>
+      state.reactFlowObjects.nodes.filter((node: Node) => node.id === nodeId)[0]
+  );
+
+  const nodeHeight = useMemo(
+    () => (thisNode ? thisNode.height! : 0),
+    [thisNode]
+  );
+  const nodeWidth = useMemo(() => (thisNode ? thisNode.width! : 0), [thisNode]);
 
   const addNode = (newNode: CustomNodeVariant) => {
     const node = createNodeFromData(newNode);
@@ -38,10 +50,19 @@ export const useStoreNodes = () => {
     dispatch(editNodesByVariant(change));
   };
 
-  const removeNodeById = (nodeId: string) => {
+  const removeNodeById = useCallback(() => {
     const thisNode: Node = allNodes.filter((node) => node.id === nodeId)[0];
     dispatch(removeNode(thisNode));
-  };
+    if (nodeConfig.DELETION_CREATES_TOAST_NOTIFICATION) {
+      toast.success("Component deleted", {
+        description: getComponentNameFromNodeData,
+      });
+    }
+  }, [nodeId]);
 
-  return { addNode, removeNodeById, editNodesOfVariant };
+  const getComponentNameFromNodeData: string = useMemo(() => {
+    return thisNode ? getComponentNameTextFromNodeData(thisNode) : "";
+  }, [nodeId]);
+
+  return { nodeHeight, nodeWidth, addNode, removeNodeById, editNodesOfVariant };
 };
