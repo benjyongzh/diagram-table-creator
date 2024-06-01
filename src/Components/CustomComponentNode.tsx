@@ -33,20 +33,7 @@ import defaultHandleStyles from "Styles/handle";
 export default memo((props: NodeProps) => {
   const { id, data } = props;
   const updateNodeInternals = useUpdateNodeInternals();
-  const { removeNodeById } = useStoreNodes();
-
-  const nodeHeight: number = useAppSelector((state) => {
-    const thisNode: Node | undefined = state.reactFlowObjects.nodes.filter(
-      (node: Node) => node.id === id
-    )[0];
-    return thisNode ? thisNode.height! : 0;
-  });
-  const nodeWidth = useAppSelector((state) => {
-    const thisNode: Node | undefined = state.reactFlowObjects.nodes.filter(
-      (node: Node) => node.id === id
-    )[0];
-    return thisNode ? thisNode.width! : 0;
-  });
+  const { nodeHeight, nodeWidth, removeNodeById } = useStoreNodes(id);
 
   // use id to call reactflowslice action to remove node
   const onDeleteButtonClicked = useCallback(() => {

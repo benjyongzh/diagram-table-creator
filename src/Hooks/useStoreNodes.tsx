@@ -16,6 +16,19 @@ export const useStoreNodes = () => {
     (state) => state.reactFlowObjects.nodes
   );
 
+  const nodeHeight: number = useAppSelector((state) => {
+    const thisNode: Node | undefined = state.reactFlowObjects.nodes.filter(
+      (node: Node) => node.id === nodeId
+    )[0];
+    return thisNode ? thisNode.height! : 0;
+  });
+  const nodeWidth = useAppSelector((state) => {
+    const thisNode: Node | undefined = state.reactFlowObjects.nodes.filter(
+      (node: Node) => node.id === nodeId
+    )[0];
+    return thisNode ? thisNode.width! : 0;
+  });
+
   const addNode = (newNode: CustomNodeVariant) => {
     const node = createNodeFromData(newNode);
     dispatch(addNewNode(node));
