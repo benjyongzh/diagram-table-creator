@@ -7,7 +7,7 @@ import { removeEdge } from "Features/reactFlowSlice";
 import { getEdgeLabelTextFromId } from "Utilities/reactFlowEdges";
 import edgeConfig from "Configs/edgeConfig";
 
-export const useStoreEdges = (edgeId: string) => {
+export const useStoreEdges = (edgeId?: string) => {
   const dispatch = useAppDispatch();
   // const allNodes: Node[] = useAppSelector(
   //   (state) => state.reactFlowObjects.nodes
@@ -23,16 +23,18 @@ export const useStoreEdges = (edgeId: string) => {
   // };
 
   const deleteEdgeById = useCallback(() => {
-    dispatch(removeEdge(edgeId));
-    if (edgeConfig.DELETION_CREATES_TOAST_NOTIFICATION) {
-      toast.success("Connection deleted", {
-        description: getLabelIdFromEdgeId,
-      });
+    if (edgeId) {
+      dispatch(removeEdge(edgeId));
+      if (edgeConfig.DELETION_CREATES_TOAST_NOTIFICATION) {
+        toast.success("Connection deleted", {
+          description: getLabelIdFromEdgeId,
+        });
+      }
     }
   }, [edgeId]);
 
   const getLabelIdFromEdgeId: string = useMemo(() => {
-    return getEdgeLabelTextFromId(edgeId);
+    return edgeId ? getEdgeLabelTextFromId(edgeId) : "";
   }, [edgeId]);
 
   return { getLabelIdFromEdgeId, deleteEdgeById };
