@@ -72,7 +72,8 @@ const addVariantIndexNumber = (
   nodeName: string,
   index: number
 ) => {
-  state.nodeVariantIndexNumbers[nodeName]
+  state.nodeVariantIndexNumbers[nodeName] &&
+  state.nodeVariantIndexNumbers[nodeName].length
     ? state.nodeVariantIndexNumbers[nodeName].push(index)
     : (state.nodeVariantIndexNumbers[nodeName] = [index]);
 };
@@ -110,9 +111,10 @@ export const reactFlowSlice: Slice = createSlice({
       //get next highest index number
       const variantIndexNumbers: number[] =
         state.nodeVariantIndexNumbers[action.payload.data.nodeName];
-      const newIndexNumber: number = variantIndexNumbers
-        ? variantIndexNumbers.sort().reverse()[0] + 1
-        : 1;
+      const newIndexNumber: number =
+        variantIndexNumbers && variantIndexNumbers.length
+          ? variantIndexNumbers.sort().reverse()[0] + 1
+          : 1;
       //add new index number to library
       addVariantIndexNumber(
         state,
