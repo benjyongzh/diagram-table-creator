@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
+import ModalType from "Types/modalType";
 
 type modalFormProps = {
   title: string;
@@ -37,7 +38,7 @@ export const ModalForm = (props: modalFormProps) => {
   }, [form.formState, form.reset]);
 
   return (
-    <ModalContentWrapper title={title} width={width} isForm>
+    <ModalContentWrapper title={title} width={width} modalType={ModalType.form}>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onFormSubmit)}

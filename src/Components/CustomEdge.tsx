@@ -1,4 +1,4 @@
-import { memo, useMemo, useCallback } from "react";
+import { memo } from "react";
 import {
   BaseEdge,
   EdgeLabelRenderer,
@@ -7,15 +7,21 @@ import {
   // useReactFlow,
 } from "reactflow";
 
+// components
 import EdgeLabel from "./EdgeLabel";
-
+import { Modal } from "./modals/Modal";
+import { ModalConfirmation } from "./modals/ModalConfirmation";
+import { DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { Trash } from "lucide-react";
 
-import { useAppDispatch } from "Hooks/reduxHooks";
-import { removeEdge } from "Features/reactFlowSlice";
-import { getEdgeLabelTextFromId } from "Utilities/reactFlowEdges";
-//styles
+// config
+import edgeConfig from "Configs/edgeConfig";
+
+// hooks
+import { useStoreEdges } from "Hooks/useStoreEdges";
+
+// styles
+import { Trash } from "lucide-react";
 import colors from "Types/colorString";
 
 export default memo(
@@ -32,7 +38,7 @@ export default memo(
     selected,
     data,
   }: EdgeProps) => {
-    // const { setEdges } = useReactFlow();
+    const { getLabelIdFromEdgeId, deleteEdgeById } = useStoreEdges(id);
     const [edgePath, labelX, labelY, offsetX, offsetY] = getSmoothStepPath({
       sourceX,
       sourceY,
@@ -40,22 +46,17 @@ export default memo(
       targetX,
       targetY,
       targetPosition,
-      borderRadius: 5,
+      borderRadius: edgeConfig.SMOOTHSTEP_BORDER_RADIUS,
     });
-    const dispatch = useAppDispatch();
 
     // const onEdgeClick = () => {
     // setEdges((edges) => edges.filter((edge) => edge.id !== id));
     // };
 
     // use id to call reactflowslice action to remove edge
-    const onButtonClick = useCallback(() => {
-      dispatch(removeEdge(id));
-    }, [id]);
+    const onButtonClick = deleteEdgeById;
 
-    const labelId: string = useMemo(() => {
-      return getEdgeLabelTextFromId(id);
-    }, [id]);
+    const labelId: string = getLabelIdFromEdgeId;
 
     return (
       <>
@@ -78,15 +79,40 @@ export default memo(
             }`}
           >
             <span className="mb-[1px]">{labelId}</span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onButtonClick}
-              type="button"
-              className="aspect-square p-0"
-            >
-              <Trash className="h-4 w-4 text-red-500" />
-            </Button>
+            {edgeConfig.DELETION_REQUIRES_USER_CONFIRMATION ? (
+              <Modal
+                triggerElement={
+                  <DialogTrigger>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      type="button"
+                      className="aspect-square p-0"
+                    >
+                      <Trash className="h-4 w-4 text-red-500" />
+                    </Button>
+                  </DialogTrigger>
+                }
+                modalContent={
+                  <ModalConfirmation
+                    title={`Delete this connection?`}
+                    text={`Connection ${labelId} will be permanently removed from your network. You cannot undo this action.`}
+                    destructive
+                    action={onButtonClick}
+                  />
+                }
+              />
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onButtonClick}
+                type="button"
+                className="aspect-square p-0"
+              >
+                <Trash className="h-4 w-4 text-red-500" />
+              </Button>
+            )}
           </div>
           <EdgeLabel
             show={selected || false}
