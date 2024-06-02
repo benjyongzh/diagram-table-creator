@@ -124,7 +124,8 @@ export default memo((props: NodeProps) => {
 
   return (
     <div
-      className={`relative nodeComponent flex-col ${
+      className={`relative nodeComponent cursor-auto
+      flex-col ${
         data.isHovered
           ? `bg-${colors[data.color as keyof typeof colors]}-${
               nodeBackgroundBrightnessTailwind.hover
