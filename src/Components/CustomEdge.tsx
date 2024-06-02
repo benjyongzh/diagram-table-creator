@@ -18,7 +18,7 @@ import { Button } from "./ui/button";
 import edgeConfig from "Configs/edgeConfig";
 
 // hooks
-import { useStoreEdges } from "Hooks/useStoreEdges";
+import { useStoreEdgeById } from "Hooks/useStoreEdgeById";
 
 // styles
 import { Trash } from "lucide-react";
@@ -38,7 +38,7 @@ export default memo(
     selected,
     data,
   }: EdgeProps) => {
-    const { getLabelIdFromEdgeId, deleteEdgeById } = useStoreEdges(id);
+    const { getLabelIdFromEdgeId, deleteEdgeById } = useStoreEdgeById(id);
     const [edgePath, labelX, labelY, offsetX, offsetY] = getSmoothStepPath({
       sourceX,
       sourceY,
@@ -54,7 +54,7 @@ export default memo(
     // };
 
     // use id to call reactflowslice action to remove edge
-    const onButtonClick = deleteEdgeById;
+    const onButtonClick = deleteEdgeById();
 
     const labelId: string = getLabelIdFromEdgeId;
 

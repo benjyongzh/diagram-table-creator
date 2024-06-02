@@ -1,41 +1,27 @@
 //redux
-import { useMemo, useCallback } from "react";
-import { toast } from "sonner";
-import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
-import { removeEdge } from "Features/reactFlowSlice";
+import { Node, Edge } from "reactflow";
+import { useAppSelector } from "Hooks/reduxHooks";
+import { useStoreEdgeById } from "./useStoreEdgeById";
 
-import { getEdgeLabelTextFromId } from "Utilities/reactFlowEdges";
-import edgeConfig from "Configs/edgeConfig";
+export const useStoreEdges = () => {
+  const allEdges: Edge[] = useAppSelector(
+    (state) => state.reactFlowObjects.edges
+  );
 
-export const useStoreEdges = (edgeId?: string) => {
-  const dispatch = useAppDispatch();
-  // const allNodes: Node[] = useAppSelector(
-  //   (state) => state.reactFlowObjects.nodes
-  // );
-
-  // const addNode = (newNode: CustomNodeVariant) => {
-  //   const node = createNodeFromData(newNode);
-  //   dispatch(addNewNode(node));
-  // };
-
-  // const editNodesOfVariant = (change: EditVariant) => {
-  //   dispatch(editNodesByVariant(change));
-  // };
-
-  const deleteEdgeById = useCallback(() => {
-    if (edgeId) {
-      dispatch(removeEdge(edgeId));
-      if (edgeConfig.DELETION_CREATES_TOAST_NOTIFICATION) {
-        toast.success("Connection deleted", {
-          description: getLabelIdFromEdgeId,
-        });
-      }
+  const deleteEdgesOfNode = (node: Node) => {
+    const nodeId: string = node.id;
+    console.log("nodeId", nodeId);
+    //! allEdges is not being updated enough to detect the edge to delete
+    console.log(allEdges);
+    const edgesToDelete = allEdges.filter(
+      (edge) => edge.source === nodeId || edge.target === nodeId
+    );
+    console.log(edgesToDelete);
+    for (let i = 0; i < edgesToDelete.length; i++) {
+      //delete by id
+      useStoreEdgeById(edgesToDelete[i].id).deleteEdgeById();
     }
-  }, [edgeId]);
+  };
 
-  const getLabelIdFromEdgeId: string = useMemo(() => {
-    return edgeId ? getEdgeLabelTextFromId(edgeId) : "";
-  }, [edgeId]);
-
-  return { getLabelIdFromEdgeId, deleteEdgeById };
+  return { deleteEdgesOfNode };
 };
