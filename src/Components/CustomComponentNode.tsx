@@ -27,7 +27,7 @@ import {
 import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 
 // hooks
-import { useStoreNodes } from "Hooks/useStoreNodes";
+import { useStoreNodeById } from "Hooks/useStoreNodeById";
 
 //styles
 import { X } from "lucide-react";
@@ -37,7 +37,7 @@ import defaultHandleStyles from "Styles/handle";
 export default memo((props: NodeProps) => {
   const { id, data } = props;
   const updateNodeInternals = useUpdateNodeInternals();
-  const { nodeHeight, nodeWidth, removeNodeById } = useStoreNodes(id);
+  const { nodeHeight, nodeWidth, removeNodeById } = useStoreNodeById(id);
 
   // use id to call reactflowslice action to remove node
   const onDeleteButtonClicked = removeNodeById;
