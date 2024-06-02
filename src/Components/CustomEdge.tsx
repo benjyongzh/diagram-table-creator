@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import {
   BaseEdge,
   EdgeLabelRenderer,
@@ -38,7 +38,7 @@ export default memo(
     selected,
     data,
   }: EdgeProps) => {
-    const { getLabelIdFromEdgeId, deleteEdgeById } = useStoreEdgeById(id);
+    const { edgeLabelText, deleteEdgeById } = useStoreEdgeById(id);
     const [edgePath, labelX, labelY, offsetX, offsetY] = getSmoothStepPath({
       sourceX,
       sourceY,
@@ -54,9 +54,9 @@ export default memo(
     // };
 
     // use id to call reactflowslice action to remove edge
-    const onButtonClick = deleteEdgeById();
+    const onButtonClick = deleteEdgeById;
 
-    const labelId: string = getLabelIdFromEdgeId;
+    const labelId: string = edgeLabelText;
 
     return (
       <>

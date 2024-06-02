@@ -22,9 +22,7 @@ export const useStoreEdgeById = (edgeId: string) => {
       }
     }, [edgeId]);
 
-  const getLabelIdFromEdgeId: string = useMemo(() => {
-    return edgeId ? getEdgeLabelTextFromId(edgeId) : "";
-  }, [edgeId]);
+  const edgeLabelText = useMemo(() => getEdgeLabelTextFromId(edgeId), [edgeId]);
 
-  return { getLabelIdFromEdgeId, deleteEdgeById };
+  return { edgeLabelText, deleteEdgeById };
 };
