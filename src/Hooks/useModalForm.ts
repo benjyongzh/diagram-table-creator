@@ -1,3 +1,4 @@
+import nodeConfig from "Configs/nodeConfig";
 import { toast } from "sonner";
 
 export const useModalForm = () => {
@@ -6,9 +7,14 @@ export const useModalForm = () => {
     toastDescription?: string,
     callback?: Function
   ) => {
-    toast.success(toastMessage, {
-      description: toastDescription && toastDescription,
-    });
+    if (
+      nodeConfig.COMPONENT_MODAL_FORM_CREATES_TOAST_NOTIFICATION_ON_SUBMIT_SUCCESS
+    ) {
+      toast.success(toastMessage, {
+        description: toastDescription && toastDescription,
+      });
+    }
+
     callback && callback();
   };
 
@@ -17,9 +23,14 @@ export const useModalForm = () => {
     toastDescription?: string,
     callback?: Function
   ) => {
-    toast.error(toastMessage, {
-      description: toastDescription && toastDescription,
-    });
+    if (
+      nodeConfig.COMPONENT_MODAL_FORM_CREATES_TOAST_NOTIFICATION_ON_SUBMIT_FAILURE
+    ) {
+      toast.error(toastMessage, {
+        description: toastDescription && toastDescription,
+      });
+    }
+
     callback && callback();
   };
 
