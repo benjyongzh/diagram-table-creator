@@ -6,7 +6,7 @@ import { removeNode } from "Features/reactFlowSlice";
 
 // hooks
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useStoreEdges } from "./useStoreEdges";
 
 // types
@@ -32,7 +32,7 @@ export const useStoreNodeById = (nodeId: string) => {
   );
   const nodeWidth = useMemo(() => (thisNode ? thisNode.width! : 0), [thisNode]);
 
-  const removeNodeById = useCallback(() => {
+  const removeNodeById = () => {
     if (!thisNode) return;
     if (nodeConfig.DELETION_DELETES_AFFECTED_EDGES) {
       deleteEdgesOfNode(thisNode);
@@ -43,7 +43,7 @@ export const useStoreNodeById = (nodeId: string) => {
         description: getComponentNameFromNodeData,
       });
     }
-  }, [nodeId]);
+  };
 
   const getComponentNameFromNodeData: string = useMemo(() => {
     return thisNode ? getComponentNameTextFromNodeData(thisNode) : "";

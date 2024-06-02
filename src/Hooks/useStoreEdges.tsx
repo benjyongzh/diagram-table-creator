@@ -1,27 +1,44 @@
-//redux
 import { Node, Edge } from "reactflow";
-import { useAppSelector } from "Hooks/reduxHooks";
-import { useStoreEdgeById } from "./useStoreEdgeById";
+import { toast } from "sonner";
+
+//redux
+import { removeEdge } from "Features/reactFlowSlice";
+
+// hooks
+import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
+
+// config
+import edgeConfig from "Configs/edgeConfig";
+
+// utils
+import { getEdgeLabelTextFromId } from "Utilities/reactFlowEdges";
 
 export const useStoreEdges = () => {
+  const dispatch = useAppDispatch();
   const allEdges: Edge[] = useAppSelector(
     (state) => state.reactFlowObjects.edges
   );
 
   const deleteEdgesOfNode = (node: Node) => {
     const nodeId: string = node.id;
-    console.log("nodeId", nodeId);
-    //! allEdges is not being updated enough to detect the edge to delete
-    console.log(allEdges);
     const edgesToDelete = allEdges.filter(
       (edge) => edge.source === nodeId || edge.target === nodeId
     );
-    console.log(edgesToDelete);
     for (let i = 0; i < edgesToDelete.length; i++) {
       //delete by id
-      useStoreEdgeById(edgesToDelete[i].id).deleteEdgeById();
+      deleteEdge(edgesToDelete[i].id);
     }
   };
 
-  return { deleteEdgesOfNode };
+  // also used by useStoreEdgeById
+  const deleteEdge = (edgeId: string) => {
+    dispatch(removeEdge(edgeId));
+    if (edgeConfig.DELETION_CREATES_TOAST_NOTIFICATION) {
+      toast.success("Connection deleted", {
+        description: getEdgeLabelTextFromId(edgeId),
+      });
+    }
+  };
+
+  return { deleteEdgesOfNode, deleteEdge };
 };
