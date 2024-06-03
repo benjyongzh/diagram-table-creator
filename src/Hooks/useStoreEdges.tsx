@@ -1,4 +1,4 @@
-import { Node, Edge } from "reactflow";
+import { Node, Edge, Connection, updateEdge } from "reactflow";
 import { toast } from "sonner";
 
 //redux
@@ -11,10 +11,14 @@ import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 import edgeConfig from "Configs/edgeConfig";
 
 // utils
-import { getEdgeLabelTextFromId } from "Utilities/reactFlowEdges";
+import { EditVariant } from "Types/customNodeVariant";
+import { nodeIsOfThisVariant } from "Utilities/reactFlowNodes";
 
 export const useStoreEdges = () => {
   const dispatch = useAppDispatch();
+  const allNodes: Node[] = useAppSelector(
+    (state) => state.reactFlowObjects.nodes
+  );
   const allEdges: Edge[] = useAppSelector(
     (state) => state.reactFlowObjects.edges
   );
@@ -27,6 +31,27 @@ export const useStoreEdges = () => {
     for (let i = 0; i < edgesToDelete.length; i++) {
       //delete by id
       deleteEdge(edgesToDelete[i].id);
+    }
+  };
+
+  const editEdgesOfNodeVariant = (change: EditVariant) => {
+    // narrow down all nodes of this variant
+    const nodesToCheck: Node[] = allNodes.filter((node) =>
+      nodeIsOfThisVariant(node, change.old)
+    );
+
+    //* narrow down all edges of these nodes
+    const nodeIds: string[] = nodesToCheck.map((node) => node.id);
+    const edgesToCheck: Edge[] = allEdges.filter(
+      (edge) => nodeIds.includes(edge.source) || nodeIds.includes(edge.target)
+    );
+
+    //* check through each property between change.old and change.new. handleTypes
+    if (
+      JSON.stringify(change.new.handleTypes) !==
+      JSON.stringify(change.old.handleTypes)
+    ) {
+      //* apply these edges
     }
   };
 
@@ -43,5 +68,5 @@ export const useStoreEdges = () => {
     }
   };
 
-  return { deleteEdgesOfNode, deleteEdge };
+  return { editEdgesOfNodeVariant, deleteEdgesOfNode, deleteEdge };
 };
