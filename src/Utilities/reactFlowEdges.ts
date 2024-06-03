@@ -10,8 +10,8 @@ export const createEdgeId = (): string => {
 
 const getEdgeLabelFromHandleId = (handleId: string): string => {
   const array = handleId.split("-");
-  const handleName = array[array.length - 3];
-  const handleIndex = array[array.length - 1];
+  const handleName = array[0];
+  const handleIndex = array[1];
   return `${handleName}-${handleIndex}`;
 };
 

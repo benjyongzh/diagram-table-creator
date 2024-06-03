@@ -95,12 +95,7 @@ export default memo((props: NodeProps) => {
           finalArr.push(
             <Handle
               key={`${handleName}-${j}`}
-              id={formatHandleId(
-                data.nodeName,
-                data.variantIndex,
-                data.handleTypes[i],
-                j
-              )}
+              id={formatHandleId(data.handleTypes[i], j)}
               type={handleType}
               position={handlePos} //position should depend on value of handleCount
               isConnectableStart={true}

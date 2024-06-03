@@ -1,5 +1,5 @@
 import { HandleVariant } from "Types/handleVariant";
-import { Node, Connection, HandleProps, Position } from "reactflow";
+import { HandleProps, Position } from "reactflow";
 import {
   groupBy,
   convertObjectGroupingOfArraysToCountLibrary,
@@ -121,17 +121,12 @@ export const getHandleSpacingAndArrayPerNodeSide = (
   };
 };
 
-export const formatHandleId = (
-  nodeName: string,
-  nodeVariantIndex: number,
-  handleVariant: HandleVariant,
-  index: number
-) => {
-  return `${nodeName}-${nodeVariantIndex}-${handleVariant.handleName}-${handleVariant.connectionType}-${index}`;
+export const formatHandleId = (handleVariant: HandleVariant, index: number) => {
+  return `${handleVariant.handleName}-${index}-${handleVariant.connectionType}`;
 };
 
 export const getConnectionTypeFromConnectionHandleString = (
   connectionHandleString: string
 ): EdgeIdentifier => {
-  return connectionHandleString.split("-").reverse()[1];
+  return connectionHandleString.split("-")[2];
 };
