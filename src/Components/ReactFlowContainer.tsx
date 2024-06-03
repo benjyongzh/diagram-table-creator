@@ -53,6 +53,7 @@ import initialEdges, {
 import { minimapStyle } from "Styles/minimap";
 import "reactflow/dist/style.css";
 import { useTheme } from "./providers/ThemeProvider";
+import { standardEdgeData } from "Objects/edges";
 
 const nodeTypes = initialNodeTypes;
 const edgeTypes = initialEdgeTypes;
@@ -121,6 +122,7 @@ const ReactFlowContainer = () => {
       edges={edges}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
+      defaultEdgeOptions={standardEdgeData}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}

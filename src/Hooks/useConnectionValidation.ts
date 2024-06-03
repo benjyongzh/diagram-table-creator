@@ -1,5 +1,4 @@
 import { Connection, Edge } from "reactflow";
-import { standardEdgeData } from "Objects/edges";
 import {
   createEdgeId,
   createNewConnectionTypeIndex,
@@ -83,7 +82,6 @@ export const useConnectionValidation = (
 
     const edge: Edge = {
       id,
-      ...standardEdgeData,
       data: edgeData,
       source: source!,
       target: target!,
