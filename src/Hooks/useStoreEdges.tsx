@@ -34,8 +34,11 @@ export const useStoreEdges = () => {
   const deleteEdge = (edgeId: string) => {
     dispatch(removeEdge(edgeId));
     if (edgeConfig.DELETION_CREATES_TOAST_NOTIFICATION) {
+      const edgeToDelete: Edge = allEdges.filter(
+        (edge) => edge.id === edgeId
+      )[0];
       toast.success("Connection deleted", {
-        description: getEdgeLabelTextFromId(edgeId),
+        description: edgeToDelete.data.mainLabel,
       });
     }
   };

@@ -3,8 +3,9 @@ import {
   createEdgeId,
   createNewConnectionTypeIndex,
   getUsableEdgeIdentifierFromConnection,
-  createEdgeStartLabel,
-  createEdgeEndLabel,
+  createEdgeMainLabel,
+  createEdgeLabelAtSource,
+  createEdgeLabelAtTarget,
 } from "Utilities/reactFlowEdges";
 
 //redux
@@ -64,21 +65,22 @@ export const useConnectionValidation = (
       )[0] || emptyEdgeVariant;
 
     // create edge data
-    const edgeStartLabel: string = createEdgeStartLabel(connection);
-    const edgeEndLabel: string = createEdgeEndLabel(connection);
+    const mainLabel: string = createEdgeMainLabel(
+      edgeIdentifier,
+      connectionTypeIndex
+    );
+    const edgeStartLabel: string = createEdgeLabelAtSource(connection);
+    const edgeEndLabel: string = createEdgeLabelAtTarget(connection);
     const edgeData: EdgeData = {
       ...edgeVariant,
       connectionTypeIndex,
+      mainLabel,
       edgeStartLabel,
       edgeEndLabel,
     };
 
     // create id
-    const id: string = createEdgeId(
-      connection,
-      edgeIdentifier,
-      connectionTypeIndex
-    );
+    const id: string = createEdgeId();
 
     const edge: Edge = {
       id,

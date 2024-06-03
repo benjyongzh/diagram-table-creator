@@ -3,8 +3,6 @@ import { useMemo, useCallback } from "react";
 // import { useAppDispatch } from "Hooks/reduxHooks";
 import { useStoreEdges } from "./useStoreEdges";
 
-import { getEdgeLabelTextFromId } from "Utilities/reactFlowEdges";
-
 export const useStoreEdgeById = (edgeId: string) => {
   // const dispatch = useAppDispatch();
   const { deleteEdge } = useStoreEdges();
@@ -15,7 +13,5 @@ export const useStoreEdgeById = (edgeId: string) => {
     }
   }, [edgeId]);
 
-  const edgeLabelText = useMemo(() => getEdgeLabelTextFromId(edgeId), [edgeId]);
-
-  return { edgeLabelText, deleteEdgeById };
+  return { deleteEdgeById };
 };

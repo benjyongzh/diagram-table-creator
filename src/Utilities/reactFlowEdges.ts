@@ -1,13 +1,11 @@
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
 import { Connection, Edge } from "reactflow";
 import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
+import edgeConfig from "Configs/edgeConfig";
+import { randomStringGenerator } from "./strings";
 
-export const createEdgeId = (
-  connection: Connection,
-  edgeIdentifier: EdgeIdentifier,
-  connectionIndex: number
-): string => {
-  return `${connection.source}-${connection.target}-${edgeIdentifier}-${connectionIndex}`;
+export const createEdgeId = (): string => {
+  return randomStringGenerator(edgeConfig.ID_LENGTH);
 };
 
 const getEdgeLabelFromHandleId = (handleId: string): string => {
@@ -17,7 +15,14 @@ const getEdgeLabelFromHandleId = (handleId: string): string => {
   return `${handleName}-${handleIndex}`;
 };
 
-const createEdgeLabel = (
+export const createEdgeMainLabel = (
+  edgeIdentifier: string,
+  connectionTypeIndex: number
+): string => {
+  return `${edgeIdentifier}-${connectionTypeIndex}`;
+};
+
+const createEdgeEndLabel = (
   connection: Connection,
   direction: "source" | "target"
 ): string => {
@@ -28,17 +33,12 @@ const createEdgeLabel = (
   return getEdgeLabelFromHandleId(handleText);
 };
 
-export const createEdgeStartLabel = (connection: Connection): string => {
-  return createEdgeLabel(connection, "source");
+export const createEdgeLabelAtSource = (connection: Connection): string => {
+  return createEdgeEndLabel(connection, "source");
 };
 
-export const createEdgeEndLabel = (connection: Connection): string => {
-  return createEdgeLabel(connection, "target");
-};
-
-export const getEdgeLabelTextFromId = (edgeId: string): string => {
-  const arr = edgeId.split("-");
-  return `${arr[arr.length - 2]}-${arr[arr.length - 1]}`;
+export const createEdgeLabelAtTarget = (connection: Connection): string => {
+  return createEdgeEndLabel(connection, "target");
 };
 
 export const getLargestConnectionTypeIndex = (
