@@ -25,6 +25,7 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
     nodeName: "Monitoring Unit",
     handleTypes: [
       {
+        handleTypeId: "12345",
         handleType: "source", //source | target
         handleName: "bleh",
         position: Position.Right,
@@ -32,6 +33,7 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
         connectionType: "",
       },
       {
+        handleTypeId: "67890",
         handleType: "source", //source | target
         handleName: "bla",
         position: Position.Top,
@@ -40,6 +42,7 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
       },
 
       {
+        handleTypeId: "abcde",
         handleType: "source", //source | target
         handleName: "blu",
         position: Position.Bottom,
@@ -53,6 +56,7 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
     nodeName: "Extension Unit",
     handleTypes: [
       {
+        handleTypeId: "fghij",
         handleType: "source", //source | target
         handleName: "blihhh",
         position: Position.Right,

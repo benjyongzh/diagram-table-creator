@@ -25,6 +25,7 @@ import { useAppSelector } from "Hooks/reduxHooks";
 
 // ui
 import { X } from "lucide-react";
+import { useHandleTypeIdGenerator } from "Hooks/useHandleTypeIdGenerator";
 
 type FormFieldHandleVariantItemProps = {
   indexNumber: number;
@@ -40,6 +41,7 @@ export const FormFieldHandleVariantItem = (
   const edgeVariants = useAppSelector(
     (state) => state.customEdgeVariants.variants
   );
+  const { handleTypeId } = useHandleTypeIdGenerator();
 
   // const [isHovered, setIsHovered] = useState(false);
 
@@ -55,6 +57,21 @@ export const FormFieldHandleVariantItem = (
         // onMouseEnter={() => handleHover(true)}
         // onMouseLeave={() => handleHover(false)}
       >
+        <FormField
+          control={control}
+          name={`handle_variants.${props.indexNumber}.handleTypeId`}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input
+                  type="hidden"
+                  {...field}
+                  defaultValue={field.value || handleTypeId}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
         <FormField
           control={control}
           name={`handle_variants.${props.indexNumber}.handleName`}

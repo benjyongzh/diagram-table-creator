@@ -3,14 +3,22 @@ import { isPosition } from "./position";
 import { isHandleType } from "./handleType";
 import nodeConfig from "Configs/nodeConfig";
 import { z } from "zod";
-import { handleVariantSchema } from "./schemas/handleVariant";
+import {
+  handleVariantSchema,
+  handleVariantInfoSchema,
+} from "./schemas/handleVariant";
 import { isEdgeIdentifier } from "./edgeIdentifier";
+import handleConfig from "Configs/handleConfig";
 
 export type HandleVariant = z.infer<typeof handleVariantSchema>;
+export type HandleVariantInfo = z.infer<typeof handleVariantInfoSchema>;
 
 export const isHandleVariant = (arg: any): arg is HandleVariant => {
   return (
     arg &&
+    arg.handleTypeId &&
+    typeof arg.handleTypeId === "string" &&
+    arg.handleTypeId.length === handleConfig.ID_LENGTH &&
     arg.handleType &&
     isHandleType(arg.handleType) &&
     arg.handleName &&
@@ -24,7 +32,7 @@ export const isHandleVariant = (arg: any): arg is HandleVariant => {
   );
 };
 
-export const handleVariantDefaultValue: HandleVariant = {
+export const handleVariantDefaultValue: HandleVariantInfo = {
   handleType: "source", //source | target
   handleName: "",
   position: Position.Left,

@@ -1,9 +1,10 @@
 import { Position } from "reactflow";
 import { z } from "zod";
 import nodeConfig from "Configs/nodeConfig";
+import handleConfig from "Configs/handleConfig";
 import edgeIdentifierSchema from "./edgeIdentifier";
 
-export const handleVariantSchema = z.object({
+export const handleVariantInfoSchema = z.object({
   handleType: z.enum(["source", "target"]).default("source"),
   handleName: z
     .string()
@@ -27,13 +28,8 @@ export const handleVariantSchema = z.object({
   connectionType: edgeIdentifierSchema,
 });
 
-// export const handleVariantSchema = z.object({
-//   handleType: z.string().default("source"),
-//   handleName: z.string().min(1).default("myHandleType"),
-//   position: z.string().default(Position.Top),
-//   quantity: z
-//     .number()
-//     .min(nodeConfig.HANDLETYPE_QUANTITY_MIN)
-//     .max(nodeConfig.HANDLETYPE_QUANTITY_MAX)
-//     .default(nodeConfig.HANDLETYPE_QUANTITY_MIN),
-// }) satisfies ZodType<HandleVariant>;
+export const handleVariantSchema = z
+  .object({
+    handleTypeId: z.string().length(handleConfig.ID_LENGTH),
+  })
+  .merge(handleVariantInfoSchema);

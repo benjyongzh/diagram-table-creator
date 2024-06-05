@@ -24,6 +24,8 @@ import { handleVariantDefaultValue } from "Types/handleVariant";
 import colors from "Types/colorString";
 import CustomNodeVariant from "Types/customNodeVariant";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
+import { randomStringGenerator } from "Utilities/strings";
+import handleConfig from "Configs/handleConfig";
 
 type FormFieldGroupNodeProps = {
   variant?: CustomNodeVariant;
@@ -47,7 +49,8 @@ export const FormFieldGroupNode = (props: FormFieldGroupNodeProps) => {
   }, [reset]);
 
   const addHandleVariant = useCallback(() => {
-    append(handleVariantDefaultValue);
+    const handleId: string = randomStringGenerator(handleConfig.ID_LENGTH);
+    append({ handleTypeId: handleId, ...handleVariantDefaultValue });
   }, []);
 
   const removeHandleVariant = (index: number) =>
