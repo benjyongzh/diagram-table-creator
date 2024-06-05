@@ -12,7 +12,7 @@ import {
 
 // types
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
-import EdgeData from "Types/EdgeData";
+import EdgeData from "Types/edgeData";
 
 // hooks
 
