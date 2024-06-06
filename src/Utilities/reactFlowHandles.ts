@@ -130,3 +130,15 @@ export const getConnectionTypeFromConnectionHandleString = (
 ): EdgeIdentifier => {
   return connectionHandleString.split("-")[2];
 };
+
+export const getHandleNameFromConnectionHandleString = (
+  connectionHandleString: string
+): string => {
+  return connectionHandleString.split("-")[0];
+};
+
+export const getHandleIndexFromConnectionHandleString = (
+  connectionHandleString: string
+): number => {
+  return parseInt(connectionHandleString.split("-")[1]);
+};

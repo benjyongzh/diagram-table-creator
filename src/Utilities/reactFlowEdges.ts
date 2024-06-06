@@ -1,8 +1,13 @@
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
-import { Connection, Edge } from "reactflow";
-import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
+import { Connection, Edge, Node } from "reactflow";
+import {
+  getConnectionTypeFromConnectionHandleString,
+  getHandleNameFromConnectionHandleString,
+  getHandleIndexFromConnectionHandleString,
+} from "Utilities/reactFlowHandles";
 import edgeConfig from "Configs/edgeConfig";
 import { randomStringGenerator } from "./strings";
+import { EdgeConnectionDirectionToNode } from "Types/edgeConnectionDirectionToNode";
 
 export const createEdgeId = (): string => {
   return randomStringGenerator(edgeConfig.ID_LENGTH);
@@ -72,4 +77,78 @@ export const getUsableEdgeIdentifierFromConnection = (
   if (sourceConnectionType !== "" && targetConnectionType === "")
     return sourceConnectionType;
   return targetConnectionType;
+};
+
+export const getEdgesConnectedToHandleName = (
+  edges: Edge[],
+  handleName: string
+): Edge[] => {
+  return edges.filter(
+    (edge) =>
+      getHandleNameFromConnectionHandleString(edge.sourceHandle!) ===
+        handleName ||
+      getHandleNameFromConnectionHandleString(edge.targetHandle!) === handleName
+  );
+};
+
+export const getEdgesConnectedToHandleNameMoreThanIndex = (
+  edges: Edge[],
+  handleName: string,
+  index: number
+): Edge[] => {
+  return edges.filter(
+    (edge) =>
+      (getHandleNameFromConnectionHandleString(edge.sourceHandle!) ===
+        handleName &&
+        getHandleIndexFromConnectionHandleString(edge.sourceHandle!) > index) ||
+      (getHandleNameFromConnectionHandleString(edge.targetHandle!) ===
+        handleName &&
+        getHandleIndexFromConnectionHandleString(edge.targetHandle!) > index)
+  );
+};
+
+export const getEdgesConnectedToNodeId = (
+  edges: Edge[],
+  nodeId: string
+): Edge[] => {
+  return edges.filter(
+    (edge) => edge.source === nodeId || edge.target === nodeId
+  );
+};
+
+export const getEdgesConnectedToNodes = (
+  edges: Edge[],
+  nodes: Node[]
+): Edge[] => {
+  const nodeIds: string[] = nodes.map((node: Node) => node.id);
+  return edges.filter((edge) => {
+    return nodeIds.includes(edge.source) || nodeIds.includes(edge.target);
+  });
+};
+
+export const getEdgeConnectionDirectionToNodes = (
+  edges: Edge[],
+  nodes: Node[]
+): EdgeConnectionDirectionToNode[] => {
+  const nodeIds: string[] = nodes.map((node: Node) => node.id);
+  return edges.map((edge) => {
+    if (nodeIds.includes(edge.source) && nodeIds.includes(edge.target))
+      return "both";
+    if (nodeIds.includes(edge.target)) return "target";
+    if (nodeIds.includes(edge.source)) return "source";
+    return "none";
+  });
+};
+
+export const getEdgesWithConnectionType = (
+  edges: Edge[],
+  connectionType: EdgeIdentifier
+): Edge[] => {
+  return edges.filter(
+    (edge) =>
+      getConnectionTypeFromConnectionHandleString(edge.sourceHandle!) ===
+        connectionType ||
+      getConnectionTypeFromConnectionHandleString(edge.targetHandle!) ===
+        connectionType
+  );
 };
