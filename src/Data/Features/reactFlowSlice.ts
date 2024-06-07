@@ -214,6 +214,14 @@ export const reactFlowSlice: Slice = createSlice({
     setAllEdges: (state, action: PayloadAction<Array<Edge>>) => {
       state.edges = action.payload;
     },
+    editEdge: (state, action: PayloadAction<Edge>) => {
+      state.edges = state.edges.map((edge: Edge) => {
+        if (edge.id === action.payload.id) {
+          return { ...edge, ...action.payload };
+        }
+        return edge;
+      });
+    },
     removeEdge: (state, action: PayloadAction<string>) => {
       state.edges = state.edges.filter(
         (edge: Edge) => edge.id !== action.payload
@@ -234,6 +242,7 @@ export const {
   onEdgesChange,
   onConnect,
   setAllEdges,
+  editEdge,
   removeEdge,
 } = reactFlowSlice.actions;
 

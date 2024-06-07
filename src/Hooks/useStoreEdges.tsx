@@ -2,7 +2,7 @@ import { Node, Edge, Connection, updateEdge } from "reactflow";
 import { toast } from "sonner";
 
 //redux
-import { removeEdge } from "Features/reactFlowSlice";
+import { removeEdge, editEdge } from "Features/reactFlowSlice";
 
 // hooks
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
@@ -22,6 +22,8 @@ import {
   getEdgesConnectedToHandleName,
   getEdgesConnectedToHandleNameMoreThanIndex,
   getEdgeConnectionDirectionToNodes,
+  createEdgeMainLabel,
+  setEdgeData,
 } from "Utilities/reactFlowEdges";
 import { HandleVariant } from "Types/handleVariant";
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
@@ -81,7 +83,7 @@ export const useStoreEdges = () => {
             }
           }
 
-          //* check handleName
+          //* check handleName. will affect edges' start and end labels
 
           //* connectionType
           if (oldHandleType.connectionType !== newHandleType.connectionType) {
@@ -100,6 +102,17 @@ export const useStoreEdges = () => {
               switch (direction) {
                 case "both":
                   // both edge is connected to affected nodes on both ends. just update connectionType in edge
+                  const mainLabel: string = createEdgeMainLabel(
+                    newHandleType.connectionType,
+                    edge.data.connectionTypeIndex
+                  );
+                  const newEdge: Edge = setEdgeData(edge, {
+                    ...edge.data,
+                    mainLabel,
+                    edgeIdentifier: newHandleType.connectionType,
+                  });
+                  dispatch(editEdge(newEdge)); // might want to use a hook for editEdge so that there can be toasts
+
                   break;
                 case "source":
                   // check if target has connectionType of either "any" or newHandleType.connectionType. else, delete edge
@@ -114,6 +127,7 @@ export const useStoreEdges = () => {
                     // update redux object
                   } else {
                     // delete edge
+                    deleteEdge(edge.id);
                   }
                   break;
                 case "target":
@@ -129,6 +143,7 @@ export const useStoreEdges = () => {
                     // update redux object
                   } else {
                     // delete edge
+                    deleteEdge(edge.id);
                   }
                   break;
 
@@ -151,22 +166,6 @@ export const useStoreEdges = () => {
 
       //* check for handleTypes that exist in new but not in old
     }
-
-    // //* narrow down all edges of these nodes
-    // const nodeIds: string[] = nodesToCheck.map((node) => node.id);
-    // const edgesToCheck: Edge[] = allEdges.filter(
-    //   (edge) => nodeIds.includes(edge.source) || nodeIds.includes(edge.target)
-    // );
-
-    // //* check through each property between change.old and change.new. handleTypes
-    // if (
-    //   JSON.stringify(change.new.handleTypes) !==
-    //   JSON.stringify(change.old.handleTypes)
-    // ) {
-    //   for (let i = 0; i < edgesToCheck.length; i++) {
-    //     //* check which edges are supposed to be deleted
-    //   }
-    // }
   };
 
   // also used by useStoreEdgeById

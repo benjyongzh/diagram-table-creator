@@ -8,6 +8,7 @@ import {
 import edgeConfig from "Configs/edgeConfig";
 import { randomStringGenerator } from "./strings";
 import { EdgeConnectionDirectionToNode } from "Types/edgeConnectionDirectionToNode";
+import EdgeData from "Types/edgeData";
 
 export const createEdgeId = (): string => {
   return randomStringGenerator(edgeConfig.ID_LENGTH);
@@ -151,4 +152,11 @@ export const getEdgesWithConnectionType = (
       getConnectionTypeFromConnectionHandleString(edge.targetHandle!) ===
         connectionType
   );
+};
+
+export const setEdgeData = (edge: Edge, newData: EdgeData): Edge => {
+  return {
+    ...edge,
+    data: newData,
+  };
 };
