@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import { useStoreEdges } from "./useStoreEdges";
 
 // types
+import { reduxObjectsHookOptions } from "Types/reduxObjectsHookOptions";
 
 //config
 import nodeConfig from "Configs/nodeConfig";
@@ -32,13 +33,16 @@ export const useStoreNodeById = (nodeId: string) => {
   );
   const nodeWidth = useMemo(() => (thisNode ? thisNode.width! : 0), [thisNode]);
 
-  const removeNodeById = () => {
+  const removeNodeById = (options?: reduxObjectsHookOptions) => {
     if (!thisNode) return;
     if (nodeConfig.DELETION_DELETES_AFFECTED_EDGES) {
       deleteEdgesOfNode(thisNode);
     }
     dispatch(removeNode(thisNode));
-    if (nodeConfig.DELETION_CREATES_TOAST_NOTIFICATION) {
+    if (
+      (!options || options.useToast) &&
+      nodeConfig.DELETION_CREATES_TOAST_NOTIFICATION
+    ) {
       toast.success("Component deleted", {
         description: getComponentNameFromNodeData,
       });

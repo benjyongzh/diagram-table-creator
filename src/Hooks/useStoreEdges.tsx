@@ -169,14 +169,29 @@ export const useStoreEdges = () => {
   };
 
   // also used by useStoreEdgeById
-  const deleteEdge = (edgeId: string) => {
+  const deleteEdge = (edgeId: string, options?: reduxObjectsHookOptions) => {
     dispatch(removeEdge(edgeId));
-    if (edgeConfig.DELETION_CREATES_TOAST_NOTIFICATION) {
+    if (
+      (!options || options.useToast) &&
+      edgeConfig.DELETION_CREATES_TOAST_NOTIFICATION
+    ) {
       const edgeToDelete: Edge = allEdges.filter(
         (edge) => edge.id === edgeId
       )[0];
       toast.success("Connection deleted", {
         description: edgeToDelete.data.mainLabel,
+      });
+    }
+  };
+
+  const setEdge = (edge: Edge, options?: reduxObjectsHookOptions) => {
+    dispatch(editEdge(edge));
+    if (
+      (!options || options.useToast) &&
+      edgeConfig.EDITING_CREATES_TOAST_NOTIFICATION
+    ) {
+      toast.success("Connection edited", {
+        description: edge.data.mainLabel,
       });
     }
   };
