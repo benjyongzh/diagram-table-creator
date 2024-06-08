@@ -22,11 +22,11 @@ import {
   getEdgesConnectedToHandleName,
   getEdgesConnectedToHandleNameMoreThanIndex,
   getEdgeConnectionDirectionToNodes,
-  createEdgeMainLabel,
-  setEdgeData,
+  updateEdgeConnectionType,
 } from "Utilities/reactFlowEdges";
 import { HandleVariant } from "Types/handleVariant";
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
+import { reduxObjectsHookOptions } from "Types/reduxObjectsHookOptions";
 
 export const useStoreEdges = () => {
   const dispatch = useAppDispatch();
@@ -102,16 +102,11 @@ export const useStoreEdges = () => {
               switch (direction) {
                 case "both":
                   // both edge is connected to affected nodes on both ends. just update connectionType in edge
-                  const mainLabel: string = createEdgeMainLabel(
-                    newHandleType.connectionType,
-                    edge.data.connectionTypeIndex
+                  const newEdge: Edge = updateEdgeConnectionType(
+                    edge,
+                    newHandleType.connectionType
                   );
-                  const newEdge: Edge = setEdgeData(edge, {
-                    ...edge.data,
-                    mainLabel,
-                    edgeIdentifier: newHandleType.connectionType,
-                  });
-                  dispatch(editEdge(newEdge)); // might want to use a hook for editEdge so that there can be toasts
+                  setEdge(newEdge);
 
                   break;
                 case "source":
@@ -125,6 +120,11 @@ export const useStoreEdges = () => {
                     targetConnectionType === ""
                   ) {
                     // update redux object
+                    const newEdge: Edge = updateEdgeConnectionType(
+                      edge,
+                      newHandleType.connectionType
+                    );
+                    setEdge(newEdge);
                   } else {
                     // delete edge
                     deleteEdge(edge.id);
@@ -141,6 +141,11 @@ export const useStoreEdges = () => {
                     sourceConnectionType === ""
                   ) {
                     // update redux object
+                    const newEdge: Edge = updateEdgeConnectionType(
+                      edge,
+                      newHandleType.connectionType
+                    );
+                    setEdge(newEdge);
                   } else {
                     // delete edge
                     deleteEdge(edge.id);

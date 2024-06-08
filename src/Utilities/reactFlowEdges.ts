@@ -160,3 +160,19 @@ export const setEdgeData = (edge: Edge, newData: EdgeData): Edge => {
     data: newData,
   };
 };
+
+export const updateEdgeConnectionType = (
+  edge: Edge,
+  conectionType: EdgeIdentifier
+): Edge => {
+  const mainLabel: string = createEdgeMainLabel(
+    conectionType,
+    edge.data.connectionTypeIndex
+  );
+  const newEdge: Edge = setEdgeData(edge, {
+    ...edge.data,
+    mainLabel,
+    edgeIdentifier: conectionType,
+  });
+  return newEdge;
+};
