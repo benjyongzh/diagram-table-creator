@@ -1,5 +1,5 @@
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
-import { Connection, Edge, Node } from "reactflow";
+import { Connection, Edge, HandleType, Node } from "reactflow";
 import {
   getConnectionTypeFromConnectionHandleString,
   getHandleNameFromConnectionHandleString,
@@ -175,4 +175,26 @@ export const updateEdgeConnectionType = (
     edgeIdentifier: conectionType,
   });
   return newEdge;
+};
+
+export const updateEdgeEndLabel = (
+  edge: Edge,
+  connection: Connection,
+  handleType: HandleType
+): Edge => {
+  const newLabel: string = createEdgeEndLabel(connection, handleType);
+
+  if (handleType === "source") {
+    const newEdge: Edge = setEdgeData(edge, {
+      ...edge.data,
+      edgeStartLabel: newLabel,
+    });
+    return newEdge;
+  } else {
+    const newEdge: Edge = setEdgeData(edge, {
+      ...edge.data,
+      edgeEndLabel: newLabel,
+    });
+    return newEdge;
+  }
 };

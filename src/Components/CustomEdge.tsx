@@ -19,6 +19,7 @@ import edgeConfig from "Configs/edgeConfig";
 
 // hooks
 import { useStoreEdgeById } from "Hooks/useStoreEdgeById";
+import { useEdgeData } from "Hooks/useEdgeData";
 
 // styles
 import { Trash } from "lucide-react";
@@ -28,6 +29,10 @@ export default memo(
   ({
     id,
     sourceX,
+    source,
+    target,
+    sourceHandleId,
+    targetHandleId,
     sourceY,
     targetX,
     targetY,
@@ -48,6 +53,8 @@ export default memo(
       targetPosition,
       borderRadius: edgeConfig.SMOOTHSTEP_BORDER_RADIUS,
     });
+
+    const { edgeData } = useEdgeData(id);
 
     // const onEdgeClick = () => {
     // setEdges((edges) => edges.filter((edge) => edge.id !== id));
