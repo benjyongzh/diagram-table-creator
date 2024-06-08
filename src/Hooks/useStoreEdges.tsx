@@ -67,20 +67,18 @@ export const useStoreEdges = () => {
           change.new.handleTypes.filter(
             (handleType) => handleType.handleTypeId === oldHandleTypeId
           )[0];
+        const edgeIdsToDelete: string[] = [];
         if (newHandleType !== null) {
           // this handleType exists is both old and new. check if handleInfo etc is same
           //* check quantity
           if (oldHandleType.quantity > newHandleType.quantity) {
             // quantity is lower now select edges who are connected to index at most newHandleType.quantity
-            const edgesToDelete: Edge[] =
-              getEdgesConnectedToHandleNameMoreThanIndex(
-                allEdges,
-                oldHandleType.handleName,
-                newHandleType.quantity
-              );
-            for (let j = 0; j < edgesToDelete.length; j++) {
-              deleteEdge(edgesToDelete[j].id);
-            }
+            const edgesToDelete = getEdgesConnectedToHandleNameMoreThanIndex(
+              allEdges,
+              oldHandleType.handleName,
+              newHandleType.quantity
+            ).map((edge) => edge.id);
+            edgeIdsToDelete.concat(edgesToDelete);
           }
 
           //* check handleName. will affect edges' start and end labels
@@ -159,13 +157,15 @@ export const useStoreEdges = () => {
           }
         } else {
           // this handleType no longer exists. select all edges using this handleType and remove them
-          const edgesToDelete: Edge[] = getEdgesConnectedToHandleName(
+          const edgesToDelete = getEdgesConnectedToHandleName(
             allEdges,
             oldHandleType.handleName
-          );
-          for (let j = 0; j < edgesToDelete.length; j++) {
-            deleteEdge(edgesToDelete[j].id);
-          }
+          ).map((edge) => edge.id);
+          edgeIdsToDelete.concat(edgesToDelete);
+        }
+
+        for (let j = 0; j < edgeIdsToDelete.length; j++) {
+          deleteEdge(edgeIdsToDelete[j]);
         }
       }
 
