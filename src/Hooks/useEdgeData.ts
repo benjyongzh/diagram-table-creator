@@ -1,28 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Connection, Edge, HandleType } from "reactflow";
-import edgeIdentifierSchema, {
-  EdgeIdentifier,
-} from "Types/schemas/edgeIdentifier";
+import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
 import {
   updateEdgeConnectionType,
   updateEdgeEndLabel,
 } from "Utilities/reactFlowEdges";
-import {
-  getConnectionTypeFromConnectionHandleString,
-  getHandleIndexFromConnectionHandleString,
-  getHandleNameFromConnectionHandleString,
-} from "Utilities/reactFlowHandles";
+import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
 import EdgeData from "Types/edgeData";
 import { useAppSelector } from "./reduxHooks";
+import { useStoreEdges } from "./useStoreEdges";
 
 export const useEdgeData = (edgeId: string) => {
   const allEdges: Edge[] = useAppSelector(
     (state) => state.reactFlowObjects.edges
   );
-
-  const edge: Edge = allEdges.filter((edge) => edge.id === edgeId)[0];
-
-  const [edgeData, setEdgeData] = useState<EdgeData>(edge.data);
+  const edge: Edge | null = useMemo(
+    () => allEdges.filter((edge) => edge.id === edgeId)[0],
+    [edgeId]
+  );
+  const { updateEdge } = useStoreEdges();
 
   const onHandleIdChange = (newHandleId: string, handleSide: HandleType) => {
     // check connectionType
@@ -42,15 +38,20 @@ export const useEdgeData = (edgeId: string) => {
       handleSide
     );
 
-    setEdgeData(newEdge.data);
+    // setEdgeData(newEdge.data);
+    updateEdge(newEdge, { useToast: false });
   };
 
   useEffect(() => {
-    onHandleIdChange(edge.sourceHandle!, "source");
+    if (edge && edge.sourceHandle)
+      onHandleIdChange(edge.sourceHandle, "source");
   }, [edge.sourceHandle]);
 
   useEffect(() => {
-    onHandleIdChange(edge.targetHandle!, "target");
+    if (edge && edge.targetHandle)
+      onHandleIdChange(edge.targetHandle, "target");
   }, [edge.targetHandle]);
-  return edgeData;
+
+  const edgeData: EdgeData = useMemo(() => edge.data, [edge.data]);
+  return { edgeData };
 };

@@ -189,7 +189,7 @@ export const useStoreEdges = () => {
     }
   };
 
-  const setEdge = (edge: Edge, options?: reduxObjectsHookOptions) => {
+  const updateEdge = (edge: Edge, options?: reduxObjectsHookOptions) => {
     dispatch(editEdge(edge));
     if (
       (!options || options.useToast) &&
@@ -201,5 +201,9 @@ export const useStoreEdges = () => {
     }
   };
 
-  return { editEdgesOfNodeVariant, deleteEdgesOfNode, deleteEdge };
+  return {
+    /*editEdgesOfNodeVariant,*/ updateEdge,
+    deleteEdgesOfNode,
+    deleteEdge,
+  };
 };

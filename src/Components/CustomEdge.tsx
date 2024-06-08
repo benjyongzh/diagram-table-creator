@@ -41,7 +41,6 @@ export default memo(
     style = {},
     markerEnd,
     selected,
-    data,
   }: EdgeProps) => {
     const { deleteEdgeById } = useStoreEdgeById(id);
     const [edgePath, labelX, labelY, offsetX, offsetY] = getSmoothStepPath({
@@ -63,8 +62,6 @@ export default memo(
     // use id to call reactflowslice action to remove edge
     const onButtonClick = deleteEdgeById;
 
-    const labelId: string = useMemo(() => data.mainLabel, [data.mainLabel]);
-
     return (
       <>
         <BaseEdge path={edgePath} markerEnd={markerEnd} style={style} />
@@ -72,7 +69,7 @@ export default memo(
           <EdgeLabel
             show={selected || false}
             origin={{ x: sourceX, y: sourceY }}
-            label={data.edgeStartLabel}
+            label={edgeData.edgeStartLabel}
           />
           <div
             style={{
@@ -85,7 +82,7 @@ export default memo(
               selected ? "visible" : "invisible"
             }`}
           >
-            <span className="mb-[1px]">{labelId}</span>
+            <span className="mb-[1px]">{edgeData.mainLabel}</span>
             {edgeConfig.DELETION_REQUIRES_USER_CONFIRMATION ? (
               <Modal
                 triggerElement={
@@ -103,7 +100,7 @@ export default memo(
                 modalContent={
                   <ModalConfirmation
                     title={`Delete this connection?`}
-                    text={`Connection ${labelId} will be permanently removed from your network. You cannot undo this action.`}
+                    text={`Connection ${edgeData.mainLabel} will be permanently removed from your network. You cannot undo this action.`}
                     destructive
                     action={onButtonClick}
                   />
@@ -124,7 +121,7 @@ export default memo(
           <EdgeLabel
             show={selected || false}
             origin={{ x: targetX, y: targetY }}
-            label={data.edgeEndLabel}
+            label={edgeData.edgeEndLabel}
           />
         </EdgeLabelRenderer>
       </>
