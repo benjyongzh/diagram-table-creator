@@ -9,6 +9,7 @@ import edgeConfig from "Configs/edgeConfig";
 import { randomStringGenerator } from "./strings";
 import { EdgeConnectionDirectionToNode } from "Types/edgeConnectionDirectionToNode";
 import EdgeData from "Types/edgeData";
+import { HandleVariant } from "Types/handleVariant";
 
 export const createEdgeId = (): string => {
   return randomStringGenerator(edgeConfig.ID_LENGTH);
@@ -197,4 +198,40 @@ export const updateEdgeEndLabel = (
     });
     return newEdge;
   }
+};
+
+export const edgeIsConnectedToHandleWhoseNewIndexIsNoLongerInRange = (
+  edge: Edge,
+  handles: {
+    oldHandleType: HandleVariant;
+    newHandleType: HandleVariant;
+  }
+): boolean => {
+  const { oldHandleType, newHandleType } = handles;
+
+  // check source side
+  const sourceHandleName: string = getHandleNameFromConnectionHandleString(
+    edge.sourceHandle!
+  );
+  if (sourceHandleName === oldHandleType.handleName) {
+    const sourceIndex: number = getHandleIndexFromConnectionHandleString(
+      edge.sourceHandle!
+    );
+    if (sourceIndex >= newHandleType.quantity) {
+      return true;
+    }
+  }
+  //check target side
+  const targetHandleName: string = getHandleNameFromConnectionHandleString(
+    edge.targetHandle!
+  );
+  if (targetHandleName === oldHandleType.handleName) {
+    const targetIndex: number = getHandleIndexFromConnectionHandleString(
+      edge.targetHandle!
+    );
+    if (targetIndex >= newHandleType.quantity) {
+      return true;
+    }
+  }
+  return false;
 };

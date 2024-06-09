@@ -68,17 +68,26 @@ export const useStoreEdges = () => {
             (handleType) => handleType.handleTypeId === oldHandleTypeId
           )[0];
         const edgeIdsToDelete: string[] = [];
-        if (newHandleType !== null) {
+        if (newHandleType) {
+          console.log("new", newHandleType);
           // this handleType exists is both old and new. check if handleInfo etc is same
           //* check quantity
           if (oldHandleType.quantity > newHandleType.quantity) {
             // quantity is lower now select edges who are connected to index at most newHandleType.quantity
-            const edgesToDelete = getEdgesConnectedToHandleNameMoreThanIndex(
+            const edgesToDelete: string[] = getEdgesConnectedToNodes(
               allEdges,
-              oldHandleType.handleName,
-              newHandleType.quantity
-            ).map((edge) => edge.id);
-            edgeIdsToDelete.concat(edgesToDelete);
+              nodesToCheck
+            )
+              .filter((edge) => !edgeIdsToDelete.includes(edge.id))
+              .filter((edge) =>
+                edgeIsConnectedToHandleWhoseNewIndexIsNoLongerInRange(edge, {
+                  oldHandleType,
+                  newHandleType,
+                })
+              )
+              .map((edge) => edge.id);
+            console.log("edgesToDelete", edgesToDelete);
+            edgeIdsToDelete.push(...edgesToDelete);
           }
 
           //* check handleName. will affect edges' start and end labels
@@ -161,15 +170,15 @@ export const useStoreEdges = () => {
             allEdges,
             oldHandleType.handleName
           ).map((edge) => edge.id);
-          edgeIdsToDelete.concat(edgesToDelete);
+          edgeIdsToDelete.push(...edgesToDelete);
         }
+        console.log(`edgeIdsToDelete`, edgeIdsToDelete);
 
+        // delete all in edgeIdsToDelete array
         for (let j = 0; j < edgeIdsToDelete.length; j++) {
           deleteEdge(edgeIdsToDelete[j]);
         }
       }
-
-      //* check for handleTypes that exist in new but not in old
     }
   };
 
