@@ -4,6 +4,7 @@ import {
   getConnectionTypeFromConnectionHandleString,
   getHandleNameFromConnectionHandleString,
   getHandleIndexFromConnectionHandleString,
+  replaceHandleIdHandleName,
 } from "Utilities/reactFlowHandles";
 import edgeConfig from "Configs/edgeConfig";
 import { randomStringGenerator } from "./strings";
@@ -133,6 +134,7 @@ export const getEdgeConnectionDirectionToNodes = (
   nodes: Node[]
 ): EdgeConnectionDirectionToNode[] => {
   const nodeIds: string[] = nodes.map((node: Node) => node.id);
+  console.log("nodeIds", nodeIds);
   return edges.map((edge) => {
     if (nodeIds.includes(edge.source) && nodeIds.includes(edge.target))
       return "both";
@@ -176,6 +178,35 @@ export const updateEdgeConnectionType = (
     edgeIdentifier: conectionType,
   });
   return newEdge;
+};
+
+export const updateEdgeHandleName = (
+  edge: Edge,
+  handleName: string,
+  handleType: HandleType
+): Edge => {
+  if (!edge.sourceHandle || !edge.targetHandle) return edge;
+  if (handleType === "source") {
+    const newLabel: string = replaceHandleIdHandleName(
+      edge.sourceHandle,
+      handleName
+    );
+    const newEdge: Edge = setEdgeData(edge, {
+      ...edge.data,
+      edgeStartLabel: newLabel,
+    });
+    return newEdge;
+  } else {
+    const newLabel: string = replaceHandleIdHandleName(
+      edge.targetHandle,
+      handleName
+    );
+    const newEdge: Edge = setEdgeData(edge, {
+      ...edge.data,
+      edgeEndLabel: newLabel,
+    });
+    return newEdge;
+  }
 };
 
 export const updateEdgeEndLabel = (
@@ -234,4 +265,28 @@ export const edgeIsConnectedToHandleWhoseNewIndexIsNoLongerInRange = (
     }
   }
   return false;
+};
+
+export const updateEdgeInfo = (
+  edge: Edge,
+  info: {
+    connectionType?: EdgeIdentifier;
+    sourceHandleName?: string;
+    targetHandleName?: string;
+  }
+): Edge => {
+  let newEdge = { ...edge };
+  if (info.connectionType) {
+    // connectionType changed. update edge
+    newEdge = updateEdgeConnectionType(newEdge, info.connectionType);
+  }
+  if (info.sourceHandleName) {
+    // handleName changed. update edge
+    newEdge = updateEdgeHandleName(newEdge, info.sourceHandleName, "source");
+  }
+  if (info.targetHandleName) {
+    // handleName changed. update edge
+    newEdge = updateEdgeHandleName(newEdge, info.targetHandleName, "target");
+  }
+  return newEdge;
 };

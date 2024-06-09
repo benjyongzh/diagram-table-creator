@@ -142,3 +142,10 @@ export const getHandleIndexFromConnectionHandleString = (
 ): number => {
   return parseInt(connectionHandleString.split("-")[1]);
 };
+
+export const replaceHandleIdHandleName = (
+  handleId: string,
+  newHandleName: string
+): string => {
+  return handleId.split("-").splice(0, 1, newHandleName).join("-");
+};

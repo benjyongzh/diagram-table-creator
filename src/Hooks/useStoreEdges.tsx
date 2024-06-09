@@ -23,6 +23,8 @@ import {
   getEdgesConnectedToHandleNameMoreThanIndex,
   getEdgeConnectionDirectionToNodes,
   updateEdgeConnectionType,
+  edgeIsConnectedToHandleWhoseNewIndexIsNoLongerInRange,
+  updateEdgeInfo,
 } from "Utilities/reactFlowEdges";
 import { HandleVariant } from "Types/handleVariant";
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
@@ -69,7 +71,7 @@ export const useStoreEdges = () => {
           )[0];
         const edgeIdsToDelete: string[] = [];
         if (newHandleType) {
-          console.log("new", newHandleType);
+          console.log("edited Handle Type", newHandleType);
           // this handleType exists is both old and new. check if handleInfo etc is same
           //* check quantity
           if (oldHandleType.quantity > newHandleType.quantity) {
@@ -90,78 +92,104 @@ export const useStoreEdges = () => {
             edgeIdsToDelete.push(...edgesToDelete);
           }
 
-          //* check handleName. will affect edges' start and end labels
+          const edgesToCheck: Edge[] = getEdgesConnectedToNodes(
+            allEdges,
+            nodesToCheck
+          ).filter((edge) => !edgeIdsToDelete.includes(edge.id));
 
-          //* connectionType
-          if (oldHandleType.connectionType !== newHandleType.connectionType) {
-            // connectionType has changed. for each edge, check if connection still valid
-            const edgesToCheck: Edge[] = getEdgesConnectedToNodes(
-              allEdges,
-              nodesToCheck
-            );
-            // identify if it is the source or target what is experiencing connectionType change. (if both, then edge is still valid)
-            const edgeConnectionDirections: EdgeConnectionDirectionToNode[] =
-              getEdgeConnectionDirectionToNodes(edgesToCheck, nodesToCheck);
-            for (let j = 0; j < edgeConnectionDirections.length; j++) {
-              const direction: EdgeConnectionDirectionToNode =
-                edgeConnectionDirections[j];
-              const edge: Edge = edgesToCheck[j];
-              switch (direction) {
-                case "both":
+          // identify if it is the source or target that is experiencing connectionType change. (if both, then edge is still valid)
+          const edgeConnectionDirections: EdgeConnectionDirectionToNode[] =
+            getEdgeConnectionDirectionToNodes(edgesToCheck, nodesToCheck);
+          for (let j = 0; j < edgeConnectionDirections.length; j++) {
+            // j is number of edgesToCheck
+            const direction: EdgeConnectionDirectionToNode =
+              edgeConnectionDirections[j];
+            const edge: Edge = edgesToCheck[j];
+            switch (direction) {
+              case "both":
+                {
                   // both edge is connected to affected nodes on both ends. just update connectionType in edge
-                  const newEdge: Edge = updateEdgeConnectionType(
-                    edge,
-                    newHandleType.connectionType
-                  );
-                  setEdge(newEdge);
+                  //* connectionType. will affect edges' mainLabel and connectionTypeVariantIndex
+                  //
+                  // const connectionTypeHasChanged: boolean =
+                  //   oldHandleType.connectionType !==
+                  //     newHandleType.connectionType &&
+                  //   !edgeIdsToDelete.includes(edge.id);
 
-                  break;
-                case "source":
+                  //* check handleName. will affect edges' start and end labels
+                  // const handleNameHasChanged: boolean =
+                  //   oldHandleType.handleName !== newHandleType.handleName;
+                  console.log(
+                    `both ends of edge ${edge.id} are connected to edited handleType`
+                  );
+                  const newEdge: Edge = updateEdgeInfo(edge, {
+                    connectionType: newHandleType.connectionType,
+                    sourceHandleName: newHandleType.handleName,
+                    targetHandleName: newHandleType.handleName,
+                  });
+                  updateEdge(newEdge);
+                }
+                break;
+              case "source":
+                {
                   // check if target has connectionType of either "any" or newHandleType.connectionType. else, delete edge
+                  console.log(
+                    `source end of edge ${edge.id} is connected to edited handleType`
+                  );
                   const targetConnectionType: EdgeIdentifier =
                     getConnectionTypeFromConnectionHandleString(
                       edge.targetHandle!
                     );
                   if (
-                    targetConnectionType === newHandleType.connectionType ||
-                    targetConnectionType === ""
+                    targetConnectionType !== newHandleType.connectionType &&
+                    targetConnectionType !== ""
                   ) {
-                    // update redux object
-                    const newEdge: Edge = updateEdgeConnectionType(
-                      edge,
-                      newHandleType.connectionType
-                    );
-                    setEdge(newEdge);
-                  } else {
                     // delete edge
-                    deleteEdge(edge.id);
+                    console.log(`${edge.id} will be deleted`);
+                    edgeIdsToDelete.push(edge.id);
+                    break;
                   }
-                  break;
-                case "target":
+
+                  // update redux object
+                  const newEdge: Edge = updateEdgeInfo(edge, {
+                    connectionType: newHandleType.connectionType,
+                    sourceHandleName: newHandleType.handleName,
+                  });
+                  updateEdge(newEdge);
+                }
+
+                break;
+              case "target":
+                {
                   // check if source has connectionType of either "any" or newHandleType.connectionType. else, delete edge
+                  console.log(
+                    `target end of edge ${edge.id} is connected to edited handleType`
+                  );
                   const sourceConnectionType: EdgeIdentifier =
                     getConnectionTypeFromConnectionHandleString(
                       edge.sourceHandle!
                     );
                   if (
-                    sourceConnectionType === newHandleType.connectionType ||
-                    sourceConnectionType === ""
+                    sourceConnectionType !== newHandleType.connectionType &&
+                    sourceConnectionType !== ""
                   ) {
-                    // update redux object
-                    const newEdge: Edge = updateEdgeConnectionType(
-                      edge,
-                      newHandleType.connectionType
-                    );
-                    setEdge(newEdge);
-                  } else {
                     // delete edge
-                    deleteEdge(edge.id);
+                    console.log(`${edge.id} will be deleted`);
+                    edgeIdsToDelete.push(edge.id);
+                    break;
                   }
-                  break;
+                  // update redux object
+                  const newEdge: Edge = updateEdgeInfo(edge, {
+                    connectionType: newHandleType.connectionType,
+                    targetHandleName: newHandleType.handleName,
+                  });
+                  updateEdge(newEdge);
+                }
 
-                default:
-                  break;
-              }
+                break;
+
+              default:
+                break;
             }
           }
         } else {
@@ -172,7 +200,7 @@ export const useStoreEdges = () => {
           ).map((edge) => edge.id);
           edgeIdsToDelete.push(...edgesToDelete);
         }
-        console.log(`edgeIdsToDelete`, edgeIdsToDelete);
+        console.log(`final edgeIdsToDelete`, edgeIdsToDelete);
 
         // delete all in edgeIdsToDelete array
         for (let j = 0; j < edgeIdsToDelete.length; j++) {
@@ -211,7 +239,8 @@ export const useStoreEdges = () => {
   };
 
   return {
-    /*editEdgesOfNodeVariant,*/ updateEdge,
+    editEdgesOfNodeVariant,
+    updateEdge,
     deleteEdgesOfNode,
     deleteEdge,
   };
