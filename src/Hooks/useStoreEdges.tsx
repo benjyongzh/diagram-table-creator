@@ -1,4 +1,10 @@
-import { Node, Edge, Connection, updateEdge } from "reactflow";
+import {
+  Node,
+  Edge,
+  Connection,
+  updateEdge,
+  getConnectedEdges,
+} from "reactflow";
 import { toast } from "sonner";
 
 //redux
@@ -16,7 +22,7 @@ import { EdgeConnectionDirectionToNode } from "Types/edgeConnectionDirectionToNo
 // utils
 import { EditVariant } from "Types/customNodeVariant";
 import { nodeIsOfThisVariant } from "Utilities/reactFlowNodes";
-import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
+import { handleHasIncompatibleConnectionType } from "Utilities/reactFlowHandles";
 import {
   getEdgesConnectedToHandleName,
   getEdgesConnectedToHandleNameMoreThanIndex,
@@ -134,26 +140,24 @@ export const useStoreEdges = () => {
                   console.log(
                     `source end of edge ${edge.id} is connected to edited handleType`
                   );
-                  const targetConnectionType: EdgeIdentifier =
-                    getConnectionTypeFromConnectionHandleString(
-                      edge.targetHandle!
-                    );
                   if (
-                    targetConnectionType !== newHandleType.connectionType &&
-                    targetConnectionType !== ""
+                    handleHasIncompatibleConnectionType(
+                      edge.targetHandle!,
+                      newHandleType.connectionType
+                    )
                   ) {
                     // delete edge
                     console.log(`${edge.id} will be deleted`);
                     edgeIdsToDelete.push(edge.id);
-                    break;
+                  } else {
+                    // update redux object
+                    const newEdge: Edge = updateEdgeInfo(edge, {
+                      connectionType: newHandleType.connectionType,
+                      sourceHandleName: newHandleType.handleName,
+                    });
+                    console.log("newEdge", newEdge);
+                    updateEdge(newEdge);
                   }
-
-                  // update redux object
-                  const newEdge: Edge = updateEdgeInfo(edge, {
-                    connectionType: newHandleType.connectionType,
-                    sourceHandleName: newHandleType.handleName,
-                  });
-                  updateEdge(newEdge);
                 }
 
                 break;
@@ -163,25 +167,24 @@ export const useStoreEdges = () => {
                   console.log(
                     `target end of edge ${edge.id} is connected to edited handleType`
                   );
-                  const sourceConnectionType: EdgeIdentifier =
-                    getConnectionTypeFromConnectionHandleString(
-                      edge.sourceHandle!
-                    );
                   if (
-                    sourceConnectionType !== newHandleType.connectionType &&
-                    sourceConnectionType !== ""
+                    handleHasIncompatibleConnectionType(
+                      edge.sourceHandle!,
+                      newHandleType.connectionType
+                    )
                   ) {
                     // delete edge
                     console.log(`${edge.id} will be deleted`);
                     edgeIdsToDelete.push(edge.id);
-                    break;
+                  } else {
+                    // update redux object
+                    const newEdge: Edge = updateEdgeInfo(edge, {
+                      connectionType: newHandleType.connectionType,
+                      targetHandleName: newHandleType.handleName,
+                    });
+                    console.log("newEdge", newEdge);
+                    updateEdge(newEdge);
                   }
-                  // update redux object
-                  const newEdge: Edge = updateEdgeInfo(edge, {
-                    connectionType: newHandleType.connectionType,
-                    targetHandleName: newHandleType.handleName,
-                  });
-                  updateEdge(newEdge);
                 }
 
                 break;
