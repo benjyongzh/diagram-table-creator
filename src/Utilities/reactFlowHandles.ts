@@ -147,5 +147,21 @@ export const replaceHandleIdHandleName = (
   handleId: string,
   newHandleName: string
 ): string => {
-  return handleId.split("-").splice(0, 1, newHandleName).join("-");
+  const output: string = handleId
+    .split("-")
+    .map((part, index) => (index === 0 ? newHandleName : part))
+    .join("-");
+  return output;
+};
+
+export const handleHasIncompatibleConnectionType = (
+  handleId: string,
+  desiredConnectionType: EdgeIdentifier
+): boolean => {
+  const targetConnectionType: EdgeIdentifier =
+    getConnectionTypeFromConnectionHandleString(handleId);
+  return (
+    targetConnectionType !== desiredConnectionType &&
+    targetConnectionType !== ""
+  );
 };
