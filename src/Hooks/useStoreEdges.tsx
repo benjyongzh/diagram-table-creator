@@ -18,7 +18,6 @@ import { EditVariant } from "Types/customNodeVariant";
 import { nodeIsOfThisVariant } from "Utilities/reactFlowNodes";
 import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
 import {
-  getEdgesConnectedToNodes,
   getEdgesConnectedToHandleName,
   getEdgesConnectedToHandleNameMoreThanIndex,
   getEdgeConnectionDirectionToNodes,
@@ -75,10 +74,9 @@ export const useStoreEdges = () => {
           // this handleType exists is both old and new. check if handleInfo etc is same
           //* check quantity
           if (oldHandleType.quantity > newHandleType.quantity) {
-            // quantity is lower now select edges who are connected to index at most newHandleType.quantity
-            const edgesToDelete: string[] = getEdgesConnectedToNodes(
-              allEdges,
-              nodesToCheck
+            const edgesToDelete: string[] = getConnectedEdges(
+              nodesToCheck,
+              allEdges
             )
               .filter((edge) => !edgeIdsToDelete.includes(edge.id))
               .filter((edge) =>
@@ -92,10 +90,10 @@ export const useStoreEdges = () => {
             edgeIdsToDelete.push(...edgesToDelete);
           }
 
-          const edgesToCheck: Edge[] = getEdgesConnectedToNodes(
-            allEdges,
-            nodesToCheck
-          ).filter((edge) => !edgeIdsToDelete.includes(edge.id));
+          const edgesToCheck: Edge[] = getConnectedEdges(
+            nodesToCheck,
+            allEdges
+          );
 
           // identify if it is the source or target that is experiencing connectionType change. (if both, then edge is still valid)
           const edgeConnectionDirections: EdgeConnectionDirectionToNode[] =
