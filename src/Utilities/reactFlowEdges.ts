@@ -5,6 +5,7 @@ import {
   getHandleNameFromConnectionHandleString,
   getHandleIndexFromConnectionHandleString,
   replaceHandleIdHandleName,
+  getEdgeEndLabelFromHandleId,
 } from "Utilities/reactFlowHandles";
 import edgeConfig from "Configs/edgeConfig";
 import { randomStringGenerator } from "./strings";
@@ -134,7 +135,6 @@ export const getEdgeConnectionDirectionToNodes = (
   nodes: Node[]
 ): EdgeConnectionDirectionToNode[] => {
   const nodeIds: string[] = nodes.map((node: Node) => node.id);
-  console.log("nodeIds", nodeIds);
   return edges.map((edge) => {
     if (nodeIds.includes(edge.source) && nodeIds.includes(edge.target))
       return "both";
@@ -187,24 +187,34 @@ export const updateEdgeHandleName = (
 ): Edge => {
   if (!edge.sourceHandle || !edge.targetHandle) return edge;
   if (handleType === "source") {
-    const newLabel: string = replaceHandleIdHandleName(
+    const newSourceHandle: string = replaceHandleIdHandleName(
       edge.sourceHandle,
       handleName
     );
-    const newEdge: Edge = setEdgeData(edge, {
-      ...edge.data,
-      edgeStartLabel: newLabel,
-    });
+    const newLabel: string = getEdgeEndLabelFromHandleId(newSourceHandle);
+    const newEdge: Edge = {
+      ...edge,
+      sourceHandle: newSourceHandle,
+      data: {
+        ...edge.data,
+        edgeStartLabel: newLabel,
+      },
+    };
     return newEdge;
   } else {
-    const newLabel: string = replaceHandleIdHandleName(
+    const newTargetHandle: string = replaceHandleIdHandleName(
       edge.targetHandle,
       handleName
     );
-    const newEdge: Edge = setEdgeData(edge, {
-      ...edge.data,
-      edgeEndLabel: newLabel,
-    });
+    const newLabel: string = getEdgeEndLabelFromHandleId(newTargetHandle);
+    const newEdge: Edge = {
+      ...edge,
+      targetHandle: newTargetHandle,
+      data: {
+        ...edge.data,
+        edgeEndLabel: newLabel,
+      },
+    };
     return newEdge;
   }
 };

@@ -165,3 +165,11 @@ export const handleHasIncompatibleConnectionType = (
     targetConnectionType !== ""
   );
 };
+
+export const getEdgeEndLabelFromHandleId = (handleId: string): string => {
+  const arr: string[] = handleId.split("-");
+  const output: string = arr
+    .filter((part, index) => index < arr.length - 1)
+    .join("-");
+  return output;
+};

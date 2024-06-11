@@ -92,7 +92,6 @@ export const useStoreEdges = () => {
                 })
               )
               .map((edge) => edge.id);
-            console.log("edgesToDelete", edgesToDelete);
             edgeIdsToDelete.push(...edgesToDelete);
           }
 
@@ -113,33 +112,17 @@ export const useStoreEdges = () => {
               case "both":
                 {
                   // both edge is connected to affected nodes on both ends. just update connectionType in edge
-                  //* connectionType. will affect edges' mainLabel and connectionTypeVariantIndex
-                  //
-                  // const connectionTypeHasChanged: boolean =
-                  //   oldHandleType.connectionType !==
-                  //     newHandleType.connectionType &&
-                  //   !edgeIdsToDelete.includes(edge.id);
-
-                  //* check handleName. will affect edges' start and end labels
-                  // const handleNameHasChanged: boolean =
-                  //   oldHandleType.handleName !== newHandleType.handleName;
-                  console.log(
-                    `both ends of edge ${edge.id} are connected to edited handleType`
-                  );
                   const newEdge: Edge = updateEdgeInfo(edge, {
                     connectionType: newHandleType.connectionType,
                     sourceHandleName: newHandleType.handleName,
                     targetHandleName: newHandleType.handleName,
                   });
-                  updateEdge(newEdge);
+                  updateEdge(newEdge, { useToast: false });
                 }
                 break;
               case "source":
                 {
                   // check if target has connectionType of either "any" or newHandleType.connectionType. else, delete edge
-                  console.log(
-                    `source end of edge ${edge.id} is connected to edited handleType`
-                  );
                   if (
                     handleHasIncompatibleConnectionType(
                       edge.targetHandle!,
@@ -155,8 +138,7 @@ export const useStoreEdges = () => {
                       connectionType: newHandleType.connectionType,
                       sourceHandleName: newHandleType.handleName,
                     });
-                    console.log("newEdge", newEdge);
-                    updateEdge(newEdge);
+                    updateEdge(newEdge, { useToast: false });
                   }
                 }
 
@@ -164,9 +146,6 @@ export const useStoreEdges = () => {
               case "target":
                 {
                   // check if source has connectionType of either "any" or newHandleType.connectionType. else, delete edge
-                  console.log(
-                    `target end of edge ${edge.id} is connected to edited handleType`
-                  );
                   if (
                     handleHasIncompatibleConnectionType(
                       edge.sourceHandle!,
@@ -182,8 +161,7 @@ export const useStoreEdges = () => {
                       connectionType: newHandleType.connectionType,
                       targetHandleName: newHandleType.handleName,
                     });
-                    console.log("newEdge", newEdge);
-                    updateEdge(newEdge);
+                    updateEdge(newEdge, { useToast: false });
                   }
                 }
 

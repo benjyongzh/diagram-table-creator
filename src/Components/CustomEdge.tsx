@@ -19,7 +19,6 @@ import edgeConfig from "Configs/edgeConfig";
 
 // hooks
 import { useStoreEdgeById } from "Hooks/useStoreEdgeById";
-import { useEdgeData } from "Hooks/useEdgeData";
 
 // styles
 import { Trash } from "lucide-react";
@@ -29,10 +28,6 @@ export default memo(
   ({
     id,
     sourceX,
-    source,
-    target,
-    sourceHandleId,
-    targetHandleId,
     sourceY,
     targetX,
     targetY,
@@ -40,6 +35,7 @@ export default memo(
     targetPosition,
     style = {},
     markerEnd,
+    data, // this or useEdgeData
     selected,
   }: EdgeProps) => {
     const { deleteEdgeById } = useStoreEdgeById(id);
@@ -53,13 +49,10 @@ export default memo(
       borderRadius: edgeConfig.SMOOTHSTEP_BORDER_RADIUS,
     });
 
-    const { edgeData } = useEdgeData(id);
-
     // const onEdgeClick = () => {
     // setEdges((edges) => edges.filter((edge) => edge.id !== id));
     // };
 
-    // use id to call reactflowslice action to remove edge
     const onButtonClick = deleteEdgeById;
 
     return (
@@ -69,7 +62,7 @@ export default memo(
           <EdgeLabel
             show={selected || false}
             origin={{ x: sourceX, y: sourceY }}
-            label={edgeData.edgeStartLabel}
+            label={data.edgeStartLabel}
           />
           <div
             style={{
@@ -82,7 +75,7 @@ export default memo(
               selected ? "visible" : "invisible"
             }`}
           >
-            <span className="mb-[1px]">{edgeData.mainLabel}</span>
+            <span className="mb-[1px]">{data.mainLabel}</span>
             {edgeConfig.DELETION_REQUIRES_USER_CONFIRMATION ? (
               <Modal
                 triggerElement={
@@ -100,7 +93,7 @@ export default memo(
                 modalContent={
                   <ModalConfirmation
                     title={`Delete this connection?`}
-                    text={`Connection ${edgeData.mainLabel} will be permanently removed from your network. You cannot undo this action.`}
+                    text={`Connection ${data.mainLabel} will be permanently removed from your network. You cannot undo this action.`}
                     destructive
                     action={onButtonClick}
                   />
@@ -121,7 +114,7 @@ export default memo(
           <EdgeLabel
             show={selected || false}
             origin={{ x: targetX, y: targetY }}
-            label={edgeData.edgeEndLabel}
+            label={data.edgeEndLabel}
           />
         </EdgeLabelRenderer>
       </>
