@@ -53,25 +53,10 @@ export const FormFieldHandleVariantItem = (
     border-slate-300 dark:border-slate-900 gap-2"
     >
       <div
-        className="grid grid-cols-10 gap-6"
+        className="grid grid-cols-10 gap-x-6 gap-y-0"
         // onMouseEnter={() => handleHover(true)}
         // onMouseLeave={() => handleHover(false)}
       >
-        <FormField
-          control={control}
-          name={`handle_variants.${props.indexNumber}.handleTypeId`}
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  type="hidden"
-                  {...field}
-                  defaultValue={field.value || handleTypeId}
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
         <FormField
           control={control}
           name={`handle_variants.${props.indexNumber}.handleName`}
@@ -174,6 +159,21 @@ export const FormFieldHandleVariantItem = (
                     ))}
                   </SelectContent>
                 </Select>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name={`handle_variants.${props.indexNumber}.handleTypeId`}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input
+                  type="hidden"
+                  {...field}
+                  defaultValue={field.value || handleTypeId}
+                />
               </FormControl>
             </FormItem>
           )}
