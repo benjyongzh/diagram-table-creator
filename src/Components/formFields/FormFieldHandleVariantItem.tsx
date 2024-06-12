@@ -137,9 +137,7 @@ export const FormFieldHandleVariantItem = (
               />
               <FormControl>
                 <Select
-                  onValueChange={() =>
-                    field.value === "any" ? "" : field.value
-                  }
+                  onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
@@ -160,6 +158,7 @@ export const FormFieldHandleVariantItem = (
                   </SelectContent>
                 </Select>
               </FormControl>
+              {field.value}
             </FormItem>
           )}
         />
