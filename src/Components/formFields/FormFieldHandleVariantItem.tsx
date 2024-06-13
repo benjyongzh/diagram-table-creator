@@ -20,7 +20,11 @@ import nodeConfig from "Configs/nodeConfig";
 
 // hooks
 import { ErrorMessage } from "@hookform/error-message";
-import { useFormContext } from "react-hook-form";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  useFormContext,
+} from "react-hook-form";
 import { useAppSelector } from "Hooks/reduxHooks";
 
 // ui
@@ -46,6 +50,12 @@ export const FormFieldHandleVariantItem = (
   // const [isHovered, setIsHovered] = useState(false);
 
   // const handleHover = (bool: boolean) => setIsHovered(bool);
+  const handleConnectionTypeChange = (
+    field: ControllerRenderProps<FieldValues, any>,
+    value: string
+  ) => {
+    field.onChange(value === "any" ? "" : value);
+  };
 
   return (
     <div
@@ -137,7 +147,9 @@ export const FormFieldHandleVariantItem = (
               />
               <FormControl>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(value: string) =>
+                    handleConnectionTypeChange(field, value)
+                  }
                   defaultValue={field.value}
                 >
                   <FormControl>
@@ -158,7 +170,6 @@ export const FormFieldHandleVariantItem = (
                   </SelectContent>
                 </Select>
               </FormControl>
-              {field.value}
             </FormItem>
           )}
         />
