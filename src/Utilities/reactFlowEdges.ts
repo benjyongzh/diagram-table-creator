@@ -76,9 +76,15 @@ export const getUsableEdgeIdentifierFromConnection = (
     getConnectionTypeFromConnectionHandleString(connection.sourceHandle!);
   const targetConnectionType: EdgeIdentifier =
     getConnectionTypeFromConnectionHandleString(connection.targetHandle!);
-  if (sourceConnectionType === "" && targetConnectionType !== "")
+  if (
+    sourceConnectionType === edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER &&
+    targetConnectionType !== edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER
+  )
     return targetConnectionType;
-  if (sourceConnectionType !== "" && targetConnectionType === "")
+  if (
+    sourceConnectionType !== edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER &&
+    targetConnectionType === edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER
+  )
     return sourceConnectionType;
   return targetConnectionType;
 };

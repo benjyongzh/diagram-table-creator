@@ -1,3 +1,4 @@
+import edgeConfig from "Configs/edgeConfig";
 import { EdgeIdentifier } from "./schemas/edgeIdentifier";
 
 type CustomEdgeVariant = {
@@ -10,5 +11,5 @@ export default CustomEdgeVariant;
 
 export const emptyEdgeVariant: CustomEdgeVariant = {
   edgeName: "",
-  edgeIdentifier: "",
+  edgeIdentifier: edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER,
 };

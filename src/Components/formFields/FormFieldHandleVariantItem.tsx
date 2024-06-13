@@ -16,7 +16,7 @@ import ButtonStyledIcon from "Components/ui/ButtonStyledIcon";
 
 // config
 import nodeConfig from "Configs/nodeConfig";
-// import { useState } from "react";
+import edgeConfig from "Configs/edgeConfig";
 
 // hooks
 import { ErrorMessage } from "@hookform/error-message";
@@ -54,7 +54,9 @@ export const FormFieldHandleVariantItem = (
     field: ControllerRenderProps<FieldValues, any>,
     value: string
   ) => {
-    field.onChange(value === "any" ? "" : value);
+    field.onChange(
+      value === "any" ? edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER : value
+    );
   };
 
   return (

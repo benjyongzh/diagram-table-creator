@@ -9,6 +9,7 @@ import {
 } from "./schemas/handleVariant";
 import { isEdgeIdentifier } from "./edgeIdentifier";
 import handleConfig from "Configs/handleConfig";
+import edgeConfig from "Configs/edgeConfig";
 
 export type HandleVariant = z.infer<typeof handleVariantSchema>;
 export type HandleVariantInfo = z.infer<typeof handleVariantInfoSchema>;
@@ -37,5 +38,5 @@ export const handleVariantDefaultValue: HandleVariantInfo = {
   handleName: "",
   position: Position.Left,
   quantity: nodeConfig.HANDLETYPE_QUANTITY_MIN,
-  connectionType: "", //blank = accept any connectionType
+  connectionType: edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER,
 };

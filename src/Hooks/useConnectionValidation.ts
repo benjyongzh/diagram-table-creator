@@ -19,6 +19,7 @@ import EdgeData from "Types/edgeData";
 // util
 import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
 import CustomEdgeVariant, { emptyEdgeVariant } from "Types/customEdgeVariant";
+import edgeConfig from "Configs/edgeConfig";
 
 export const useConnectionValidation = (
   allEdges: Edge[],
@@ -40,8 +41,9 @@ export const useConnectionValidation = (
       getConnectionTypeFromConnectionHandleString(connection.targetHandle);
     const result: boolean =
       sourceConnectionType === targetConnectionType ||
-      sourceConnectionType === "" ||
-      targetConnectionType === "";
+      sourceConnectionType ===
+        edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER ||
+      targetConnectionType === edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER;
     // console.log(result);
     return result;
   };

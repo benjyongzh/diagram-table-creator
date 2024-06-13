@@ -7,6 +7,7 @@ import {
 import { getSpacing } from "Utilities/numbers";
 import nodeDimensions from "Types/nodeDimensions";
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
+import edgeConfig from "Configs/edgeConfig";
 
 export const flattenHandleVariantArrayIntoHandlePropsArray = <
   T extends HandleVariant
@@ -162,7 +163,7 @@ export const handleHasIncompatibleConnectionType = (
     getConnectionTypeFromConnectionHandleString(handleId);
   return (
     targetConnectionType !== desiredConnectionType &&
-    targetConnectionType !== ""
+    targetConnectionType !== edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER
   );
 };
 

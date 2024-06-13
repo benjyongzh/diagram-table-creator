@@ -3,6 +3,7 @@ import CustomComponentNode from "Components/CustomComponentNode";
 import nodeConfigs from "Configs/nodeConfig";
 import CustomNodeVariant from "Types/customNodeVariant";
 import colors from "Types/colorString";
+import edgeConfig from "Configs/edgeConfig";
 
 const initialNodes: Array<Node> = [
   {
@@ -30,7 +31,7 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
         handleName: "bleh",
         position: Position.Right,
         quantity: 4,
-        connectionType: "",
+        connectionType: edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER,
       },
       {
         handleTypeId: "67890",
