@@ -4,7 +4,7 @@ import { DialogClose } from "Components/ui/dialog";
 import ModalType from "Types/modalType";
 import React, { useMemo } from "react";
 
-type ModalConfirmationProps = {
+export type ModalConfirmationProps = {
   title?: string;
   content: React.ReactNode;
   destructive?: boolean;

@@ -3,6 +3,9 @@ import { Button } from "../ui/button";
 import { DialogClose } from "../ui/dialog";
 import { Form } from "../ui/form";
 import { useEffect } from "react";
+import { Modal } from "./Modal";
+import { DialogTrigger } from "../ui/dialog";
+import { ModalConfirmation, ModalConfirmationProps } from "./ModalConfirmation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
@@ -15,10 +18,13 @@ type modalFormProps = {
   schema: z.ZodObject<any>;
   children: React.ReactNode;
   onSubmit: Function;
+  submitModal?: submitModalData;
 };
 
+type submitModalData = Omit<ModalConfirmationProps, "action">;
+
 export const ModalForm = (props: modalFormProps) => {
-  const { title, width, schema, children, onSubmit } = props;
+  const { title, width, schema, children, onSubmit, submitModal } = props;
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
@@ -46,9 +52,30 @@ export const ModalForm = (props: modalFormProps) => {
         >
           <FormProvider {...form}>{children}</FormProvider>
           <div className="w-full flex items-center justify-end gap-4">
-            <Button type="submit" className="px-8">
-              Submit
-            </Button>
+            {submitModal ? (
+              <Modal
+                triggerElement={
+                  <DialogTrigger>
+                    <Button type="button" className="px-8">
+                      Submit
+                    </Button>
+                  </DialogTrigger>
+                }
+                modalContent={
+                  <ModalConfirmation
+                    title={submitModal.title}
+                    content={submitModal.content}
+                    destructive={submitModal.destructive}
+                    action={onFormSubmit}
+                  />
+                }
+              />
+            ) : (
+              <Button type="submit" className="px-8">
+                Submit
+              </Button>
+            )}
+
             <DialogClose asChild>
               <Button type="button" variant="outline" className="px-8">
                 Cancel
