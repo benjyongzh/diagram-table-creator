@@ -66,7 +66,7 @@ export const ModalForm = (props: modalFormProps) => {
                     title={submitModal.title}
                     content={submitModal.content}
                     destructive={submitModal.destructive}
-                    action={onFormSubmit}
+                    action={form.handleSubmit(onFormSubmit)}
                   />
                 }
               />
