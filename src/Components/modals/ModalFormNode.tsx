@@ -9,6 +9,7 @@ import CustomNodeVariant from "Types/nodes/customNodeVariant";
 // hooks
 import { useStoreNodeVariants } from "Hooks/useStoreNodeVariants";
 import { useModalForm } from "Hooks/useModalForm";
+import { useMemo } from "react";
 
 type ModalFormNodeProps = {
   setModalOpen: Function;
@@ -38,7 +39,7 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
           props.setModalOpen(false)
         );
       } catch (error) {
-        formSubmitFailure("Error editing node", `${error}`);
+        formSubmitFailure("Error editing component", `${error}`);
       }
     } else {
       try {
@@ -57,12 +58,48 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
     }
   };
 
+  const submitModalContent = useMemo(
+    () =>
+      props.variant && (
+        <div className="flex flex-col gap-2">
+          <span>{`${props.variant.nodeName}'s connections will be affected by any changes. You cannot undo this action.`}</span>
+        </div>
+      ),
+    [props.variant]
+  );
+
+  const submitMiddleware = (
+    data: z.infer<typeof schema>
+  ): z.infer<typeof schema> => {
+    //* middleware logic before real form submission
+    console.log(data);
+    //* list down differences
+    const newNodeVariant: CustomNodeVariant = {
+      nodeName: data.component_name,
+      handleTypes: data.handle_variants,
+      color: data.color,
+    };
+    if (JSON.stringify(props.variant) !== JSON.stringify(newNodeVariant)) {
+      //* spawn modalConfirmation. how?
+    }
+
+    return data;
+  };
+
   return (
     <ModalForm
-      title={props.variant ? "Edit Node" : "Create New Node"}
+      title={props.variant ? "Edit Component" : "Create New Component"}
       width={760}
       schema={schema}
       onSubmit={onNodeFormSubmit}
+      submitModal={
+        props.variant && {
+          title: `Confirm edit ${props.variant.nodeName}?`,
+          content: submitModalContent,
+          destructive: false,
+        }
+      }
+      submitMiddleware={submitMiddleware}
     >
       <FormFieldGroupNode variant={props.variant && props.variant} />
     </ModalForm>
