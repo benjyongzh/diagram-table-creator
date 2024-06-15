@@ -15,7 +15,7 @@ import { ModalConfirmation } from "./modals/ModalConfirmation";
 //config
 import nodeConfig, {
   nodeBackgroundBrightnessTailwind,
-} from "Configs/nodeConfig";
+} from "@/Configs/nodeConfig";
 
 // utils
 import {
@@ -24,7 +24,7 @@ import {
   getHandleSpacingAndArrayPerNodeSide,
   handleSpacingAndArray,
   formatHandleId,
-} from "Utilities/reactFlowHandles";
+} from "@/Services/reactFlowHandles";
 import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 
 // hooks

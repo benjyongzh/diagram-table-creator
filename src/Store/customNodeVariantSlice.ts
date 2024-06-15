@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { StoreCustomNodeVariants } from "Types/storeCustomNodeVariants";
-import CustomNodeVariant, { EditVariant } from "Types/customNodeVariant";
+import { StoreCustomNodeVariants } from "Types/store/storeCustomNodeVariants";
+import CustomNodeVariant, { EditVariant } from "Types/nodes/customNodeVariant";
 
 // Define the initial state using that type
 const initialState: StoreCustomNodeVariants = {

@@ -18,9 +18,12 @@
       "Types/*": ["./src/Data/Types/*"],
       "Objects/*": ["./src/Data/Objects/*"],
       "Features/*": ["./src/Data/Features/*"],
-      "Configs/*": ["./src/Data/Configs/*"],
+      "Configs/*": ["./src/Configs/*"],
       "Utilities/*": ["./src/Utilities/*"],
       "Hooks/*": ["./src/Hooks/*"],
+      "Services/*": ["./src/Services/*"],
+      "Store/*": ["./src/Store/*"],
+      "Tests/*": ["./src/Tests/*"],
       "Styles/*": ["./src/Styles/*"],
       "@/*": ["./src/*"]
     },

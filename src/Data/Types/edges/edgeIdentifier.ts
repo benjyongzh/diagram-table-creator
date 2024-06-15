@@ -1,4 +1,4 @@
-import { EdgeIdentifier } from "./schemas/edgeIdentifier";
+import { EdgeIdentifier } from "../schemas/edgeIdentifier";
 
 export const isEdgeIdentifier = (arg: any): arg is EdgeIdentifier => {
   return (

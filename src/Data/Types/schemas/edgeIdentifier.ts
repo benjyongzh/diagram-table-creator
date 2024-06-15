@@ -1,5 +1,5 @@
 import { z } from "zod";
-import edgeConfig from "Configs/edgeConfig";
+import edgeConfig from "@/Configs/edgeConfig";
 
 const edgeIdentifierSchema = z
   .string()

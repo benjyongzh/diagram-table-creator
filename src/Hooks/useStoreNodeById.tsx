@@ -2,7 +2,7 @@ import { Node } from "reactflow";
 import { toast } from "sonner";
 
 //redux
-import { removeNode } from "Features/reactFlowSlice";
+import { removeNode } from "@/Store/reactFlowSlice";
 
 // hooks
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
@@ -13,10 +13,10 @@ import { useStoreEdges } from "./useStoreEdges";
 import { reduxObjectsHookOptions } from "Types/reduxObjectsHookOptions";
 
 //config
-import nodeConfig from "Configs/nodeConfig";
+import nodeConfig from "@/Configs/nodeConfig";
 
 //utils
-import { getComponentNameTextFromNodeData } from "Utilities/reactFlowNodes";
+import { getComponentNameTextFromNodeData } from "@/Services/reactFlowNodes";
 
 export const useStoreNodeById = (nodeId: string) => {
   const dispatch = useAppDispatch();

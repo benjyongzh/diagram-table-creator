@@ -1,7 +1,7 @@
 import { Position } from "reactflow";
 import { z } from "zod";
-import nodeConfig from "Configs/nodeConfig";
-import handleConfig from "Configs/handleConfig";
+import nodeConfig from "@/Configs/nodeConfig";
+import handleConfig from "@/Configs/handleConfig";
 import edgeIdentifierSchema from "./edgeIdentifier";
 
 export const handleVariantInfoSchema = z.object({

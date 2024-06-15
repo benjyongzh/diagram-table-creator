@@ -1,4 +1,4 @@
-import { nodeBackgroundBrightnessTailwind } from "Configs/nodeConfig";
+import { nodeBackgroundBrightnessTailwind } from "@/Configs/nodeConfig";
 
 export const getNodeBackgroundColourStyleTailwind = (
   color: string

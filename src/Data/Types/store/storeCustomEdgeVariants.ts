@@ -1,4 +1,4 @@
-import CustomEdgeVariant from "./customEdgeVariant";
+import CustomEdgeVariant from "../edges/customEdgeVariant";
 
 export type StoreCustomEdgeVariants = {
   variants: Array<CustomEdgeVariant>;

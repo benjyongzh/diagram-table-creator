@@ -18,10 +18,10 @@ import { Settings, CirclePlus } from "lucide-react";
 import { useAppSelector } from "Hooks/reduxHooks";
 import { useSidebarListItemState } from "Hooks/useSidebarListItemState";
 
-import CustomNodeVariant from "Types/customNodeVariant";
-import CustomEdgeVariant from "Types/customEdgeVariant";
+import CustomNodeVariant from "Types/nodes/customNodeVariant";
+import CustomEdgeVariant from "Types/edges/customEdgeVariant";
 
-import featureFlags from "Configs/featureFlags";
+import featureFlags from "@/Configs/featureFlags";
 import { Modal } from "./modals/Modal";
 
 export const Sidebar = () => {

@@ -15,8 +15,8 @@ import { FormItem, FormControl, FormMessage } from "Components/ui/form";
 import ButtonStyledIcon from "Components/ui/ButtonStyledIcon";
 
 // config
-import nodeConfig from "Configs/nodeConfig";
-import edgeConfig from "Configs/edgeConfig";
+import nodeConfig from "@/Configs/nodeConfig";
+import edgeConfig from "@/Configs/edgeConfig";
 
 // hooks
 import { ErrorMessage } from "@hookform/error-message";

@@ -1,9 +1,9 @@
 import { Node, NodeTypes, Position } from "reactflow";
 import CustomComponentNode from "Components/CustomComponentNode";
-import nodeConfigs from "Configs/nodeConfig";
-import CustomNodeVariant from "Types/customNodeVariant";
+import nodeConfigs from "@/Configs/nodeConfig";
+import CustomNodeVariant from "Types/nodes/customNodeVariant";
 import colors from "Types/colorString";
-import edgeConfig from "Configs/edgeConfig";
+import edgeConfig from "@/Configs/edgeConfig";
 
 const initialNodes: Array<Node> = [
   {

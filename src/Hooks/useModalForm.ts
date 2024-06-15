@@ -1,4 +1,4 @@
-import nodeConfig from "Configs/nodeConfig";
+import nodeConfig from "@/Configs/nodeConfig";
 import { toast } from "sonner";
 
 export const useModalForm = () => {

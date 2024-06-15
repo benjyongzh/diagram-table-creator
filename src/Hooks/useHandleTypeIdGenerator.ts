@@ -1,4 +1,4 @@
-import handleConfig from "Configs/handleConfig";
+import handleConfig from "@/Configs/handleConfig";
 import { randomStringGenerator } from "Utilities/strings";
 import { useState, useEffect } from "react";
 

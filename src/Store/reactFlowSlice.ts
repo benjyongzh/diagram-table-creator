@@ -3,7 +3,7 @@ import {
   StoreReactFlowObjects,
   updateVariantCountAction,
   updateVariantCountOptions,
-} from "Types/storeReactFlowObjects";
+} from "Types/store/storeReactFlowObjects";
 import {
   Node,
   NodeChange,
@@ -19,10 +19,10 @@ import {
   createNodeCountLibrary,
   addIndexNumberToNodesBasedOnCountLibrary,
   nodeIsOfThisVariant,
-} from "Utilities/reactFlowNodes";
+} from "@/Services/reactFlowNodes";
 import { countLibraryEdit } from "Utilities/objects";
-import nodeConfigs from "Configs/nodeConfig";
-import { EditVariant } from "Types/customNodeVariant";
+import nodeConfigs from "@/Configs/nodeConfig";
+import { EditVariant } from "Types/nodes/customNodeVariant";
 
 // Define the initial state using that type
 const initialState: StoreReactFlowObjects = {

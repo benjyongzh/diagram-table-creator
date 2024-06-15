@@ -20,12 +20,12 @@ import { useFormContext, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 
 // types
-import { handleVariantDefaultValue } from "Types/handleVariant";
+import { handleVariantDefaultValue } from "Types/handles/handleVariant";
 import colors from "Types/colorString";
-import CustomNodeVariant from "Types/customNodeVariant";
+import CustomNodeVariant from "Types/nodes/customNodeVariant";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
 import { randomStringGenerator } from "Utilities/strings";
-import handleConfig from "Configs/handleConfig";
+import handleConfig from "@/Configs/handleConfig";
 
 type FormFieldGroupNodeProps = {
   variant?: CustomNodeVariant;

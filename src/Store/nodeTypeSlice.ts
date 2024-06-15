@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { StoreNodeTypes } from "Types/storeNodeTypes";
+import { StoreNodeTypes } from "Types/store/storeNodeTypes";
 import { NodeTypes } from "reactflow";
 import { removeSubsetObject } from "Utilities/objects";
 

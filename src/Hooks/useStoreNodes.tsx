@@ -1,18 +1,18 @@
 //redux
-import nodeConfig from "Configs/nodeConfig";
+import nodeConfig from "@/Configs/nodeConfig";
 import {
   addNode as addNewNode,
   editNodesByVariant,
-} from "Features/reactFlowSlice";
+} from "@/Store/reactFlowSlice";
 
 // hooks
 import { useAppDispatch } from "Hooks/reduxHooks";
 
 // types
-import CustomNodeVariant, { EditVariant } from "Types/customNodeVariant";
+import CustomNodeVariant, { EditVariant } from "Types/nodes/customNodeVariant";
 
 //utils
-import { createNodeFromData } from "Utilities/reactFlowNodes";
+import { createNodeFromData } from "@/Services/reactFlowNodes";
 import { useStoreEdges } from "./useStoreEdges";
 
 export const useStoreNodes = () => {

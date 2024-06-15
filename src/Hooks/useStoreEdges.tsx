@@ -8,21 +8,21 @@ import {
 import { toast } from "sonner";
 
 //redux
-import { removeEdge, editEdge } from "Features/reactFlowSlice";
+import { removeEdge, editEdge } from "@/Store/reactFlowSlice";
 
 // hooks
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 
 // config
-import edgeConfig from "Configs/edgeConfig";
+import edgeConfig from "@/Configs/edgeConfig";
 
 // types
-import { EdgeConnectionDirectionToNode } from "Types/edgeConnectionDirectionToNode";
+import { EdgeConnectionDirectionToNode } from "Types/edges/edgeConnectionDirectionToNode";
 
 // utils
-import { EditVariant } from "Types/customNodeVariant";
-import { nodeIsOfThisVariant } from "Utilities/reactFlowNodes";
-import { handleHasIncompatibleConnectionType } from "Utilities/reactFlowHandles";
+import { EditVariant } from "Types/nodes/customNodeVariant";
+import { nodeIsOfThisVariant } from "@/Services/reactFlowNodes";
+import { handleHasIncompatibleConnectionType } from "@/Services/reactFlowHandles";
 import {
   getEdgesConnectedToHandleName,
   getEdgesConnectedToHandleNameMoreThanIndex,
@@ -30,8 +30,8 @@ import {
   updateEdgeConnectionType,
   edgeIsConnectedToHandleWhoseNewIndexIsNoLongerInRange,
   updateEdgeInfo,
-} from "Utilities/reactFlowEdges";
-import { HandleVariant } from "Types/handleVariant";
+} from "@/Services/reactFlowEdges";
+import { HandleVariant } from "Types/handles/handleVariant";
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
 import { reduxObjectsHookOptions } from "Types/reduxObjectsHookOptions";
 

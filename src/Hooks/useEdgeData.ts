@@ -4,9 +4,9 @@ import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
 import {
   updateEdgeConnectionType,
   updateEdgeEndLabel,
-} from "Utilities/reactFlowEdges";
-import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
-import EdgeData from "Types/edgeData";
+} from "@/Services/reactFlowEdges";
+import { getConnectionTypeFromConnectionHandleString } from "@/Services/reactFlowHandles";
+import EdgeData from "Types/edges/edgeData";
 import { useAppSelector } from "./reduxHooks";
 import { useStoreEdges } from "./useStoreEdges";
 

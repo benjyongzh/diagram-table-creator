@@ -8,7 +8,7 @@ import { SidebarListItem } from "./SidebarListItem";
 import { DialogTrigger } from "./ui/dialog";
 
 // types
-import CustomNodeVariant from "Types/customNodeVariant";
+import CustomNodeVariant from "Types/nodes/customNodeVariant";
 
 // hooks
 import { useStoreNodes } from "Hooks/useStoreNodes";

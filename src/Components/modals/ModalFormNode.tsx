@@ -4,7 +4,7 @@ import { z } from "zod";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
 
 //redux
-import CustomNodeVariant from "Types/customNodeVariant";
+import CustomNodeVariant from "Types/nodes/customNodeVariant";
 
 // hooks
 import { useStoreNodeVariants } from "Hooks/useStoreNodeVariants";

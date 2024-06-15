@@ -6,20 +6,22 @@ import {
   createEdgeMainLabel,
   createEdgeLabelAtSource,
   createEdgeLabelAtTarget,
-} from "Utilities/reactFlowEdges";
+} from "@/Services/reactFlowEdges";
 
 //redux
 
 // types
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
-import EdgeData from "Types/edgeData";
+import EdgeData from "Types/edges/edgeData";
 
 // hooks
 
 // util
-import { getConnectionTypeFromConnectionHandleString } from "Utilities/reactFlowHandles";
-import CustomEdgeVariant, { emptyEdgeVariant } from "Types/customEdgeVariant";
-import edgeConfig from "Configs/edgeConfig";
+import { getConnectionTypeFromConnectionHandleString } from "@/Services/reactFlowHandles";
+import CustomEdgeVariant, {
+  emptyEdgeVariant,
+} from "Types/edges/customEdgeVariant";
+import edgeConfig from "@/Configs/edgeConfig";
 
 export const useConnectionValidation = (
   allEdges: Edge[],

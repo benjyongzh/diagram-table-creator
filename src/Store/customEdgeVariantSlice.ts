@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { StoreCustomEdgeVariants } from "Types/storeCustomEdgeVariants";
-import CustomEdgeVariant from "Types/customEdgeVariant";
+import { StoreCustomEdgeVariants } from "Types/store/storeCustomEdgeVariants";
+import CustomEdgeVariant from "Types/edges/customEdgeVariant";
 
 // Define the initial state using that type
 const initialState: StoreCustomEdgeVariants = {

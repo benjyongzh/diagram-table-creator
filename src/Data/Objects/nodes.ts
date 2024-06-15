@@ -1,4 +1,4 @@
-import nodeConfigs from "Configs/nodeConfig";
+import nodeConfigs from "@/Configs/nodeConfig";
 import { nodeStyle } from "Styles/node";
 
 export const standardNodeData = {

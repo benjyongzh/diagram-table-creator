@@ -1,6 +1,6 @@
 import { ReactFlowProvider } from "reactflow";
 import { Provider as ReduxProvider } from "react-redux";
-import { store } from "Objects/store";
+import { store } from "@/Store/store";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import ReactFlowContainer from "./ReactFlowContainer";
 import { Sidebar } from "./Sidebar";

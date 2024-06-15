@@ -20,7 +20,7 @@ import DevTools from "./DevTools";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 
 //config
-import featureFlags from "Configs/featureFlags";
+import featureFlags from "@/Configs/featureFlags";
 
 //redux
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
@@ -32,9 +32,9 @@ import {
   onConnect as onReactFlowConnect,
   setAllNodes,
   setAllEdges,
-} from "Features/reactFlowSlice";
-import { setAllNodeVariants } from "Features/customNodeVariantSlice";
-import { setAllEdgeVariants } from "Features/customEdgeVariantSlice";
+} from "@/Store/reactFlowSlice";
+import { setAllNodeVariants } from "@/Store/customNodeVariantSlice";
+import { setAllEdgeVariants } from "@/Store/customEdgeVariantSlice";
 
 //hooks
 import { useConnectionValidation } from "Hooks/useConnectionValidation";

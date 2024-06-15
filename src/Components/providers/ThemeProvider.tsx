@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import displayConfig from "Configs/displayConfig";
+import displayConfig from "@/Configs/displayConfig";
 
 export type Theme = "dark" | "light" | "system";
 

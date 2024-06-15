@@ -3,7 +3,7 @@ import { RowItemWithTitleDescContent } from "../RowItemWithTitleDescContent";
 import { Switch } from "../ui/switch";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "../providers/ThemeProvider";
-import featureFlags from "Configs/featureFlags";
+import featureFlags from "@/Configs/featureFlags";
 import ModalType from "Types/modalType";
 
 export const ModalSettings = () => {

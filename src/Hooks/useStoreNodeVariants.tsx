@@ -3,14 +3,14 @@ import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 import {
   addNewNodeVariant,
   editNodeVariant,
-} from "Features/customNodeVariantSlice";
+} from "@/Store/customNodeVariantSlice";
 
 // types
-import CustomNodeVariant, { EditVariant } from "Types/customNodeVariant";
+import CustomNodeVariant, { EditVariant } from "Types/nodes/customNodeVariant";
 
 // hooks
 import { useStoreNodes } from "./useStoreNodes";
-import featureFlags from "Configs/featureFlags";
+import featureFlags from "@/Configs/featureFlags";
 
 export const useStoreNodeVariants = () => {
   const dispatch = useAppDispatch();

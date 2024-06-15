@@ -1,7 +1,7 @@
 import { Edge, EdgeTypes } from "reactflow";
-import edgeConfig from "Configs/edgeConfig";
+import edgeConfig from "@/Configs/edgeConfig";
 import CustomEdge from "Components/CustomEdge";
-import CustomEdgeVariant from "Types/customEdgeVariant";
+import CustomEdgeVariant from "Types/edges/customEdgeVariant";
 
 const initialEdges: Array<Edge> = [
   {

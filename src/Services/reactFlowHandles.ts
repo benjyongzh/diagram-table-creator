@@ -1,13 +1,13 @@
-import { HandleVariant } from "Types/handleVariant";
+import { HandleVariant } from "Types/handles/handleVariant";
 import { HandleProps, Position } from "reactflow";
 import {
   groupBy,
   convertObjectGroupingOfArraysToCountLibrary,
-} from "./objects";
+} from "../Utilities/objects";
 import { getSpacing } from "Utilities/numbers";
-import nodeDimensions from "Types/nodeDimensions";
+import nodeDimensions from "Types/nodes/nodeDimensions";
 import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
-import edgeConfig from "Configs/edgeConfig";
+import edgeConfig from "@/Configs/edgeConfig";
 
 export const flattenHandleVariantArrayIntoHandlePropsArray = <
   T extends HandleVariant

@@ -1,15 +1,15 @@
 import { HandleType, Position } from "reactflow";
 import { isPosition } from "./position";
 import { isHandleType } from "./handleType";
-import nodeConfig from "Configs/nodeConfig";
+import nodeConfig from "@/Configs/nodeConfig";
 import { z } from "zod";
 import {
   handleVariantSchema,
   handleVariantInfoSchema,
-} from "./schemas/handleVariant";
-import { isEdgeIdentifier } from "./edgeIdentifier";
-import handleConfig from "Configs/handleConfig";
-import edgeConfig from "Configs/edgeConfig";
+} from "../schemas/handleVariant";
+import { isEdgeIdentifier } from "../edges/edgeIdentifier";
+import handleConfig from "@/Configs/handleConfig";
+import edgeConfig from "@/Configs/edgeConfig";
 
 export type HandleVariant = z.infer<typeof handleVariantSchema>;
 export type HandleVariantInfo = z.infer<typeof handleVariantInfoSchema>;

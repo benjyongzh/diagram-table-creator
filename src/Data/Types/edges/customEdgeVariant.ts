@@ -1,5 +1,5 @@
-import edgeConfig from "Configs/edgeConfig";
-import { EdgeIdentifier } from "./schemas/edgeIdentifier";
+import edgeConfig from "@/Configs/edgeConfig";
+import { EdgeIdentifier } from "../schemas/edgeIdentifier";
 
 type CustomEdgeVariant = {
   edgeName: string;

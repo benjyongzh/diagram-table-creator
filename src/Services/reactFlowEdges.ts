@@ -6,12 +6,12 @@ import {
   getHandleIndexFromConnectionHandleString,
   replaceHandleIdHandleName,
   getEdgeEndLabelFromHandleId,
-} from "Utilities/reactFlowHandles";
-import edgeConfig from "Configs/edgeConfig";
-import { randomStringGenerator } from "./strings";
-import { EdgeConnectionDirectionToNode } from "Types/edgeConnectionDirectionToNode";
-import EdgeData from "Types/edgeData";
-import { HandleVariant } from "Types/handleVariant";
+} from "@/Services/reactFlowHandles";
+import edgeConfig from "@/Configs/edgeConfig";
+import { randomStringGenerator } from "../Utilities/strings";
+import { EdgeConnectionDirectionToNode } from "Types/edges/edgeConnectionDirectionToNode";
+import EdgeData from "Types/edges/edgeData";
+import { HandleVariant } from "Types/handles/handleVariant";
 
 export const createEdgeId = (): string => {
   return randomStringGenerator(edgeConfig.ID_LENGTH);

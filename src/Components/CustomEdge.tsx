@@ -15,7 +15,7 @@ import { DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 
 // config
-import edgeConfig from "Configs/edgeConfig";
+import edgeConfig from "@/Configs/edgeConfig";
 
 // hooks
 import { useStoreEdgeById } from "Hooks/useStoreEdgeById";

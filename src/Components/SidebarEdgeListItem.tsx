@@ -7,7 +7,7 @@ import { SidebarListItem } from "./SidebarListItem";
 import { DialogTrigger } from "./ui/dialog";
 
 // types
-import CustomEdgeVariant from "Types/customEdgeVariant";
+import CustomEdgeVariant from "Types/edges/customEdgeVariant";
 
 // hooks
 
@@ -22,7 +22,7 @@ type sidebarEdgeListItemProps = {
 
 export const SidebarEdgeListItem = (props: sidebarEdgeListItemProps) => {
   const { variant, onHover, isFocused } = props;
-  const [modalEditNodeIsOpen, setModalEditNodeIsOpen] = useState(false);
+  const [modalEditEdgeIsOpen, setModalEditEdgeIsOpen] = useState(false);
 
   const isHovered = (bool: boolean) => {
     onHover(bool ? variant : null);
@@ -41,8 +41,8 @@ export const SidebarEdgeListItem = (props: sidebarEdgeListItemProps) => {
         >
           {/* <Modal
             openState={{
-              open: modalEditNodeIsOpen,
-              setOpen: setModalEditNodeIsOpen,
+              open: modalEditEdgeIsOpen,
+              setOpen: setModalEditEdgeIsOpen,
             }}
             triggerElement={
               <DialogTrigger> */}
@@ -53,7 +53,7 @@ export const SidebarEdgeListItem = (props: sidebarEdgeListItemProps) => {
             }
             modalContent={
               <ModalFormNode
-                setModalOpen={setModalEditNodeIsOpen}
+                setModalOpen={setModalEditEdgeIsOpen}
                 variant={variant}
               />
             }

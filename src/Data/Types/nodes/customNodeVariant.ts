@@ -1,5 +1,5 @@
-import { HandleVariant } from "./handleVariant";
-import colors from "./colorString";
+import { HandleVariant } from "../handles/handleVariant";
+import colors from "../colorString";
 
 type CustomNodeVariant = {
   nodeName: string;
