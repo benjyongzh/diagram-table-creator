@@ -93,7 +93,7 @@ export default memo(
                 modalContent={
                   <ModalConfirmation
                     title={`Delete this connection?`}
-                    text={`Connection ${data.mainLabel} will be permanently removed from your network. You cannot undo this action.`}
+                    content={`Connection ${data.mainLabel} will be permanently removed from your network. You cannot undo this action.`}
                     destructive
                     action={onButtonClick}
                   />

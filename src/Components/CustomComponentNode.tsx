@@ -5,6 +5,7 @@ import {
   Position,
   HandleProps,
   useUpdateNodeInternals,
+  Edge,
 } from "reactflow";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { Modal } from "./modals/Modal";
@@ -28,6 +29,7 @@ import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 
 // hooks
 import { useStoreNodeById } from "Hooks/useStoreNodeById";
+import { useConnectedEdges } from "Hooks/useConnectedEdges";
 
 //styles
 import { X } from "lucide-react";
@@ -37,6 +39,7 @@ import defaultHandleStyles from "Styles/handle";
 export default memo((props: NodeProps) => {
   const { id, data } = props;
   const updateNodeInternals = useUpdateNodeInternals();
+  const connectedEdges: Edge[] = useConnectedEdges(id);
   const { nodeHeight, nodeWidth, removeNodeById } = useStoreNodeById(id);
 
   // use id to call reactflowslice action to remove node
@@ -117,6 +120,21 @@ export default memo((props: NodeProps) => {
     [nodeHeight, nodeWidth, data.handleTypes]
   );
 
+  const modalConfirmationContent = useMemo(
+    () => (
+      <div className="flex flex-col gap-2">
+        <span className="menu-text">{`${data.nodeName} ${data.variantIndex} will be permanently removed from your network. You cannot undo this action.`}</span>
+        <span className="menu-text">{`The following connections will also be removed:`}</span>
+        <div className="flex flex-col items-start">
+          {connectedEdges.map((edge) => (
+            <span className="menu-text ml-3">{edge.data.mainLabel}</span>
+          ))}
+        </div>
+      </div>
+    ),
+    [data.nodeName, data.variantIndex, connectedEdges]
+  );
+
   return (
     <div
       className={`relative nodeComponent cursor-auto
@@ -153,7 +171,7 @@ export default memo((props: NodeProps) => {
           modalContent={
             <ModalConfirmation
               title={`Delete this component?`}
-              text={`${data.nodeName} ${data.variantIndex} will be permanently removed from your network. You cannot undo this action.`}
+              content={modalConfirmationContent}
               destructive
               action={onDeleteButtonClicked}
             />
