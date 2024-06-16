@@ -68,23 +68,22 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
     [props.variant]
   );
 
-  const submitMiddleware = (
-    data: z.infer<typeof schema>
-  ): z.infer<typeof schema> => {
-    //* middleware logic before real form submission
-    console.log(data);
-    //* list down differences
-    const newNodeVariant: CustomNodeVariant = {
-      nodeName: data.component_name,
-      handleTypes: data.handle_variants,
-      color: data.color,
-    };
-    if (JSON.stringify(props.variant) !== JSON.stringify(newNodeVariant)) {
-      //* spawn modalConfirmation. how?
-    }
+  // const submitMiddleware = (
+  //   data: z.infer<typeof schema>
+  // ): z.infer<typeof schema> => {
+  //   // middleware logic before real form submission
+  //   // check differences
+  //   const newNodeVariant: CustomNodeVariant = {
+  //     nodeName: data.component_name,
+  //     handleTypes: data.handle_variants,
+  //     color: data.color,
+  //   };
+  //   if (JSON.stringify(props.variant) !== JSON.stringify(newNodeVariant)) {
+  //     //* spawn modalConfirmation. how?
+  //   }
 
-    return data;
-  };
+  //   return data;
+  // };
 
   return (
     <ModalForm
@@ -99,7 +98,7 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
           destructive: false,
         }
       }
-      submitMiddleware={submitMiddleware}
+      // submitMiddleware={submitMiddleware}
     >
       <FormFieldGroupNode variant={props.variant && props.variant} />
     </ModalForm>

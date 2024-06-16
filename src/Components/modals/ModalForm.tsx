@@ -2,7 +2,7 @@ import { ModalContentWrapper } from "./ModalContentWrapper";
 import { Button } from "../ui/button";
 import { DialogClose } from "../ui/dialog";
 import { Form } from "../ui/form";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Modal } from "./Modal";
 import { DialogTrigger } from "../ui/dialog";
 import { ModalConfirmation, ModalConfirmationProps } from "./ModalConfirmation";
@@ -18,7 +18,7 @@ type modalFormProps = {
   schema: z.ZodObject<any>;
   children: React.ReactNode;
   onSubmit: Function;
-  submitMiddleware?: Function;
+  // submitMiddleware?: Function;
   submitModal?: submitModalData;
 };
 
@@ -31,7 +31,7 @@ export const ModalForm = (props: modalFormProps) => {
     schema,
     children,
     onSubmit,
-    submitMiddleware,
+    // submitMiddleware,
     submitModal,
   } = props;
   const form = useForm<z.infer<typeof schema>>({
@@ -43,16 +43,21 @@ export const ModalForm = (props: modalFormProps) => {
     try {
       // await fetch()
       //* callback for props to execute logic as middleware before real submission. after callback then onSubmit
-      if (submitMiddleware) {
-        const newData: z.infer<typeof schema> = submitMiddleware(data);
-        await onSubmit(newData);
-      } else {
-        await onSubmit(data);
-      }
+      // if (submitMiddleware) {
+      //   const newData: z.infer<typeof schema> = submitMiddleware(data);
+      //   await onSubmit(newData);
+      // } else {
+      await onSubmit(data);
+      // }
     } catch (e) {
       // handle your error
     }
   };
+
+  const hasSubmitModal = useMemo(
+    () => submitModal && form.formState.isDirty,
+    [submitModal, form.formState.isDirty /*, JSON.stringify(form.getValues())*/]
+  );
 
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) form.reset();
@@ -67,7 +72,7 @@ export const ModalForm = (props: modalFormProps) => {
         >
           <FormProvider {...form}>{children}</FormProvider>
           <div className="w-full flex items-center justify-end gap-4">
-            {submitModal ? (
+            {hasSubmitModal ? (
               <Modal
                 triggerElement={
                   <DialogTrigger>
@@ -78,9 +83,9 @@ export const ModalForm = (props: modalFormProps) => {
                 }
                 modalContent={
                   <ModalConfirmation
-                    title={submitModal.title}
-                    content={submitModal.content}
-                    destructive={submitModal.destructive}
+                    title={submitModal!.title}
+                    content={submitModal!.content}
+                    destructive={submitModal!.destructive}
                     action={form.handleSubmit(onFormSubmit)}
                   />
                 }
