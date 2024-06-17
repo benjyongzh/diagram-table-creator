@@ -11,9 +11,15 @@ import { useStoreNodeVariants } from "Hooks/useStoreNodeVariants";
 import { useModalForm } from "Hooks/useModalForm";
 import { useMemo } from "react";
 
+import { onFormSubmitParams, onFormSubmitFunction } from "./ModalForm";
+
 type ModalFormNodeProps = {
   setModalOpen: Function;
   variant?: CustomNodeVariant;
+};
+
+type modalFormNodeSubmitArgs = Omit<onFormSubmitParams, "data"> & {
+  data: z.infer<typeof schema>;
 };
 
 const schema = formSchemaNewNode;
@@ -22,8 +28,11 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
   const { addVariant, editVariant } = useStoreNodeVariants();
   const { formSubmitSuccess, formSubmitFailure } = useModalForm();
 
-  const onNodeFormSubmit = async (data: z.infer<typeof schema>) => {
-    console.log(data);
+  const onNodeFormSubmit: onFormSubmitFunction = async (
+    formData: modalFormNodeSubmitArgs
+  ) => {
+    const { data, form } = formData;
+    // console.log(data);
 
     if (props.variant) {
       // edit redux node variant slice
@@ -33,11 +42,15 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
           handleTypes: data.handle_variants,
           color: data.color,
         };
-        // await inserting data into DB
-        editVariant({ old: props.variant, new: newNodeVariant });
-        formSubmitSuccess("Component edited", data.component_name, () =>
-          props.setModalOpen(false)
-        );
+        if (form.formState.isDirty) {
+          // await inserting data into DB
+          editVariant({ old: props.variant, new: newNodeVariant });
+          formSubmitSuccess("Component edited", data.component_name, () =>
+            props.setModalOpen(false)
+          );
+        } else {
+          props.setModalOpen(false);
+        }
       } catch (error) {
         formSubmitFailure("Error editing component", `${error}`);
       }
@@ -62,28 +75,11 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
     () =>
       props.variant && (
         <div className="flex flex-col gap-2">
-          <span>{`${props.variant.nodeName}'s connections will be affected by any changes. You cannot undo this action.`}</span>
+          <span>{`${props.variant.nodeName}'s connections will be affected by changes made. You cannot undo this action.`}</span>
         </div>
       ),
     [props.variant]
   );
-
-  // const submitMiddleware = (
-  //   data: z.infer<typeof schema>
-  // ): z.infer<typeof schema> => {
-  //   // middleware logic before real form submission
-  //   // check differences
-  //   const newNodeVariant: CustomNodeVariant = {
-  //     nodeName: data.component_name,
-  //     handleTypes: data.handle_variants,
-  //     color: data.color,
-  //   };
-  //   if (JSON.stringify(props.variant) !== JSON.stringify(newNodeVariant)) {
-  //     //* spawn modalConfirmation. how?
-  //   }
-
-  //   return data;
-  // };
 
   return (
     <ModalForm
@@ -98,7 +94,6 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
           destructive: false,
         }
       }
-      // submitMiddleware={submitMiddleware}
     >
       <FormFieldGroupNode variant={props.variant && props.variant} />
     </ModalForm>

@@ -8,16 +8,23 @@ import { DialogTrigger } from "../ui/dialog";
 import { ModalConfirmation, ModalConfirmationProps } from "./ModalConfirmation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import ModalType from "Types/modalType";
+
+export type onFormSubmitParams = {
+  data: any;
+  form: UseFormReturn;
+};
+
+export type onFormSubmitFunction = (param: onFormSubmitParams) => any;
 
 type modalFormProps = {
   title: string;
   width: number;
   schema: z.ZodObject<any>;
   children: React.ReactNode;
-  onSubmit: Function;
+  onSubmit: onFormSubmitFunction;
   // submitMiddleware?: Function;
   submitModal?: submitModalData;
 };
@@ -25,15 +32,7 @@ type modalFormProps = {
 type submitModalData = Omit<ModalConfirmationProps, "action">;
 
 export const ModalForm = (props: modalFormProps) => {
-  const {
-    title,
-    width,
-    schema,
-    children,
-    onSubmit,
-    // submitMiddleware,
-    submitModal,
-  } = props;
+  const { title, width, schema, children, onSubmit, submitModal } = props;
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
@@ -41,14 +40,7 @@ export const ModalForm = (props: modalFormProps) => {
   const onFormSubmit = async (data: z.infer<typeof schema>) => {
     // async request which may result error
     try {
-      // await fetch()
-      //* callback for props to execute logic as middleware before real submission. after callback then onSubmit
-      // if (submitMiddleware) {
-      //   const newData: z.infer<typeof schema> = submitMiddleware(data);
-      //   await onSubmit(newData);
-      // } else {
-      await onSubmit(data);
-      // }
+      await onSubmit({ data, form });
     } catch (e) {
       // handle your error
     }
@@ -56,7 +48,7 @@ export const ModalForm = (props: modalFormProps) => {
 
   const hasSubmitModal = useMemo(
     () => submitModal && form.formState.isDirty,
-    [submitModal, form.formState.isDirty /*, JSON.stringify(form.getValues())*/]
+    [submitModal, form.formState.isDirty]
   );
 
   useEffect(() => {
