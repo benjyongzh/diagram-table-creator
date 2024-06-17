@@ -6,6 +6,7 @@ type sidebarComponentListItemProps = {
   onHover?: Function;
   onListItemClick?: Function;
   isFocused?: boolean;
+  isButton?: boolean;
   leftSideChildren?: React.ReactNode;
   rightSideChildren?: React.ReactNode;
 };
@@ -16,6 +17,7 @@ export const SidebarListItem = (props: sidebarComponentListItemProps) => {
     onHover,
     onListItemClick,
     isFocused,
+    isButton,
     leftSideChildren,
     rightSideChildren,
   } = props;
@@ -32,9 +34,9 @@ export const SidebarListItem = (props: sidebarComponentListItemProps) => {
     >
       {leftSideChildren}
       <div
-        className={`cursor-default sidebar-list-menu-item hoverable-menu-item pl-8 flex transition-all ${
+        className={`sidebar-list-menu-item hoverable-menu-item pl-8 flex transition-all ${
           isFocused ? "rounded-e-none bg-slate-300 dark:bg-slate-700" : ""
-        }`}
+        } ${isButton ? "cursor-pointer" : "cursor-default"}`}
         onClick={handleClick}
       >
         <span

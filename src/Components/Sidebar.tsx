@@ -72,8 +72,6 @@ export const Sidebar = () => {
                 General
               </AccordionContent>
             </SidebarSectionDropDown>
-
-            {/* <Separator /> */}
             <SidebarSectionDropDown sectionName="Components">
               {featureFlags.CAN_CREATE_NEW_NODES && (
                 <Modal
@@ -82,8 +80,8 @@ export const Sidebar = () => {
                     setOpen: setModalNewNodeIsOpen,
                   }}
                   triggerElement={
-                    <DialogTrigger className="w-full">
-                      <SidebarListItem onListItemClick={() => {}}>
+                    <DialogTrigger className="w-full block cursor-pointer">
+                      <SidebarListItem onListItemClick={() => {}} isButton>
                         <div className="flex items-center justify-between">
                           <span>Add New Component</span>
                           <CirclePlus />
