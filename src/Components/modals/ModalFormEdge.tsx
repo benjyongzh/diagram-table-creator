@@ -1,7 +1,7 @@
 import { ModalForm } from "./ModalForm";
 import { FormFieldGroupNode } from "../formFieldGroups/FormFieldGroupNode";
 import { z } from "zod";
-import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
+import formSchemaNewEdge from "Types/schemas/formSchemaNewEdge";
 
 //redux
 import CustomEdgeVariant from "Types/edges/customEdgeVariant";
@@ -22,7 +22,7 @@ type modalFormNodeSubmitArgs = Omit<onFormSubmitParams, "data"> & {
   data: z.infer<typeof schema>;
 };
 
-const schema = formSchemaNewNode;
+const schema = formSchemaNewEdge;
 
 export const ModalFormEdge = (props: ModalFormNodeProps) => {
   const { addVariant, editVariant } = useStoreNodeVariants();
@@ -38,13 +38,13 @@ export const ModalFormEdge = (props: ModalFormNodeProps) => {
       // edit redux node variant slice
       try {
         const newNodeVariant: CustomEdgeVariant = {
-          edgeName: data.component_name,
-          edgeIdentifier: data.handle_variants,
+          edgeName: data.connection_name,
+          edgeIdentifier: data.edge_identifier,
         };
         if (form.formState.isDirty) {
           // await inserting data into DB
           editVariant({ old: props.variant, new: newNodeVariant });
-          formSubmitSuccess("Component edited", data.component_name, () =>
+          formSubmitSuccess("Component edited", data.connection_name, () =>
             props.setModalOpen(false)
           );
         } else {
@@ -56,11 +56,11 @@ export const ModalFormEdge = (props: ModalFormNodeProps) => {
     } else {
       try {
         const newEdgeVariant: CustomEdgeVariant = {
-          edgeName: data.component_name,
-          edgeIdentifier: data.handle_variants,
+          edgeName: data.connection_name,
+          edgeIdentifier: data.edge_identifier,
         };
         addVariant(newEdgeVariant);
-        formSubmitSuccess("Connection type created", data.component_name, () =>
+        formSubmitSuccess("Connection type created", data.connection_name, () =>
           props.setModalOpen(false)
         );
       } catch (error) {
@@ -73,7 +73,7 @@ export const ModalFormEdge = (props: ModalFormNodeProps) => {
     () =>
       props.variant && (
         <div className="flex flex-col gap-2">
-          <span>{`${props.variant.nodeName}'s connections will be affected by changes made. You cannot undo this action.`}</span>
+          <span>{`Any existing ${props.variant.edgeName} connections and components with ${props.variant.edgeName} handles will be affected by changes made. You cannot undo this action.`}</span>
         </div>
       ),
     [props.variant]
