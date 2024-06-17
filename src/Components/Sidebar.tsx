@@ -4,11 +4,11 @@ import { SidebarEdgeListItem } from "./SidebarEdgeListItem";
 import { SidebarSectionDropDown } from "./SidebarSectionDropDown";
 import { ModalSettings } from "./modals/ModalSettings";
 import { ModalFormNode } from "./modals/ModalFormNode";
+import { ModalFormEdge } from "./modals/ModalFormEdge";
 import { SidebarListItem } from "./SidebarListItem";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { AccordionContent } from "./ui/accordion";
-import { Dialog, DialogTrigger } from "./ui/dialog";
-import { Separator } from "./ui/separator";
+import { DialogTrigger } from "./ui/dialog";
 import { useState } from "react";
 
 // ui
@@ -106,25 +106,25 @@ export const Sidebar = () => {
             </SidebarSectionDropDown>
             <SidebarSectionDropDown sectionName="Connections">
               {featureFlags.CAN_CREATE_NEW_EDGES && (
-                // <Modal
-                //   openState={{
-                //     open: modalNewEdgeIsOpen,
-                //     setOpen: setModalNewEdgeIsOpen,
-                //   }}
-                //   triggerElement={
-                //     <DialogTrigger className="w-full">
-                <SidebarListItem onListItemClick={() => {}}>
-                  <div className="flex items-center justify-between">
-                    <span>Add New Connection Type</span>
-                    <CirclePlus />
-                  </div>
-                </SidebarListItem>
-                //     </DialogTrigger>
-                //   }
-                //   modalContent={
-                //     <ModalFormEdge setModalOpen={setModalNewEdgeIsOpen} />
-                //   }
-                // />
+                <Modal
+                  openState={{
+                    open: modalNewEdgeIsOpen,
+                    setOpen: setModalNewEdgeIsOpen,
+                  }}
+                  triggerElement={
+                    <DialogTrigger className="w-full block cursor-pointer">
+                      <SidebarListItem onListItemClick={() => {}} isButton>
+                        <div className="flex items-center justify-between">
+                          <span>Add New Connection Type</span>
+                          <CirclePlus />
+                        </div>
+                      </SidebarListItem>
+                    </DialogTrigger>
+                  }
+                  modalContent={
+                    <ModalFormEdge setModalOpen={setModalNewEdgeIsOpen} />
+                  }
+                />
               )}
 
               {edgeVariants.map((variant: CustomEdgeVariant) => (
