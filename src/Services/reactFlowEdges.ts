@@ -14,7 +14,7 @@ import EdgeData from "Types/edges/edgeData";
 import { HandleVariant } from "Types/handles/handleVariant";
 
 export const createEdgeId = (): string => {
-  return randomStringGenerator(edgeConfig.ID_LENGTH);
+  return randomStringGenerator(edgeConfig.EDGE_ID_LENGTH);
 };
 
 const getEdgeLabelFromHandleId = (handleId: string): string => {

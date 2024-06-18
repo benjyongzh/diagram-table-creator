@@ -7,7 +7,7 @@ import {
   handleVariantSchema,
   handleVariantInfoSchema,
 } from "../schemas/handleVariant";
-import { isEdgeIdentifier } from "../edges/edgeIdentifier";
+import { isEdgeIdentifier } from "../schemas/edgeIdentifier";
 import handleConfig from "@/Configs/handleConfig";
 import edgeConfig from "@/Configs/edgeConfig";
 
