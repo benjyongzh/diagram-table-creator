@@ -53,7 +53,7 @@ import initialEdges, {
 import { minimapStyle } from "Styles/minimap";
 import "reactflow/dist/style.css";
 import { useTheme } from "./providers/ThemeProvider";
-import { standardEdgeData } from "Objects/edges";
+import { standardEdgeData } from "Types/edges/edge";
 
 const nodeTypes = initialNodeTypes;
 const edgeTypes = initialEdgeTypes;

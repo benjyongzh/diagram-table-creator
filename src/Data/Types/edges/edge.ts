@@ -13,3 +13,10 @@ export type EdgeData = {
 const edgeIdSchema = z.string().length(edgeConfig.EDGE_ID_LENGTH);
 
 export type EdgeId = z.infer<typeof edgeIdSchema>;
+
+export const standardEdgeData = {
+  type: edgeConfig.INITIAL_CUSTOM_EDGE_NAME,
+  deletable: true,
+  focusable: true,
+  //styling
+};
