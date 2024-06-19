@@ -1,5 +1,5 @@
-import CustomNodeVariant from "../nodes/customNodeVariant";
+import { NodeVariant } from "Types/nodes/nodeVariant";
 
 export type StoreCustomNodeVariants = {
-  variants: Array<CustomNodeVariant>;
+  variants: Array<NodeVariant>;
 };
