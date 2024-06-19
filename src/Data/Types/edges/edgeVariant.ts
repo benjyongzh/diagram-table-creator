@@ -1,5 +1,5 @@
 import edgeConfig from "@/Configs/edgeConfig";
-import { EdgeIdentifier } from "../schemas/edgeIdentifier";
+import { EdgeIdentifier } from "./edgeIdentifier";
 import { z } from "zod";
 
 export type EdgeVariantData = {
@@ -12,7 +12,7 @@ export const emptyEdgeVariant: EdgeVariantData = {
   edgeIdentifier: edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER,
 };
 
-const edgeVariantIdSchema = z
+export const edgeVariantIdSchema = z
   .string()
   .length(edgeConfig.EDGE_VARIANT_ID_LENGTH);
 

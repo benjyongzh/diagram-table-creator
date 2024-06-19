@@ -2,24 +2,61 @@ import { HandleType, Position } from "reactflow";
 import { isPosition } from "./position";
 import { isHandleType } from "./handleType";
 import nodeConfig from "@/Configs/nodeConfig";
-import { z } from "zod";
-import {
-  handleVariantSchema,
-  handleVariantInfoSchema,
-} from "../schemas/handleVariant";
-import { isEdgeIdentifier } from "../schemas/edgeIdentifier";
 import handleConfig from "@/Configs/handleConfig";
 import edgeConfig from "@/Configs/edgeConfig";
+import { z } from "zod";
+import { isEdgeIdentifier } from "../edges/edgeIdentifier";
+
+import { edgeVariantIdSchema } from "Types/edges/edgeVariant";
+
+export const handleVariantDataSchema = z.object({
+  handleType: z.enum(["source", "target"]).default("source"),
+  handleName: z
+    .string()
+    .min(1, "Handle name must not be empty")
+    .regex(
+      /^[\w\s]+$/,
+      "Handle name can only contain alphanumeric characters, spaces and/or underscores"
+    ),
+  position: z.nativeEnum(Position).default(Position.Left),
+  quantity: z.coerce
+    .number()
+    .min(
+      nodeConfig.HANDLETYPE_QUANTITY_MIN,
+      `Minimum quantity of ${nodeConfig.HANDLETYPE_QUANTITY_MIN}`
+    )
+    .max(
+      nodeConfig.HANDLETYPE_QUANTITY_MAX,
+      `Maximum quantity of ${nodeConfig.HANDLETYPE_QUANTITY_MAX}`
+    )
+    .default(nodeConfig.HANDLETYPE_QUANTITY_MIN),
+  connectionType: z
+    .literal(edgeConfig.FREE_CONNECTION_TYPE_VARIANT_ID)
+    .or(edgeVariantIdSchema),
+});
+
+export type HandleVariantData = z.infer<typeof handleVariantDataSchema>;
+
+export const handleVariantIdSchema = z
+  .string()
+  .length(handleConfig.HANDLE_VARIANT_ID_LENGTH);
+
+export type HandleVariantId = z.infer<typeof handleVariantIdSchema>;
+
+export const handleVariantSchema = z
+  .object({
+    id: handleVariantIdSchema,
+  })
+  .merge(handleVariantDataSchema);
 
 export type HandleVariant = z.infer<typeof handleVariantSchema>;
-export type HandleVariantInfo = z.infer<typeof handleVariantInfoSchema>;
 
 export const isHandleVariant = (arg: any): arg is HandleVariant => {
   return (
     arg &&
-    arg.handleTypeId &&
-    typeof arg.handleTypeId === "string" &&
-    arg.handleTypeId.length === handleConfig.ID_LENGTH &&
+    arg.id &&
+    typeof arg.id === "string" &&
+    arg.id.length === handleConfig.HANDLE_VARIANT_ID_LENGTH &&
     arg.handleType &&
     isHandleType(arg.handleType) &&
     arg.handleName &&
@@ -33,10 +70,10 @@ export const isHandleVariant = (arg: any): arg is HandleVariant => {
   );
 };
 
-export const handleVariantDefaultValue: HandleVariantInfo = {
+export const handleVariantDataDefaultValue: HandleVariantData = {
   handleType: "source", //source | target
   handleName: "",
   position: Position.Left,
   quantity: nodeConfig.HANDLETYPE_QUANTITY_MIN,
-  connectionType: edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER,
+  connectionType: edgeConfig.FREE_CONNECTION_TYPE_VARIANT_ID,
 };

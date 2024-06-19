@@ -1,5 +1,5 @@
 import { z } from "zod";
-import edgeIdentifierSchema from "./edgeIdentifier";
+import edgeIdentifierSchema from "../edges/edgeIdentifier";
 
 const formSchemaNewEdge = z.object({
   connection_name: z

@@ -6,7 +6,9 @@ export const useHandleTypeIdGenerator = () => {
   const [handleTypeId, setHandleTypeId] = useState<string>("");
 
   useEffect(() => {
-    const id: string = randomStringGenerator(handleConfig.ID_LENGTH);
+    const id: string = randomStringGenerator(
+      handleConfig.HANDLE_VARIANT_ID_LENGTH
+    );
     setHandleTypeId(id);
   }, []);
 

@@ -20,7 +20,7 @@ import { useFormContext, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 
 // types
-import { handleVariantDefaultValue } from "Types/handles/handleVariant";
+import { handleVariantDataDefaultValue } from "Types/handles/handleVariant";
 import colors from "Types/colorString";
 import CustomNodeVariant from "Types/nodes/customNodeVariant";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
@@ -49,8 +49,10 @@ export const FormFieldGroupNode = (props: FormFieldGroupNodeProps) => {
   }, [reset]);
 
   const addHandleVariant = useCallback(() => {
-    const handleId: string = randomStringGenerator(handleConfig.ID_LENGTH);
-    append({ handleTypeId: handleId, ...handleVariantDefaultValue });
+    const handleId: string = randomStringGenerator(
+      handleConfig.HANDLE_VARIANT_ID_LENGTH
+    );
+    append({ handleTypeId: handleId, ...handleVariantDataDefaultValue });
   }, []);
 
   const removeHandleVariant = (index: number) =>
