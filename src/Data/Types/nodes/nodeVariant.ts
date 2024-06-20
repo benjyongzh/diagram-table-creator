@@ -17,7 +17,7 @@ export type NodeVariantId = z.infer<typeof nodeVariantIdSchema>;
 
 export type NodeVariant = {
   id: NodeVariantId;
-};
+} & NodeVariantData;
 
 export type EditVariant = {
   old: NodeVariant;

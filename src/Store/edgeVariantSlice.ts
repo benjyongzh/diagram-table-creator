@@ -1,0 +1,49 @@
+import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
+import { EdgeVariant } from "Types/edges/edgeVariant";
+
+type StoreEdgeVariants = {
+  edgeVariants: EdgeVariant[];
+};
+
+// Define the initial state using that type
+const initialState: StoreEdgeVariants = {
+  edgeVariants: [],
+};
+
+export const edgeVariantSlice: Slice = createSlice({
+  name: "edgeVariants",
+  initialState,
+  reducers: {
+    // node types
+    addNewEdgeVariant: (state, action: PayloadAction<EdgeVariant>) => {
+      state.edgeVariants.push(action.payload);
+    },
+    removeEdgeVariant: (state, action: PayloadAction<EdgeVariant>) => {
+      state.edgeVariants = state.edgeVariants.filter(
+        (variant: EdgeVariant) =>
+          !(variant.edgeName !== action.payload.edgeName)
+      );
+    },
+    // editEdgeVariant: (state, action: PayloadAction<EditVariant>) => {
+    //   state.variants = state.variants.map((variant) => {
+    //     if (JSON.stringify(variant) === JSON.stringify(action.payload.old)) {
+    //       variant = { ...variant, ...action.payload.new };
+    //     }
+    //     return variant;
+    //   });
+    // },
+    setAllEdgeVariants: (state, action: PayloadAction<EdgeVariant[]>) => {
+      state.edgeVariants = action.payload;
+    },
+  },
+});
+
+// Action creators are generated for each case reducer function
+export const {
+  addNewEdgeVariant,
+  removeEdgeVariant,
+  // editEdgeVariant,
+  setAllEdgeVariants,
+} = edgeVariantSlice.actions;
+
+export default edgeVariantSlice.reducer;
