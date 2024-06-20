@@ -40,13 +40,13 @@ import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 // } from "@/Services/reactFlowEdges";
 // import { HandleVariant } from "Types/handles/handleVariant";
 // import { reduxObjectsHookOptions } from "Types/reduxObjectsHookOptions";
-import { getUsableEdgeIdentifierFromConnection } from "@/Services/reactFlowEdges";
-import { createEdgeId } from "Services/edges";
 import {
+  createEdgeId,
   createEdgeMainLabel,
   createEdgeLabelAtSource,
   createEdgeLabelAtTarget,
-} from "@/Services/reactFlowEdges";
+  getUsableEdgeIdentifierFromConnection,
+} from "Services/edges";
 
 export const useStoreEdges = () => {
   const dispatch = useAppDispatch();

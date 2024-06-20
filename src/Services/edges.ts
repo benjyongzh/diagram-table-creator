@@ -1,10 +1,13 @@
 import { Connection } from "reactflow";
 
+import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
+
 // configs
 import edgeConfig from "Configs/edgeConfig";
 
 // utils
 import { randomStringGenerator } from "Utilities/strings";
+import { getConnectionTypeFromConnectionHandleString } from "./handleVariants";
 
 export const createEdgeId = (): string => {
   return randomStringGenerator(edgeConfig.EDGE_ID_LENGTH);
@@ -41,4 +44,24 @@ export const createEdgeLabelAtSource = (connection: Connection): string => {
 
 export const createEdgeLabelAtTarget = (connection: Connection): string => {
   return createEdgeEndLabel(connection, "target");
+};
+
+export const getUsableEdgeIdentifierFromConnection = (
+  connection: Connection
+): EdgeIdentifier => {
+  const sourceConnectionType: EdgeIdentifier =
+    getConnectionTypeFromConnectionHandleString(connection.sourceHandle!);
+  const targetConnectionType: EdgeIdentifier =
+    getConnectionTypeFromConnectionHandleString(connection.targetHandle!);
+  if (
+    sourceConnectionType === edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER &&
+    targetConnectionType !== edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER
+  )
+    return targetConnectionType;
+  if (
+    sourceConnectionType !== edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER &&
+    targetConnectionType === edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER
+  )
+    return sourceConnectionType;
+  return targetConnectionType;
 };

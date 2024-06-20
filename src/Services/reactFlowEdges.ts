@@ -36,26 +36,6 @@ export const createNewConnectionTypeIndex = (
   return largest === null ? 1 : largest + 1;
 };
 
-export const getUsableEdgeIdentifierFromConnection = (
-  connection: Connection
-): EdgeIdentifier => {
-  const sourceConnectionType: EdgeIdentifier =
-    getConnectionTypeFromConnectionHandleString(connection.sourceHandle!);
-  const targetConnectionType: EdgeIdentifier =
-    getConnectionTypeFromConnectionHandleString(connection.targetHandle!);
-  if (
-    sourceConnectionType === edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER &&
-    targetConnectionType !== edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER
-  )
-    return targetConnectionType;
-  if (
-    sourceConnectionType !== edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER &&
-    targetConnectionType === edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER
-  )
-    return sourceConnectionType;
-  return targetConnectionType;
-};
-
 export const getEdgesConnectedToHandleName = (
   edges: Edge[],
   handleName: string
