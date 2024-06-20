@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-06-20T12:35:02.125Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="tpAPgcv_JZiIcmf1ZIiW" version="24.5.5" type="device">
+<mxfile host="app.diagrams.net" modified="2024-06-20T12:46:30.349Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="F3T65yw74JWWfb2aKbWR" version="24.5.5" type="device">
   <diagram name="Page-1" id="6133507b-19e7-1e82-6fc7-422aa6c4b21f">
     <mxGraphModel dx="2466" dy="710" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
@@ -158,7 +158,7 @@
             <mxPoint x="650" y="619" as="targetPoint" />
             <Array as="points">
               <mxPoint x="580" y="423" />
-              <mxPoint x="580" y="773" />
+              <mxPoint x="580" y="799" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -178,8 +178,8 @@
             <mxPoint x="550" y="425" as="sourcePoint" />
             <mxPoint x="650" y="719" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1390" y="713" />
-              <mxPoint x="1390" y="615" />
+              <mxPoint x="1320" y="739" />
+              <mxPoint x="1320" y="615" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -188,8 +188,8 @@
             <mxPoint x="890" y="749" as="sourcePoint" />
             <mxPoint x="1010" y="495" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1360" y="683" />
-              <mxPoint x="1360" y="589" />
+              <mxPoint x="1290" y="709" />
+              <mxPoint x="1290" y="589" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -281,7 +281,7 @@
             <mxPoint x="890" y="629" as="sourcePoint" />
             <mxPoint x="1270" y="489" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1260" y="645" />
+              <mxPoint x="1260" y="619" />
               <mxPoint x="1260" y="479" />
             </Array>
           </mxGeometry>
@@ -342,7 +342,7 @@
             <mxPoint x="1040" y="321" as="targetPoint" />
             <Array as="points">
               <mxPoint x="560" y="539" />
-              <mxPoint x="560" y="683" />
+              <mxPoint x="560" y="709" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -352,7 +352,7 @@
             <mxPoint x="640" y="719" as="targetPoint" />
             <Array as="points">
               <mxPoint x="540" y="569" />
-              <mxPoint x="540" y="713" />
+              <mxPoint x="540" y="739" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -374,7 +374,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="NcoKxun65NZ0Gpt5I3KS-44" value="Node" style="swimlane;html=1;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fillColor=none;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
-          <mxGeometry x="650" y="520" width="300" height="268" as="geometry">
+          <mxGeometry x="650" y="520" width="300" height="294" as="geometry">
             <mxRectangle x="-140" y="132" width="110" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -390,23 +390,26 @@
         <mxCell id="NcoKxun65NZ0Gpt5I3KS-57" value="variantIndex: number" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="NcoKxun65NZ0Gpt5I3KS-44" vertex="1">
           <mxGeometry y="86" width="300" height="26" as="geometry" />
         </mxCell>
+        <mxCell id="vX7mACFDlXpgknesi7_f-4" value="isHovered: boolean" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="NcoKxun65NZ0Gpt5I3KS-44">
+          <mxGeometry y="112" width="300" height="26" as="geometry" />
+        </mxCell>
         <mxCell id="NcoKxun65NZ0Gpt5I3KS-55" value="" style="line;html=1;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="NcoKxun65NZ0Gpt5I3KS-44" vertex="1">
-          <mxGeometry y="112" width="300" height="8" as="geometry" />
+          <mxGeometry y="138" width="300" height="8" as="geometry" />
         </mxCell>
         <mxCell id="NcoKxun65NZ0Gpt5I3KS-49" value="addNode: (newNode: Node) =&amp;gt; void" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="NcoKxun65NZ0Gpt5I3KS-44" vertex="1">
-          <mxGeometry y="120" width="300" height="28" as="geometry" />
+          <mxGeometry y="146" width="300" height="28" as="geometry" />
         </mxCell>
         <mxCell id="NcoKxun65NZ0Gpt5I3KS-50" value="updateNode: (updatedNode: Node&lt;span style=&quot;background-color: initial;&quot;&gt;) =&amp;gt; void&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="NcoKxun65NZ0Gpt5I3KS-44" vertex="1">
-          <mxGeometry y="148" width="300" height="30" as="geometry" />
+          <mxGeometry y="174" width="300" height="30" as="geometry" />
         </mxCell>
         <mxCell id="NcoKxun65NZ0Gpt5I3KS-59" value="removeNode: (nodeId: string&lt;span style=&quot;background-color: initial;&quot;&gt;) =&amp;gt; void&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="NcoKxun65NZ0Gpt5I3KS-44" vertex="1">
-          <mxGeometry y="178" width="300" height="30" as="geometry" />
+          <mxGeometry y="204" width="300" height="30" as="geometry" />
         </mxCell>
         <mxCell id="vX7mACFDlXpgknesi7_f-2" value="getNodeVariant: (nodeId:string) =&amp;gt; nodeVariant" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="NcoKxun65NZ0Gpt5I3KS-44">
-          <mxGeometry y="208" width="300" height="30" as="geometry" />
+          <mxGeometry y="234" width="300" height="30" as="geometry" />
         </mxCell>
         <mxCell id="vX7mACFDlXpgknesi7_f-1" value="getNodeName: (nodeId:string) =&amp;gt; nodeName:string" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="NcoKxun65NZ0Gpt5I3KS-44">
-          <mxGeometry y="238" width="300" height="30" as="geometry" />
+          <mxGeometry y="264" width="300" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

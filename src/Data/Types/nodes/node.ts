@@ -6,6 +6,7 @@ import { nodeStyle } from "Styles/node";
 export type NodeData = {
   variantId: NodeVariantId;
   variantIndex: number;
+  isHovered: boolean;
 };
 
 const nodeIdSchema = z.string().length(nodeConfig.NODE_ID_LENGTH);
