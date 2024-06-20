@@ -4,6 +4,8 @@ import {
   HandleVariantData,
   HandleVariantId,
 } from "Types/handles/handleVariant";
+import handleConfig from "Configs/handleConfig";
+import { randomStringGenerator } from "Utilities/strings";
 
 export const addHandleVariant = (
   newVariant: HandleVariantData
@@ -19,3 +21,7 @@ export const removeHandleVariant = (id: HandleVariantId): HandleVariant => {};
 export const getEdgeVariantOfHandleVariant = (
   id: HandleVariantId
 ): EdgeVariant => {};
+
+export const createHandleVariantId = (): string => {
+  return randomStringGenerator(handleConfig.HANDLE_VARIANT_ID_LENGTH);
+};
