@@ -3,19 +3,18 @@ import { FormFieldGroupNode } from "../formFieldGroups/FormFieldGroupNode";
 import { z } from "zod";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
 
-//redux
-import CustomNodeVariant from "Types/nodes/customNodeVariant";
+// types
+import { NodeVariant, NodeVariantData } from "Types/nodes/nodeVariant";
 
 // hooks
 import { useStoreNodeVariants } from "Hooks/useStoreNodeVariants";
 import { useModalForm } from "Hooks/useModalForm";
 import { useMemo } from "react";
-
 import { onFormSubmitParams, onFormSubmitFunction } from "./ModalForm";
 
 type ModalFormNodeProps = {
   setModalOpen: Function;
-  variant?: CustomNodeVariant;
+  variant?: NodeVariant;
 };
 
 type modalFormNodeSubmitArgs = Omit<onFormSubmitParams, "data"> & {
@@ -37,7 +36,7 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
     if (props.variant) {
       // edit redux node variant slice
       try {
-        const newNodeVariant: CustomNodeVariant = {
+        const newNodeVariantData: NodeVariantData = {
           nodeName: data.component_name,
           handleTypes: data.handle_variants,
           color: data.color,
@@ -56,12 +55,12 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
       }
     } else {
       try {
-        const newNodeVariant: CustomNodeVariant = {
+        const newNodeVariantData: NodeVariantData = {
           nodeName: data.component_name,
           handleTypes: data.handle_variants,
           color: data.color,
         };
-        addVariant(newNodeVariant);
+        addVariant(newNodeVariantData);
         formSubmitSuccess("Component created", data.component_name, () =>
           props.setModalOpen(false)
         );

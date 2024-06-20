@@ -28,24 +28,27 @@ import {
   onNodesChange as onReactFlowNodesChange,
   onNodeMouseEnter as onReactFlowMouseEnter,
   onNodeMouseLeave as onReactFlowMouseLeave,
+  setAllNodes,
+} from "@/Store/nodeSlice";
+
+import {
   onEdgesChange as onReactFlowEdgesChange,
   onConnect as onReactFlowConnect,
-  setAllNodes,
   setAllEdges,
-} from "@/Store/reactFlowSlice";
-import { setAllNodeVariants } from "@/Store/customNodeVariantSlice";
-import { setAllEdgeVariants } from "@/Store/customEdgeVariantSlice";
+} from "@/Store/edgeSlice";
+import { setAllNodeVariants } from "@/Store/nodeVariantSlice";
+import { setAllEdgeVariants } from "@/Store/edgeVariantSlice";
 
 //hooks
 import { useConnectionValidation } from "Hooks/useConnectionValidation";
 
 //initial
 import initialNodes, {
-  initialCustomNodeVariants,
+  initialNodeVariants,
   initialNodeTypes,
 } from "Objects/initialNodes";
 import initialEdges, {
-  initialCustomEdgeVariants,
+  initialEdgeVariants,
   initialEdgeTypes,
 } from "Objects/initialEdges";
 
@@ -62,11 +65,9 @@ const ReactFlowContainer = () => {
   const { theme } = useTheme();
   // const reactFlowInstance = useReactFlow();
   // const zoom = reactFlowInstance.getZoom();
-  const nodes = useAppSelector((state) => state.reactFlowObjects.nodes);
-  const edges = useAppSelector((state) => state.reactFlowObjects.edges);
-  const edgeVariants = useAppSelector(
-    (state) => state.customEdgeVariants.variants
-  );
+  const nodes = useAppSelector((state) => state.nodes.nodes);
+  const edges = useAppSelector((state) => state.edges.edges);
+  const edgeVariants = useAppSelector((state) => state.edgeVariants.variants);
   const dispatch = useAppDispatch();
   const { connectionIsValid, createValidEdgeConnection } =
     useConnectionValidation(edges, edgeVariants);
@@ -112,8 +113,8 @@ const ReactFlowContainer = () => {
     if (featureFlags.USE_INITIAL_OBJECTS) {
       // dispatch(setAllNodes(initialNodes));
       // dispatch(setAllEdges(initialEdges));
-      dispatch(setAllNodeVariants(initialCustomNodeVariants));
-      dispatch(setAllEdgeVariants(initialCustomEdgeVariants));
+      dispatch(setAllNodeVariants(initialNodeVariants));
+      dispatch(setAllEdgeVariants(initialEdgeVariants));
     }
   };
   return (

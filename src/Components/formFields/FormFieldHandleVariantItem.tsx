@@ -30,6 +30,7 @@ import { useAppSelector } from "Hooks/reduxHooks";
 // ui
 import { X } from "lucide-react";
 import { useHandleTypeIdGenerator } from "Hooks/useHandleTypeIdGenerator";
+import { EdgeVariant } from "Types/edges/edgeVariant";
 
 type FormFieldHandleVariantItemProps = {
   indexNumber: number;
@@ -42,8 +43,8 @@ export const FormFieldHandleVariantItem = (
     control,
     formState: { errors },
   } = useFormContext();
-  const edgeVariants = useAppSelector(
-    (state) => state.customEdgeVariants.variants
+  const edgeVariants: EdgeVariant[] = useAppSelector(
+    (state) => state.edgeVariants.edgeVariants
   );
   const { handleTypeId } = useHandleTypeIdGenerator();
 

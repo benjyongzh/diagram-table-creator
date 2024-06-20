@@ -8,7 +8,7 @@ import { SidebarListItem } from "./SidebarListItem";
 import { DialogTrigger } from "./ui/dialog";
 
 // types
-import CustomNodeVariant from "Types/nodes/customNodeVariant";
+import { NodeVariant } from "Types/nodes/nodeVariant";
 
 // hooks
 import { useStoreNodes } from "Hooks/useStoreNodes";
@@ -17,7 +17,7 @@ import { useStoreNodes } from "Hooks/useStoreNodes";
 import { Plus, Pencil } from "lucide-react";
 
 type sidebarComponentListItemProps = {
-  variant: CustomNodeVariant;
+  variant: NodeVariant;
   onHover: Function;
   isFocused: boolean;
 };

@@ -1,7 +1,7 @@
 import { Edge, EdgeTypes } from "reactflow";
 import edgeConfig from "@/Configs/edgeConfig";
 import CustomEdge from "Components/CustomEdge";
-import CustomEdgeVariant from "Types/edges/customEdgeVariant";
+import { EdgeVariant } from "Types/edges/edgeVariant";
 
 const initialEdges: Array<Edge> = [
   {
@@ -19,12 +19,14 @@ export const initialEdgeTypes: EdgeTypes = {
   [edgeConfig.INITIAL_CUSTOM_EDGE_NAME]: CustomEdge,
 };
 
-export const initialCustomEdgeVariants: Array<CustomEdgeVariant> = [
+export const initialEdgeVariants: Array<EdgeVariant> = [
   {
+    id: "12345",
     edgeName: "Ethernet",
     edgeIdentifier: "ET",
   },
   {
+    id: "67890",
     edgeName: "Fibre Optic",
     edgeIdentifier: "FO",
   },

@@ -1,7 +1,7 @@
 import { Node, NodeTypes, Position } from "reactflow";
 import CustomComponentNode from "Components/CustomComponentNode";
 import nodeConfigs from "@/Configs/nodeConfig";
-import CustomNodeVariant from "Types/nodes/customNodeVariant";
+import { NodeVariant } from "Types/nodes/nodeVariant";
 import colors from "Types/colorString";
 import edgeConfig from "@/Configs/edgeConfig";
 
@@ -21,12 +21,13 @@ export const initialNodeTypes: NodeTypes = {
   [nodeConfigs.INITIAL_CUSTOM_NODE_NAME]: CustomComponentNode,
 };
 
-export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
+export const initialNodeVariants: Array<NodeVariant> = [
   {
+    id: "12345",
     nodeName: "Monitoring Unit",
     handleTypes: [
       {
-        handleTypeId: "12345",
+        id: "12345",
         handleType: "source", //source | target
         handleName: "bleh",
         position: Position.Right,
@@ -34,7 +35,7 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
         connectionType: edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER,
       },
       {
-        handleTypeId: "67890",
+        id: "67890",
         handleType: "source", //source | target
         handleName: "bla",
         position: Position.Top,
@@ -43,7 +44,7 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
       },
 
       {
-        handleTypeId: "abcde",
+        id: "abcde",
         handleType: "source", //source | target
         handleName: "blu",
         position: Position.Bottom,
@@ -54,10 +55,11 @@ export const initialCustomNodeVariants: Array<CustomNodeVariant> = [
     color: colors.orange,
   },
   {
+    id: "67890",
     nodeName: "Extension Unit",
     handleTypes: [
       {
-        handleTypeId: "fghij",
+        id: "fghij",
         handleType: "source", //source | target
         handleName: "blihhh",
         position: Position.Right,

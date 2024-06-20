@@ -18,26 +18,26 @@ import { Settings, CirclePlus } from "lucide-react";
 import { useAppSelector } from "Hooks/reduxHooks";
 import { useSidebarListItemState } from "Hooks/useSidebarListItemState";
 
-import CustomNodeVariant from "Types/nodes/customNodeVariant";
-import CustomEdgeVariant from "Types/edges/customEdgeVariant";
+import { NodeVariant } from "Types/nodes/nodeVariant";
+import { EdgeVariant } from "Types/edges/edgeVariant";
 
 import featureFlags from "@/Configs/featureFlags";
 import { Modal } from "./modals/Modal";
 
 export const Sidebar = () => {
-  const nodeVariants: Array<CustomNodeVariant> = useAppSelector(
-    (state) => state.customNodeVariants.variants
+  const nodeVariants: Array<NodeVariant> = useAppSelector(
+    (state) => state.nodeVariants.variants
   );
-  const edgeVariants: Array<CustomEdgeVariant> = useAppSelector(
-    (state) => state.customEdgeVariants.variants
+  const edgeVariants: Array<EdgeVariant> = useAppSelector(
+    (state) => state.edgeVariants.variants
   );
 
   const {
     openedListItem: openedComponent,
     onListtItemHover: onComponentItemHover,
-  } = useSidebarListItemState<CustomNodeVariant>();
+  } = useSidebarListItemState<NodeVariant>();
   const { openedListItem: openedEdge, onListtItemHover: onEdgeItemHover } =
-    useSidebarListItemState<CustomEdgeVariant>();
+    useSidebarListItemState<EdgeVariant>();
 
   const [modalNewNodeIsOpen, setModalNewNodeIsOpen] = useState(false);
   const [modalNewEdgeIsOpen, setModalNewEdgeIsOpen] = useState(false);
@@ -95,7 +95,7 @@ export const Sidebar = () => {
                 />
               )}
 
-              {nodeVariants.map((variant: CustomNodeVariant) => (
+              {nodeVariants.map((variant: NodeVariant) => (
                 <SidebarComponentListItem
                   variant={variant}
                   key={variant.nodeName}
@@ -127,7 +127,7 @@ export const Sidebar = () => {
                 />
               )}
 
-              {edgeVariants.map((variant: CustomEdgeVariant) => (
+              {edgeVariants.map((variant: EdgeVariant) => (
                 <SidebarEdgeListItem
                   variant={variant}
                   key={variant.edgeName}

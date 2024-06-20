@@ -7,7 +7,7 @@ import { SidebarListItem } from "./SidebarListItem";
 import { DialogTrigger } from "./ui/dialog";
 
 // types
-import CustomEdgeVariant from "Types/edges/customEdgeVariant";
+import { EdgeVariant } from "Types/edges/edgeVariant";
 
 // hooks
 
@@ -15,7 +15,7 @@ import CustomEdgeVariant from "Types/edges/customEdgeVariant";
 import { Pencil } from "lucide-react";
 
 type sidebarEdgeListItemProps = {
-  variant: CustomEdgeVariant;
+  variant: EdgeVariant;
   onHover: Function;
   isFocused: boolean;
 };

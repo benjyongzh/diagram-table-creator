@@ -22,13 +22,13 @@ import { z } from "zod";
 // types
 import { handleVariantDataDefaultValue } from "Types/handles/handleVariant";
 import colors from "Types/colorString";
-import CustomNodeVariant from "Types/nodes/customNodeVariant";
+import { NodeVariant } from "Types/nodes/nodeVariant";
 import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
 import { randomStringGenerator } from "Utilities/strings";
 import handleConfig from "@/Configs/handleConfig";
 
 type FormFieldGroupNodeProps = {
-  variant?: CustomNodeVariant;
+  variant?: NodeVariant;
 };
 
 export const FormFieldGroupNode = (props: FormFieldGroupNodeProps) => {
