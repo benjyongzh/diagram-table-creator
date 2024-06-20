@@ -41,6 +41,7 @@ import { setAllEdgeVariants } from "@/Store/edgeVariantSlice";
 
 //hooks
 import { useConnectionValidation } from "Hooks/useConnectionValidation";
+import { useStoreEdges } from "Hooks/useStoreEdges";
 
 //initial
 import initialNodes, {
@@ -69,8 +70,8 @@ const ReactFlowContainer = () => {
   const edges = useAppSelector((state) => state.edges.edges);
   const edgeVariants = useAppSelector((state) => state.edgeVariants.variants);
   const dispatch = useAppDispatch();
-  const { connectionIsValid, createValidEdgeConnection } =
-    useConnectionValidation(edges, edgeVariants);
+  const { connectionIsValid } = useConnectionValidation();
+  const { addEdgeFromConnection } = useStoreEdges();
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => dispatch(onReactFlowNodesChange(changes)),
@@ -82,8 +83,7 @@ const ReactFlowContainer = () => {
   );
   const onConnect = useCallback(
     (connection: Connection) => {
-      const newEdge: Edge = createValidEdgeConnection(connection);
-      dispatch(onReactFlowConnect(newEdge));
+      addEdgeFromConnection(connection);
     },
     [edges, edgeVariants]
   );

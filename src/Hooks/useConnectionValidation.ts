@@ -1,32 +1,23 @@
 import { Connection, Edge } from "reactflow";
-import {
-  createEdgeId,
-  createNewConnectionTypeIndex,
-  getUsableEdgeIdentifierFromConnection,
-  createEdgeMainLabel,
-  createEdgeLabelAtSource,
-  createEdgeLabelAtTarget,
-} from "@/Services/reactFlowEdges";
-
 //redux
 
 // types
-import { EdgeIdentifier } from "Types/schemas/edgeIdentifier";
-import EdgeData from "Types/edges/edgeData";
+import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
+import { EdgeVariant, emptyEdgeVariant } from "Types/edges/edgeVariant";
 
 // hooks
+import { useAppSelector } from "./reduxHooks";
 
 // util
 import { getConnectionTypeFromConnectionHandleString } from "@/Services/reactFlowHandles";
-import CustomEdgeVariant, {
-  emptyEdgeVariant,
-} from "Types/edges/customEdgeVariant";
 import edgeConfig from "@/Configs/edgeConfig";
 
-export const useConnectionValidation = (
-  allEdges: Edge[],
-  allEdgeVariants: CustomEdgeVariant[]
-) => {
+export const useConnectionValidation = () => {
+  const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
+  const allEdgeVariants: EdgeVariant[] = useAppSelector(
+    (state) => state.edgeVariants.edgeVariants
+  );
+
   const connectionIsValid = (connection: Connection): boolean => {
     if (
       !connection ||
@@ -50,6 +41,7 @@ export const useConnectionValidation = (
     return result;
   };
 
+  /*
   const createValidEdgeConnection = (connection: Connection): Edge => {
     const { source, target, sourceHandle, targetHandle } = connection;
     // get edgeIdentifier of connection
@@ -57,27 +49,21 @@ export const useConnectionValidation = (
       getUsableEdgeIdentifierFromConnection(connection);
 
     // get new connectionTypeIndex. bsaed on next highest index of this connectionType
-    const connectionTypeIndex: number = createNewConnectionTypeIndex(
-      allEdges,
-      edgeIdentifier
-    );
+    const variantIndex: number = getVariantCountOfEdges() + 1;
 
     // create a CustomEdgeVariant with a connectionTypeIndex value
-    const edgeVariant: CustomEdgeVariant =
+    const edgeVariant: EdgeVariant =
       allEdgeVariants.filter(
         (variant) => variant.edgeIdentifier === edgeIdentifier
       )[0] || emptyEdgeVariant;
 
     // create edge data
-    const mainLabel: string = createEdgeMainLabel(
-      edgeIdentifier,
-      connectionTypeIndex
-    );
+    const mainLabel: string = createEdgeMainLabel(edgeIdentifier, variantIndex);
     const edgeStartLabel: string = createEdgeLabelAtSource(connection);
     const edgeEndLabel: string = createEdgeLabelAtTarget(connection);
     const edgeData: EdgeData = {
       ...edgeVariant,
-      connectionTypeIndex,
+      variantIndex,
       mainLabel,
       edgeStartLabel,
       edgeEndLabel,
@@ -99,6 +85,7 @@ export const useConnectionValidation = (
     };
     return edge;
   };
+  */
 
-  return { connectionIsValid, createValidEdgeConnection };
+  return { connectionIsValid };
 };

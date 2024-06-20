@@ -13,5 +13,9 @@ export const useStoreEdgeById = (edgeId: string) => {
     }
   }, [edgeId]);
 
-  return { deleteEdgeById };
+  const getEdgeVariant = (): EdgeVariant => {
+    console.log(`use ${edgeId}`);
+  };
+
+  return { deleteEdgeById, getEdgeVariant };
 };
