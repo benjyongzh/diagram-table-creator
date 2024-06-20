@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
+import { EdgeId } from "Types/edges/edge";
 import {
   Edge,
   addEdge,
@@ -37,7 +38,7 @@ export const edgeSlice: Slice = createSlice({
         return edge;
       });
     },
-    removeEdge: (state, action: PayloadAction<string>) => {
+    removeEdgeById: (state, action: PayloadAction<EdgeId>) => {
       state.edges = state.edges.filter(
         (edge: Edge) => edge.id !== action.payload
       );
@@ -46,7 +47,12 @@ export const edgeSlice: Slice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { onEdgesChange, onConnect, setAllEdges, editEdge, removeEdge } =
-  edgeSlice.actions;
+export const {
+  onEdgesChange,
+  onConnect,
+  setAllEdges,
+  editEdge,
+  removeEdgeById,
+} = edgeSlice.actions;
 
 export default edgeSlice.reducer;

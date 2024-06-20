@@ -5,6 +5,7 @@ import {
   // nodeIsOfThisVariant,
 } from "@/Services/reactFlowNodes";
 import nodeConfigs from "@/Configs/nodeConfig";
+import { NodeId } from "Types/nodes/node";
 // import { EditVariant } from "Types/nodes/customNodeVariant";
 
 type StoreNodes = {
@@ -33,6 +34,12 @@ export const nodeSlice: Slice = createSlice({
     removeNode: (state, action: PayloadAction<Node>) => {
       state.nodes = state.nodes.filter(
         (node: Node) => node.id !== action.payload.id
+      );
+    },
+
+    removeNodeById: (state, action: PayloadAction<NodeId>) => {
+      state.nodes = state.nodes.filter(
+        (node: Node) => node.id !== action.payload
       );
     },
 
@@ -89,7 +96,8 @@ export const {
   setAllNodes,
   addNode,
   removeNode,
-  editNodesByVariant,
+  removeNodeById,
+  // editNodesByVariant,
   onNodeMouseEnter,
   onNodeMouseLeave,
 } = nodeSlice.actions;

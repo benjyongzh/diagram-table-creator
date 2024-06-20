@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
-import { EdgeVariant } from "Types/edges/edgeVariant";
+import { EdgeVariant, EdgeVariantId } from "Types/edges/edgeVariant";
 
 type StoreEdgeVariants = {
   edgeVariants: EdgeVariant[];
@@ -18,10 +18,9 @@ export const edgeVariantSlice: Slice = createSlice({
     addNewEdgeVariant: (state, action: PayloadAction<EdgeVariant>) => {
       state.edgeVariants.push(action.payload);
     },
-    removeEdgeVariant: (state, action: PayloadAction<EdgeVariant>) => {
+    removeEdgeVariant: (state, action: PayloadAction<EdgeVariantId>) => {
       state.edgeVariants = state.edgeVariants.filter(
-        (variant: EdgeVariant) =>
-          !(variant.edgeName !== action.payload.edgeName)
+        (variant: EdgeVariant) => !(variant.id !== action.payload)
       );
     },
     // editEdgeVariant: (state, action: PayloadAction<EditVariant>) => {

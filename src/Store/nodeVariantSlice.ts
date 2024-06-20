@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
-import { NodeVariant } from "Types/nodes/nodeVariant";
+import { NodeVariant, NodeVariantId } from "Types/nodes/nodeVariant";
 
 type StoreNodeVariants = {
   nodeVariants: NodeVariant[];
@@ -18,10 +18,9 @@ export const nodeVariantSlice: Slice = createSlice({
     addNewNodeVariant: (state, action: PayloadAction<NodeVariant>) => {
       state.nodeVariants.push(action.payload);
     },
-    removeNodeVariant: (state, action: PayloadAction<NodeVariant>) => {
+    removeNodeVariant: (state, action: PayloadAction<NodeVariantId>) => {
       state.nodeVariants = state.nodeVariants.filter(
-        (variant: NodeVariant) =>
-          !(variant.nodeName !== action.payload.nodeName)
+        (variant: NodeVariant) => !(variant.id !== action.payload)
       );
     },
     // editNodeVariant: (state, action: PayloadAction<EditVariant>) => {
