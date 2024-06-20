@@ -5,7 +5,7 @@ import nodeConfigs from "@/Configs/nodeConfig";
 import CustomNodeVariant from "Types/nodes/customNodeVariant";
 
 export const createNodeFromData = <T>(data: T): Node => {
-  const newNodeId: string = randomStringGenerator(nodeConfigs.ID_LENGTH);
+  const newNodeId: string = randomStringGenerator(nodeConfigs.NODE_ID_LENGTH);
   // const variantIndex: number = 0;
   // const newData = { ...data, variantIndex };
   // return { id: newNodeId, data: newData, ...standardNodeData };
