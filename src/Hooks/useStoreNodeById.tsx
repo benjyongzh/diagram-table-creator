@@ -1,30 +1,26 @@
 import { Node } from "reactflow";
 import { toast } from "sonner";
 
-//redux
-import { removeNode } from "@/Store/reactFlowSlice";
-
 // hooks
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 import { useMemo } from "react";
-import { useStoreEdges } from "./useStoreEdges";
+import { useStoreNodeVariants } from "./useStoreNodeVariants";
 
 // types
-import { reduxObjectsHookOptions } from "Types/reduxObjectsHookOptions";
+import { NodeVariant } from "Types/nodes/nodeVariant";
 
 //config
 import nodeConfig from "@/Configs/nodeConfig";
 
 //utils
-import { getComponentNameTextFromNodeData } from "@/Services/reactFlowNodes";
+import { NodeId } from "Types/nodes/node";
 
-export const useStoreNodeById = (nodeId: string) => {
-  const dispatch = useAppDispatch();
-  const { deleteEdgesOfNode } = useStoreEdges();
+export const useStoreNodeById = (nodeId: NodeId) => {
+  // const dispatch = useAppDispatch();
+  const { allNodeVariants } = useStoreNodeVariants();
 
   const thisNode: Node | undefined = useAppSelector(
-    (state) =>
-      state.reactFlowObjects.nodes.filter((node: Node) => node.id === nodeId)[0]
+    (state) => state.nodes.nodes.filter((node: Node) => node.id === nodeId)[0]
   );
 
   const nodeHeight = useMemo(
@@ -33,25 +29,16 @@ export const useStoreNodeById = (nodeId: string) => {
   );
   const nodeWidth = useMemo(() => (thisNode ? thisNode.width! : 0), [thisNode]);
 
-  const removeNodeById = (options?: reduxObjectsHookOptions) => {
-    if (!thisNode) return;
-    if (nodeConfig.DELETION_DELETES_AFFECTED_EDGES) {
-      deleteEdgesOfNode(thisNode);
-    }
-    dispatch(removeNode(thisNode));
-    if (
-      (!options || options.useToast) &&
-      nodeConfig.DELETION_CREATES_TOAST_NOTIFICATION
-    ) {
-      toast.success("Component deleted", {
-        description: getComponentNameFromNodeData,
-      });
-    }
+  const getNodeVariant = (): NodeVariant => {
+    return allNodeVariants.filter(
+      (variant: NodeVariant) => variant.id === thisNode!.data.variantId
+    );
   };
 
-  const getComponentNameFromNodeData: string = useMemo(() => {
-    return thisNode ? getComponentNameTextFromNodeData(thisNode) : "";
-  }, [nodeId]);
+  const getNodeName = (): string => {
+    const variant: NodeVariant = getNodeVariant();
+    return variant.nodeName;
+  };
 
-  return { nodeHeight, nodeWidth, removeNodeById };
+  return { nodeHeight, nodeWidth, getNodeVariant, getNodeName };
 };
