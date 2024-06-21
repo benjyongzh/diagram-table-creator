@@ -80,7 +80,7 @@ export const useStoreEdges = () => {
     };
 
     // create id
-    const id: string = createEdgeId();
+    const id: EdgeId = createEdgeId();
 
     const newEdge: Edge = {
       id,

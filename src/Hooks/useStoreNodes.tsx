@@ -1,35 +1,45 @@
-//redux
-import nodeConfig from "@/Configs/nodeConfig";
+import { Node } from "reactflow";
+// redux
 import {
-  addNode as addNewNode,
-  editNodesByVariant,
-} from "@/Store/reactFlowSlice";
+  addNode as storeAddNode,
+  updateNode as storeUpdateNode,
+  removeNodeById,
+} from "Store/nodeSlice";
 
 // hooks
 import { useAppDispatch } from "Hooks/reduxHooks";
 
 // types
-import CustomNodeVariant, { EditVariant } from "Types/nodes/customNodeVariant";
+import { standardNodeData } from "Types/nodes/node";
+import { NodeData, NodeId } from "Types/nodes/node";
 
-//utils
-import { createNodeFromData } from "@/Services/reactFlowNodes";
-import { useStoreEdges } from "./useStoreEdges";
+// services
+import { createNodeId } from "Services/nodes";
 
 export const useStoreNodes = () => {
   const dispatch = useAppDispatch();
-  const { editEdgesOfNodeVariant } = useStoreEdges();
+  // const { editEdgesOfNodeVariant } = useStoreEdges();
 
-  const addNode = (newNode: CustomNodeVariant) => {
-    const node = createNodeFromData(newNode);
-    dispatch(addNewNode(node));
+  const addNode = (newNodeData: NodeData) => {
+    const id: NodeId = createNodeId();
+    const node: Node = { id, data: { ...newNodeData }, ...standardNodeData };
+    dispatch(storeAddNode(node));
   };
 
-  const editNodesOfVariant = (change: EditVariant) => {
-    dispatch(editNodesByVariant(change));
-    if (nodeConfig.EDITING_VARIANT_EDITS_AFFECTED_EDGES) {
-      editEdgesOfNodeVariant(change);
-    }
+  const updateNode = (updatedNode: Node) => {
+    dispatch(storeUpdateNode(updatedNode));
   };
 
-  return { addNode, editNodesOfVariant };
+  const removeNode = (nodeId: NodeId) => {
+    dispatch(removeNodeById(nodeId));
+  };
+
+  // const editNodesOfVariant = (change: EditVariant) => {
+  //   dispatch(editNodesByVariant(change));
+  //   if (nodeConfig.EDITING_VARIANT_EDITS_AFFECTED_EDGES) {
+  //     editEdgesOfNodeVariant(change);
+  //   }
+  // };
+
+  return { addNode, updateNode, removeNode /*editNodesOfVariant*/ };
 };

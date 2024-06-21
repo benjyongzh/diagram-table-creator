@@ -31,6 +31,16 @@ export const nodeSlice: Slice = createSlice({
     addNode: (state, action: PayloadAction<Node>) => {
       state.nodes.push(action.payload);
     },
+
+    updateNode: (state, action: PayloadAction<Node>) => {
+      state.nodes = state.nodes.map((node: Node) => {
+        if (node.id === action.payload.id) {
+          node = { ...action.payload };
+        }
+
+        return node;
+      });
+    },
     removeNode: (state, action: PayloadAction<Node>) => {
       state.nodes = state.nodes.filter(
         (node: Node) => node.id !== action.payload.id
@@ -95,6 +105,7 @@ export const {
   onNodesChange,
   setAllNodes,
   addNode,
+  updateNode,
   removeNode,
   removeNodeById,
   // editNodesByVariant,
