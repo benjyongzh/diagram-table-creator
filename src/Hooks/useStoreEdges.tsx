@@ -285,6 +285,7 @@ export const useStoreEdges = () => {
   // };
 
   return {
+    allEdges,
     addEdgeFromConnection,
     updateEdge,
     removeEdge,

@@ -23,8 +23,7 @@ import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 
 export const useStoreEdgeVariants = () => {
   const dispatch = useAppDispatch();
-  const { removeEdge } = useStoreEdges();
-  const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
+  const { allEdges, removeEdge } = useStoreEdges();
   const allEdgeVariants: EdgeVariant[] = useAppSelector(
     (state) => state.edgeVariants.edgeVariants
   );
