@@ -15,7 +15,7 @@ export const edgeVariantSlice: Slice = createSlice({
   initialState,
   reducers: {
     // node types
-    addNewEdgeVariant: (state, action: PayloadAction<EdgeVariant>) => {
+    addEdgeVariant: (state, action: PayloadAction<EdgeVariant>) => {
       state.edgeVariants.push(action.payload);
     },
     removeEdgeVariant: (state, action: PayloadAction<EdgeVariantId>) => {
@@ -39,7 +39,7 @@ export const edgeVariantSlice: Slice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  addNewEdgeVariant,
+  addEdgeVariant,
   removeEdgeVariant,
   // editEdgeVariant,
   setAllEdgeVariants,
