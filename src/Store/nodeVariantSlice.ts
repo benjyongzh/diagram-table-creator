@@ -15,10 +15,19 @@ export const nodeVariantSlice: Slice = createSlice({
   initialState,
   reducers: {
     // node types
-    addNewNodeVariant: (state, action: PayloadAction<NodeVariant>) => {
+    addNodeVariant: (state, action: PayloadAction<NodeVariant>) => {
       state.nodeVariants.push(action.payload);
     },
-    removeNodeVariant: (state, action: PayloadAction<NodeVariantId>) => {
+    updateNodeVariant: (state, action: PayloadAction<NodeVariant>) => {
+      state.nodeVariants = state.nodeVariants.map((variant: NodeVariant) => {
+        if (variant.id === action.payload.id) {
+          variant = { ...action.payload };
+        }
+
+        return variant;
+      });
+    },
+    removeNodeVariantById: (state, action: PayloadAction<NodeVariantId>) => {
       state.nodeVariants = state.nodeVariants.filter(
         (variant: NodeVariant) => !(variant.id !== action.payload)
       );
@@ -39,8 +48,9 @@ export const nodeVariantSlice: Slice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  addNewNodeVariant,
-  removeNodeVariant,
+  addNodeVariant,
+  updateNodeVariant,
+  removeNodeVariantById,
   // editNodeVariant,
   setAllNodeVariants,
 } = nodeVariantSlice.actions;

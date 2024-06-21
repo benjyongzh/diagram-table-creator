@@ -83,6 +83,7 @@ export const useStoreNodes = () => {
   // };
 
   return {
+    allNodes,
     addNode,
     updateNode,
     removeNodeById,
