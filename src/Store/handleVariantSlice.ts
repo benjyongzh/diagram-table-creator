@@ -15,7 +15,7 @@ export const handleVariantslice: Slice = createSlice({
   initialState,
   reducers: {
     // node types
-    addNewHandleVariant: (state, action: PayloadAction<HandleVariant>) => {
+    addHandleVariant: (state, action: PayloadAction<HandleVariant>) => {
       state.handleVariants.push(action.payload);
     },
     removeHandleVariant: (state, action: PayloadAction<HandleVariantId>) => {
@@ -23,14 +23,17 @@ export const handleVariantslice: Slice = createSlice({
         (variant: HandleVariant) => !(variant.id !== action.payload)
       );
     },
-    // editHandleVariant: (state, action: PayloadAction<EditVariant>) => {
-    //   state.variants = state.variants.map((variant) => {
-    //     if (JSON.stringify(variant) === JSON.stringify(action.payload.old)) {
-    //       variant = { ...variant, ...action.payload.new };
-    //     }
-    //     return variant;
-    //   });
-    // },
+    updateHandleVariant: (state, action: PayloadAction<HandleVariant>) => {
+      state.handleVariants = state.handleVariants.map(
+        (variant: HandleVariant) => {
+          if (variant.id === action.payload.id) {
+            variant = { ...action.payload };
+          }
+
+          return variant;
+        }
+      );
+    },
     setAllHandleVariants: (state, action: PayloadAction<HandleVariant[]>) => {
       state.handleVariants = action.payload;
     },
@@ -39,9 +42,9 @@ export const handleVariantslice: Slice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  addNewHandleVariant,
+  addHandleVariant,
   removeHandleVariant,
-  // editHandleVariant,
+  updateHandleVariant,
   setAllhandleVariants,
 } = handleVariantslice.actions;
 

@@ -23,14 +23,15 @@ export const edgeVariantSlice: Slice = createSlice({
         (variant: EdgeVariant) => !(variant.id !== action.payload)
       );
     },
-    // editEdgeVariant: (state, action: PayloadAction<EditVariant>) => {
-    //   state.variants = state.variants.map((variant) => {
-    //     if (JSON.stringify(variant) === JSON.stringify(action.payload.old)) {
-    //       variant = { ...variant, ...action.payload.new };
-    //     }
-    //     return variant;
-    //   });
-    // },
+    updateEdgeVariant: (state, action: PayloadAction<EdgeVariant>) => {
+      state.edgeVariants = state.edgeVariants.map((variant: EdgeVariant) => {
+        if (variant.id === action.payload.id) {
+          variant = { ...action.payload };
+        }
+
+        return variant;
+      });
+    },
     setAllEdgeVariants: (state, action: PayloadAction<EdgeVariant[]>) => {
       state.edgeVariants = action.payload;
     },
@@ -41,7 +42,7 @@ export const edgeVariantSlice: Slice = createSlice({
 export const {
   addEdgeVariant,
   removeEdgeVariant,
-  // editEdgeVariant,
+  updateEdgeVariant,
   setAllEdgeVariants,
 } = edgeVariantSlice.actions;
 
