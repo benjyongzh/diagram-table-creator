@@ -66,7 +66,7 @@ export const useStoreNodes = () => {
       });
     }
 
-    //* update nodeVariant Indexes for other nodes of this variant
+    // update nodeVariant Indexes for other nodes of this variant
     refreshVariantIndexesOfNodes(thisVariant);
   };
 

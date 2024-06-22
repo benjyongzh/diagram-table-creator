@@ -1,10 +1,4 @@
-import {
-  Node,
-  Edge,
-  Connection,
-  updateEdge,
-  getConnectedEdges,
-} from "reactflow";
+import { Node, Edge, Connection } from "reactflow";
 import { toast } from "sonner";
 
 //redux
@@ -12,34 +6,15 @@ import { onConnect, removeEdgeById, editEdge } from "@/Store/edgeSlice";
 
 // hooks
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
-// import { useConnectionValidation } from "./useConnectionValidation";
 import { useStoreEdgeVariants } from "./useStoreEdgeVariants";
 
 // config
-import edgeConfig from "@/Configs/edgeConfig";
 
 // types
-import { EdgeConnectionDirectionToNode } from "Types/edges/edgeConnectionDirectionToNode";
 import { EdgeId } from "Types/edges/edge";
-import { EdgeVariant } from "Types/edges/edgeVariant";
 import { EdgeVariantId } from "Types/edges/edgeVariant";
 import { EdgeData } from "Types/edges/edge";
 import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
-
-// utils
-// import { EditVariant } from "Types/nodes/customNodeVariant";
-// import { nodeIsOfThisVariant } from "@/Services/reactFlowNodes";
-// import { handleHasIncompatibleConnectionType } from "@/Services/reactFlowHandles";
-// import {
-//   getEdgesConnectedToHandleName,
-//   getEdgesConnectedToHandleNameMoreThanIndex,
-//   getEdgeConnectionDirectionToNodes,
-//   updateEdgeConnectionType,
-//   edgeIsConnectedToHandleWhoseNewIndexIsNoLongerInRange,
-//   updateEdgeInfo,
-// } from "@/Services/reactFlowEdges";
-// import { HandleVariant } from "Types/handles/handleVariant";
-// import { reduxObjectsHookOptions } from "Types/reduxObjectsHookOptions";
 import {
   createEdgeId,
   createEdgeMainLabel,
@@ -114,17 +89,6 @@ export const useStoreEdges = () => {
   const getEdgeById = (id: EdgeId): Edge => {
     return allEdges.filter((edge: Edge) => edge.id === id)[0];
   };
-
-  // const deleteEdgesOfNode = (node: Node) => {
-  //   const nodeId: string = node.id;
-  //   const edgesToDelete = allEdges.filter(
-  //     (edge) => edge.source === nodeId || edge.target === nodeId
-  //   );
-  //   for (let i = 0; i < edgesToDelete.length; i++) {
-  //     //delete by id
-  //     deleteEdge(edgesToDelete[i].id);
-  //   }
-  // };
 
   // const editEdgesOfNodeVariant = (change: EditVariant) => {
   //   // narrow down all nodes of this variant
@@ -295,9 +259,5 @@ export const useStoreEdges = () => {
     removeEdge,
     getVariantCountOfEdges,
     getEdgeById,
-    // editEdgesOfNodeVariant,
-    // updateEdge,
-    // deleteEdgesOfNode,
-    // deleteEdge,
   };
 };
