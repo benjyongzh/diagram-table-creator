@@ -13,6 +13,7 @@ import { NodeVariant, NodeVariantId } from "Types/nodes/nodeVariant";
 // hooks
 import { useStoreNodes } from "./useStoreNodes";
 import featureFlags from "@/Configs/featureFlags";
+import { HandleVariant } from "Types/handles/handleVariant";
 
 export const useStoreNodeVariants = () => {
   const dispatch = useAppDispatch();
@@ -56,11 +57,18 @@ export const useStoreNodeVariants = () => {
     return allNodes.filter((node: Node) => node.data.variantId === id);
   };
 
+  const getNodeVariantFromId = (id: NodeVariantId): NodeVariant => {
+    return allNodeVariants.filter(
+      (variant: NodeVariant) => variant.id === id
+    )[0];
+  };
+
   return {
     allNodeVariants,
     addNodeVariant,
     updateNodeVariant,
     removeNodeVariantById,
     getNodesOfVariantId,
+    getNodeVariantFromId,
   };
 };
