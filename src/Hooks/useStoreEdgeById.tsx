@@ -23,11 +23,11 @@ export const useStoreEdgeById = (edgeId: string) => {
     }
   }, [edgeId]);
 
-  const getEdgeVariant = (): EdgeVariant => {
+  const edgeVariant: EdgeVariant = useMemo(() => {
     console.log(`use ${edgeId}`);
     const variantId: EdgeVariantId = thisEdge.data.variantId;
     return getEdgeVariantFromId(variantId);
-  };
+  }, [edgeId]);
 
-  return { thisEdge, deleteEdgeById, getEdgeVariant };
+  return { thisEdge, deleteEdgeById, edgeVariant };
 };
