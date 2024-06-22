@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
 import { Node, NodeChange, applyNodeChanges } from "reactflow";
-import {
-  checkNodeType,
-  // nodeIsOfThisVariant,
-} from "@/Services/reactFlowNodes";
+import { checkNodeType } from "Services/nodes";
 import nodeConfigs from "@/Configs/nodeConfig";
 import { NodeId } from "Types/nodes/node";
 // import { EditVariant } from "Types/nodes/customNodeVariant";
