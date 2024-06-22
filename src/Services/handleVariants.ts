@@ -1,12 +1,7 @@
 import { Position, HandleProps } from "reactflow";
 
 // types
-import { EdgeVariant } from "Types/edges/edgeVariant";
-import {
-  HandleVariant,
-  HandleVariantData,
-  HandleVariantId,
-} from "Types/handles/handleVariant";
+import { HandleVariant } from "Types/handles/handleVariant";
 import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 import nodeDimensions from "Types/nodes/nodeDimensions";
 
@@ -22,20 +17,11 @@ import { getSpacing } from "Utilities/numbers";
 import handleConfig from "Configs/handleConfig";
 import edgeConfig from "Configs/edgeConfig";
 
-export const addHandleVariant = (
-  newVariant: HandleVariantData
-): HandleVariant => {};
-
 export const updateHandleVariant = (
   updatedVariant: HandleVariant
 ): HandleVariant => {
   return updatedVariant;
 };
-export const removeHandleVariant = (id: HandleVariantId): HandleVariant => {};
-
-export const getEdgeVariantOfHandleVariant = (
-  id: HandleVariantId
-): EdgeVariant => {};
 
 export const createHandleVariantId = (): string => {
   return randomStringGenerator(handleConfig.HANDLE_VARIANT_ID_LENGTH);
