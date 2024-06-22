@@ -1,5 +1,6 @@
 import { Node } from "reactflow";
 import { toast } from "sonner";
+import colors from "../colorString";
 
 // hooks
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
@@ -14,6 +15,7 @@ import nodeConfig from "@/Configs/nodeConfig";
 
 //utils
 import { NodeId } from "Types/nodes/node";
+import { HandleVariant } from "Types/handles/handleVariant";
 
 export const useStoreNodeById = (nodeId: NodeId) => {
   // const dispatch = useAppDispatch();
@@ -29,16 +31,29 @@ export const useStoreNodeById = (nodeId: NodeId) => {
   );
   const nodeWidth = useMemo(() => (thisNode ? thisNode.width! : 0), [thisNode]);
 
-  const getNodeVariant = (): NodeVariant => {
-    return allNodeVariants.filter(
-      (variant: NodeVariant) => variant.id === thisNode!.data.variantId
-    );
-  };
+  const nodeVariant: NodeVariant = useMemo(
+    () =>
+      allNodeVariants.filter(
+        (variant: NodeVariant) => variant.id === thisNode!.data.variantId
+      ),
+    [thisNode]
+  );
 
-  const getNodeName = (): string => {
-    const variant: NodeVariant = getNodeVariant();
-    return variant.nodeName;
-  };
+  const nodeName: string = useMemo(() => nodeVariant.nodeName, [nodeVariant]);
 
-  return { nodeHeight, nodeWidth, getNodeVariant, getNodeName };
+  const handleVariants: HandleVariant[] = useMemo(
+    () => nodeVariant.handleTypes,
+    [nodeVariant]
+  );
+
+  const nodeColor: colors = useMemo(() => nodeVariant.color, [nodeVariant]);
+
+  return {
+    nodeHeight,
+    nodeWidth,
+    nodeVariant,
+    nodeName,
+    handleVariants,
+    nodeColor,
+  };
 };

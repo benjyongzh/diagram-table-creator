@@ -17,6 +17,11 @@ import nodeConfig, {
   nodeBackgroundBrightnessTailwind,
 } from "@/Configs/nodeConfig";
 
+// types
+import colors from "Types/colorString";
+import { NodeVariant } from "Types/nodes/nodeVariant";
+import { HandleVariant } from "Types/handles/handleVariant";
+
 // utils
 import {
   convertHandlePositionToStyleKey,
@@ -30,24 +35,32 @@ import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 // hooks
 import { useStoreNodeById } from "Hooks/useStoreNodeById";
 import { useConnectedEdges } from "Hooks/useConnectedEdges";
+import { useStoreNodes } from "Hooks/useStoreNodes";
 
 //styles
 import { X } from "lucide-react";
-import colors from "Types/colorString";
 import defaultHandleStyles from "Styles/handle";
 
 export default memo((props: NodeProps) => {
   const { id, data } = props;
   const updateNodeInternals = useUpdateNodeInternals();
   const connectedEdges: Edge[] = useConnectedEdges(id);
-  const { nodeHeight, nodeWidth, removeNodeById } = useStoreNodeById(id);
+  const {
+    nodeHeight,
+    nodeWidth,
+    nodeVariant,
+    nodeName,
+    handleVariants,
+    nodeColor,
+  } = useStoreNodeById(id);
+  const { removeNodeById } = useStoreNodes();
 
   // use id to call reactflowslice action to remove node
-  const onDeleteButtonClicked = removeNodeById;
+  const onDeleteButtonClicked = () => removeNodeById(id);
 
   const handlesGroupings: Record<string, HandleProps[]> = useMemo(
-    () => getHandlePropsGroupingByKey(data.handleTypes, "position"),
-    [data.handleTypes]
+    () => getHandlePropsGroupingByKey(handleVariants, "position"),
+    [handleVariants]
   );
 
   const handleSpacingsAndArray: Record<Position, handleSpacingAndArray> =
@@ -55,19 +68,19 @@ export default memo((props: NodeProps) => {
       () =>
         getHandleSpacingAndArrayPerNodeSide(
           { height: nodeHeight, width: nodeWidth },
-          data.handleTypes
+          handleVariants
         ),
-      [nodeHeight, nodeWidth, data.handleTypes]
+      [nodeHeight, nodeWidth, handleVariants]
     );
 
   const createArrayOfHandlesWithSpreadPositions =
     (): Array<React.ReactElement> => {
       const finalArr: Array<React.ReactElement> = [];
-      if (data.handleTypes.length < 1) return finalArr;
+      if (handleVariants.length < 1) return finalArr;
 
       const maxHandleCountPerSide: Record<string, number> =
         convertObjectGroupingOfArraysToCountLibrary(handlesGroupings);
-      for (let i = 0; i < data.handleTypes.length; i++) {
+      for (let i = 0; i < handleVariants.length; i++) {
         // i is the index of each handleVariant
 
         // get info of this handleVariant
@@ -132,7 +145,7 @@ export default memo((props: NodeProps) => {
         </div>
       </div>
     ),
-    [data.nodeName, data.variantIndex, connectedEdges]
+    [nodeName, data.variantIndex, connectedEdges]
   );
 
   return (
@@ -149,7 +162,7 @@ export default memo((props: NodeProps) => {
       }`}
     >
       <h2>
-        {data.nodeName} {data.variantIndex}
+        {nodeName} {data.variantIndex}
       </h2>
       {/* <p>
         height: {nodeHeight}, width: {nodeWidth}

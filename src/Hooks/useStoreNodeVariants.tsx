@@ -37,11 +37,14 @@ export const useStoreNodeVariants = () => {
     dispatch(storeUpdateNodeVariant(variant));
     if (featureFlags.EDITING_VARIANTS_CHANGES_EXISTING_NODES) {
       //! update nodes of this variant
+      // const nodesToUpdate: Node[] = getNodesOfVariantId(variant.id);
+      // for (let i = 0; i < nodesToUpdate.length; i++) {
+      // updateNode
+      // }
     }
   };
 
   const removeNodeVariantById = (id: NodeVariantId) => {
-    //! remove nodes of this variant first
     const nodesToDelete: Node[] = getNodesOfVariantId(id);
     for (let i = 0; i < nodesToDelete.length; i++) {
       removeNodeById(nodesToDelete[i].id);
