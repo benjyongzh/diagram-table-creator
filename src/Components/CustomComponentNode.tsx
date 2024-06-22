@@ -136,7 +136,7 @@ export default memo((props: NodeProps) => {
   const modalConfirmationContent = useMemo(
     () => (
       <div className="flex flex-col gap-2">
-        <span className="menu-text">{`${data.nodeName} ${data.variantIndex} will be permanently removed from your network. You cannot undo this action.`}</span>
+        <span className="menu-text">{`${nodeName} ${data.variantIndex} will be permanently removed from your network. You cannot undo this action.`}</span>
         <span className="menu-text">{`The following connections will also be removed:`}</span>
         <div className="flex flex-col items-start">
           {connectedEdges.map((edge) => (
@@ -153,10 +153,10 @@ export default memo((props: NodeProps) => {
       className={`relative nodeComponent cursor-auto
       flex-col ${
         data.isHovered
-          ? `bg-${colors[data.color as keyof typeof colors]}-${
+          ? `bg-${colors[nodeColor as keyof typeof colors]}-${
               nodeBackgroundBrightnessTailwind.hover
             }`
-          : `bg-${colors[data.color as keyof typeof colors]}-${
+          : `bg-${colors[nodeColor as keyof typeof colors]}-${
               nodeBackgroundBrightnessTailwind.normal
             }`
       }`}
