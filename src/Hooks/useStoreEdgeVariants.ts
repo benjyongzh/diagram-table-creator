@@ -28,6 +28,9 @@ export const useStoreEdgeVariants = () => {
     (state) => state.edgeVariants.edgeVariants
   );
 
+  const getEdgeVariantFromId = (id: EdgeVariantId) =>
+    allEdgeVariants.filter((variant) => variant.id === id)[0];
+
   const addEdgeVariant = (newVariantData: EdgeVariantData) => {
     const id: EdgeVariantId = createEdgeVariantId();
     const newVariant: EdgeVariant = { id, ...newVariantData };
@@ -36,7 +39,7 @@ export const useStoreEdgeVariants = () => {
 
   const updateEdgeVariant = (updatedVariant: EdgeVariant) => {
     //TODO! update edges of this variant as well
-    const edgesToUpdate: Edge[] = getEdges(updatedVariant.id);
+    const edgesToUpdate: Edge[] = getEdgesOfVariantId(updatedVariant.id);
     for (let i = 0; i < edgesToUpdate.length; i++) {
       // update mainLabel
       // update edgeStartLabel
@@ -47,7 +50,7 @@ export const useStoreEdgeVariants = () => {
 
   const removeEdgeVariant = (id: EdgeVariantId) => {
     // delete edges of this variant first
-    const edgesToDelete: Edge[] = getEdges(id);
+    const edgesToDelete: Edge[] = getEdgesOfVariantId(id);
     for (let i = 0; i < edgesToDelete.length; i++) {
       removeEdge(edgesToDelete[i].id);
     }
@@ -58,7 +61,7 @@ export const useStoreEdgeVariants = () => {
     dispatch(storeRemoveEdgeVariant(id));
   };
 
-  const getEdges = (id: EdgeVariantId): Edge[] => {
+  const getEdgesOfVariantId = (id: EdgeVariantId): Edge[] => {
     return allEdges.filter((edge) => edge.data.variantId === id);
   };
 
@@ -71,9 +74,11 @@ export const useStoreEdgeVariants = () => {
   };
 
   return {
+    getEdgeVariantFromId,
     addEdgeVariant,
     updateEdgeVariant,
     removeEdgeVariant,
+    getEdgesOfVariantId,
     getEdgeVariantFromEdgeIdentifier,
   };
 };
