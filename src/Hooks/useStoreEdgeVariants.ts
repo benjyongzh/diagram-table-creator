@@ -20,10 +20,15 @@ import {
   EdgeVariantData,
 } from "Types/edges/edgeVariant";
 import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
+import { HandleVariant } from "Types/handles/handleVariant";
+import { useStoreHandleVariants } from "./useStoreHandleVariants";
+import edgeConfig from "Configs/edgeConfig";
 
 export const useStoreEdgeVariants = () => {
   const dispatch = useAppDispatch();
   const { allEdges, removeEdge } = useStoreEdges();
+  const { allHandleVariants, setEdgeVariantIdOfHandleVariant } =
+    useStoreHandleVariants();
   const allEdgeVariants: EdgeVariant[] = useAppSelector(
     (state) => state.edgeVariants.edgeVariants
   );
@@ -55,7 +60,11 @@ export const useStoreEdgeVariants = () => {
       removeEdge(edgesToDelete[i].id);
     }
 
-    //TODO! for all handles using this edgeVariant, set connectionType to any
+    // for all handles using this edgeVariant, set connectionType to any
+    setEdgeVariantIdOfHandleVariant({
+      initialEdgeVariantId: id,
+      finalEdgeVariantId: edgeConfig.FREE_CONNECTION_TYPE_VARIANT_ID,
+    });
 
     // delete this variant
     dispatch(storeRemoveEdgeVariant(id));

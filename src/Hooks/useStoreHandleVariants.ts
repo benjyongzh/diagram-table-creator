@@ -19,6 +19,7 @@ import { useStoreNodeVariants } from "./useStoreNodeVariants";
 import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 import edgeConfig from "Configs/edgeConfig";
 import { useStoreEdgeVariants } from "./useStoreEdgeVariants";
+import { EdgeVariantId } from "Types/edges/edgeVariant";
 
 export const useStoreHandleVariants = () => {
   const dispatch = useAppDispatch();
@@ -71,6 +72,22 @@ export const useStoreHandleVariants = () => {
     }
   };
 
+  const setEdgeVariantIdOfHandleVariant = (args: {
+    initialEdgeVariantId: EdgeVariantId;
+    finalEdgeVariantId: EdgeVariantId;
+  }) => {
+    const handlesToUpdate: HandleVariant[] = allHandleVariants.filter(
+      (variant) => variant.edgeVariantId === args.initialEdgeVariantId
+    );
+    for (let i = 0; i < handlesToUpdate.length; i++) {
+      const updatedVariant: HandleVariant = {
+        ...handlesToUpdate[i],
+        edgeVariantId: args.finalEdgeVariantId,
+      };
+      updateHandleVariant(updatedVariant);
+    }
+  };
+
   return {
     allHandleVariants,
     addHandleVariant,
@@ -79,5 +96,6 @@ export const useStoreHandleVariants = () => {
     removeUnusedHandleVariants,
     getHandleVariantFromId,
     getEdgeIdentifierOfhandleVariant,
+    setEdgeVariantIdOfHandleVariant,
   };
 };
