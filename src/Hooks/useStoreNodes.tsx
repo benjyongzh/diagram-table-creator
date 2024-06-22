@@ -54,8 +54,9 @@ export const useStoreNodes = () => {
     for (let i = 0; i < edgeIdsToDelete.length; i++) {
       removeEdge(edgeIdsToDelete[i]);
     }
-    dispatch(storeRemoveNodeById(nodeId));
     const thisNode: Node = getNodeFromNodeId(nodeId);
+    const thisVariant: NodeVariant = getNodeVariant(thisNode);
+    dispatch(storeRemoveNodeById(nodeId));
     if (
       // (!options || options.useToast) &&
       nodeConfig.DELETION_CREATES_TOAST_NOTIFICATION
@@ -64,6 +65,9 @@ export const useStoreNodes = () => {
         description: getNodeName(thisNode),
       });
     }
+
+    //* update nodeVariant Indexes for other nodes of this variant
+    refreshVariantIndexesOfNodes(thisVariant);
   };
 
   const getNodeFromNodeId = (nodeId: NodeId): Node => {
@@ -79,6 +83,19 @@ export const useStoreNodes = () => {
   const getNodeName = (node: Node): string => {
     const variant: NodeVariant = getNodeVariant(node);
     return variant.nodeName;
+  };
+
+  const refreshVariantIndexesOfNodes = (variant: NodeVariant) => {
+    const nodesToUpdate: Node[] = allNodes.filter(
+      (node) => node.data.variantId === variant.id
+    );
+    for (let i = 0; i < nodesToUpdate.length; i++) {
+      const newNode: Node = {
+        ...nodesToUpdate[i],
+        data: { ...nodesToUpdate[i].data, variantIndex: i + 1 },
+      };
+      updateNode(newNode);
+    }
   };
 
   // const editNodesOfVariant = (change: EditVariant) => {
