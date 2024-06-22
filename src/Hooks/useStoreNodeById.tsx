@@ -33,11 +33,13 @@ import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 
 // styling
 import defaultHandleStyles from "Styles/handle";
+import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 
 export const useStoreNodeById = (nodeId: NodeId) => {
   // const dispatch = useAppDispatch();
   const { allNodeVariants } = useStoreNodeVariants();
-  const { allHandleVariants } = useStoreHandleVariants();
+  const { allHandleVariants, getEdgeIdentifierOfhandleVariant } =
+    useStoreHandleVariants();
   const updateNodeInternals = useUpdateNodeInternals();
 
   const thisNode: Node | undefined = useAppSelector(
@@ -99,7 +101,7 @@ export const useStoreNodeById = (nodeId: NodeId) => {
         handleType,
         handleName,
         position: handlePos,
-        connectionType,
+        edgeVariantId,
       } = handleVariants[i];
 
       // establish styleKey for this Variant
@@ -119,14 +121,23 @@ export const useStoreNodeById = (nodeId: NodeId) => {
         // console.log(`offset for handle ${handleName}-${j}`, offset);
         const handleStyle: CSSProperties = { [styleKey]: offset };
 
+        // create id for handlePort
+        const handlePortEdgeIdentifier: EdgeIdentifier =
+          getEdgeIdentifierOfhandleVariant(handleVariants[i]);
+        const handlePortId: string = formatHandleId(
+          handleVariants[i],
+          handlePortEdgeIdentifier,
+          j
+        );
+
         const newhandlePort: HandlePort = {
-          id: formatHandleId(handleVariants[i], j),
+          id: handlePortId,
           portIndex: j,
           position: handlePos,
           style: { ...defaultHandleStyles, ...handleStyle },
           handleType,
           handleName,
-          connectionType,
+          edgeVariantId,
         };
 
         finalArr.push(newhandlePort);

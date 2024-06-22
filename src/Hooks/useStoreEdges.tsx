@@ -111,6 +111,10 @@ export const useStoreEdges = () => {
     return count;
   };
 
+  const getEdgeById = (id: EdgeId): Edge => {
+    return allEdges.filter((edge: Edge) => edge.id === id)[0];
+  };
+
   // const deleteEdgesOfNode = (node: Node) => {
   //   const nodeId: string = node.id;
   //   const edgesToDelete = allEdges.filter(
@@ -290,6 +294,7 @@ export const useStoreEdges = () => {
     updateEdge,
     removeEdge,
     getVariantCountOfEdges,
+    getEdgeById,
     // editEdgesOfNodeVariant,
     // updateEdge,
     // deleteEdgesOfNode,

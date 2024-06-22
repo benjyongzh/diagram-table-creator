@@ -140,8 +140,12 @@ export const getHandleSpacingAndArrayPerNodeSide = (
   };
 };
 
-export const formatHandleId = (handleVariant: HandleVariant, index: number) => {
-  return `${handleVariant.handleName}-${index}-${handleVariant.connectionType}`;
+export const formatHandleId = (
+  handleVariant: HandleVariant,
+  edgeIdentifier: EdgeIdentifier,
+  index: number
+) => {
+  return `${handleVariant.handleName}-${index}-${edgeIdentifier}`;
 };
 
 export const getConnectionTypeFromConnectionHandleString = (

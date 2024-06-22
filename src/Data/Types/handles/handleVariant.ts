@@ -7,8 +7,16 @@ import edgeConfig from "@/Configs/edgeConfig";
 import { z } from "zod";
 import { isEdgeIdentifier } from "../edges/edgeIdentifier";
 
-import { edgeVariantIdSchema } from "Types/edges/edgeVariant";
+import { EdgeVariantId, edgeVariantIdSchema } from "Types/edges/edgeVariant";
 import { CSSProperties } from "react";
+
+const handleVariantConnectionTypeSchema = z
+  .literal(edgeConfig.FREE_CONNECTION_TYPE_VARIANT_ID)
+  .or(edgeVariantIdSchema);
+
+export type HandleVariantConnectionType = z.infer<
+  typeof handleVariantConnectionTypeSchema
+>;
 
 export const handleVariantDataSchema = z.object({
   handleType: z.enum(["source", "target"]).default("source"),
@@ -31,9 +39,7 @@ export const handleVariantDataSchema = z.object({
       `Maximum quantity of ${nodeConfig.HANDLETYPE_QUANTITY_MAX}`
     )
     .default(nodeConfig.HANDLETYPE_QUANTITY_MIN),
-  connectionType: z
-    .literal(edgeConfig.FREE_CONNECTION_TYPE_VARIANT_ID)
-    .or(edgeVariantIdSchema),
+  edgeVariantId: handleVariantConnectionTypeSchema,
 });
 
 export type HandleVariantData = z.infer<typeof handleVariantDataSchema>;
@@ -76,7 +82,7 @@ export const handleVariantDataDefaultValue: HandleVariantData = {
   handleName: "",
   position: Position.Left,
   quantity: nodeConfig.HANDLETYPE_QUANTITY_MIN,
-  connectionType: edgeConfig.FREE_CONNECTION_TYPE_VARIANT_ID,
+  edgeVariantId: edgeConfig.FREE_CONNECTION_TYPE_VARIANT_ID,
 };
 
 export type HandlePort = Omit<HandleVariantData, "quantity"> & {
