@@ -8,6 +8,7 @@ import { z } from "zod";
 import { isEdgeIdentifier } from "../edges/edgeIdentifier";
 
 import { edgeVariantIdSchema } from "Types/edges/edgeVariant";
+import { CSSProperties } from "react";
 
 export const handleVariantDataSchema = z.object({
   handleType: z.enum(["source", "target"]).default("source"),
@@ -76,4 +77,10 @@ export const handleVariantDataDefaultValue: HandleVariantData = {
   position: Position.Left,
   quantity: nodeConfig.HANDLETYPE_QUANTITY_MIN,
   connectionType: edgeConfig.FREE_CONNECTION_TYPE_VARIANT_ID,
+};
+
+export type HandlePort = Omit<HandleVariantData, "quantity"> & {
+  id: string;
+  portIndex: number;
+  style: CSSProperties;
 };
