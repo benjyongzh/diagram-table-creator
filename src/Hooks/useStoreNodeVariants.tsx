@@ -9,11 +9,15 @@ import {
 
 // types
 import { NodeVariant, NodeVariantId } from "Types/nodes/nodeVariant";
+import { HandleVariantId } from "Types/handles/handleVariant";
+import { HandleVariant } from "Types/handles/handleVariant";
 
 // hooks
 import { useStoreNodes } from "./useStoreNodes";
+import { useStoreHandleVariants } from "./useStoreHandleVariants";
+
+// configs
 import featureFlags from "@/Configs/featureFlags";
-import { HandleVariant } from "Types/handles/handleVariant";
 
 export const useStoreNodeVariants = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +26,8 @@ export const useStoreNodeVariants = () => {
   );
 
   const { allNodes, updateNode, removeNodeById } = useStoreNodes();
+  const { allHandleVariants, removeHandleVariantById } =
+    useStoreHandleVariants();
 
   const addNodeVariant = (newVariant: NodeVariant) => {
     // check to make sure there are no other variants of this name
@@ -37,7 +43,7 @@ export const useStoreNodeVariants = () => {
   const updateNodeVariant = (variant: NodeVariant) => {
     dispatch(storeUpdateNodeVariant(variant));
     if (featureFlags.EDITING_VARIANTS_CHANGES_EXISTING_NODES) {
-      //! update nodes of this variant
+      //! update nodes of this variant. variantIndex?
       // const nodesToUpdate: Node[] = getNodesOfVariantId(variant.id);
       // for (let i = 0; i < nodesToUpdate.length; i++) {
       // updateNode
@@ -46,10 +52,19 @@ export const useStoreNodeVariants = () => {
   };
 
   const removeNodeVariantById = (id: NodeVariantId) => {
+    // delete nodes of this variant
     const nodesToDelete: Node[] = getNodesOfVariantId(id);
     for (let i = 0; i < nodesToDelete.length; i++) {
       removeNodeById(nodesToDelete[i].id);
     }
+
+    // delete handleVariants of this nodeVariant
+    const handlesToDelete: HandleVariant[] = getHandleVariantsFromId(id);
+    for (let i = 0; i < handlesToDelete.length; i++) {
+      removeHandleVariantById(handlesToDelete[i].id);
+    }
+
+    // delete this nodeVariant
     dispatch(storeRemoveNodeVariantById(id));
   };
 
@@ -63,6 +78,13 @@ export const useStoreNodeVariants = () => {
     )[0];
   };
 
+  const getHandleVariantsFromId = (id: NodeVariantId): HandleVariant[] => {
+    const variantIds: HandleVariantId[] = getNodeVariantFromId(id).handleTypes;
+    return allHandleVariants.filter((variant) =>
+      variantIds.includes(variant.id)
+    );
+  };
+
   return {
     allNodeVariants,
     addNodeVariant,
@@ -70,5 +92,6 @@ export const useStoreNodeVariants = () => {
     removeNodeVariantById,
     getNodesOfVariantId,
     getNodeVariantFromId,
+    getHandleVariantsFromId,
   };
 };

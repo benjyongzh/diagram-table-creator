@@ -18,7 +18,10 @@ export const handleVariantslice: Slice = createSlice({
     addHandleVariant: (state, action: PayloadAction<HandleVariant>) => {
       state.handleVariants.push(action.payload);
     },
-    removeHandleVariant: (state, action: PayloadAction<HandleVariantId>) => {
+    removeHandleVariantById: (
+      state,
+      action: PayloadAction<HandleVariantId>
+    ) => {
       state.handleVariants = state.handleVariants.filter(
         (variant: HandleVariant) => !(variant.id !== action.payload)
       );
@@ -43,7 +46,7 @@ export const handleVariantslice: Slice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   addHandleVariant,
-  removeHandleVariant,
+  removeHandleVariantById,
   updateHandleVariant,
   setAllhandleVariants,
 } = handleVariantslice.actions;

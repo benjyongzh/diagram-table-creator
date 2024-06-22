@@ -6,10 +6,15 @@ import colors from "Types/colorString";
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 import { useMemo } from "react";
 import { useStoreNodeVariants } from "./useStoreNodeVariants";
+import { useStoreHandleVariants } from "./useStoreHandleVariants";
 
 // types
 import { NodeVariant } from "Types/nodes/nodeVariant";
-import { HandleVariant, HandlePort } from "Types/handles/handleVariant";
+import {
+  HandleVariant,
+  HandleVariantId,
+  HandlePort,
+} from "Types/handles/handleVariant";
 import { CSSProperties } from "react";
 
 //config
@@ -32,6 +37,7 @@ import defaultHandleStyles from "Styles/handle";
 export const useStoreNodeById = (nodeId: NodeId) => {
   // const dispatch = useAppDispatch();
   const { allNodeVariants } = useStoreNodeVariants();
+  const { allHandleVariants } = useStoreHandleVariants();
   const updateNodeInternals = useUpdateNodeInternals();
 
   const thisNode: Node | undefined = useAppSelector(
@@ -55,7 +61,10 @@ export const useStoreNodeById = (nodeId: NodeId) => {
   const nodeName: string = useMemo(() => nodeVariant.nodeName, [nodeVariant]);
 
   const handleVariants: HandleVariant[] = useMemo(
-    () => nodeVariant.handleTypes,
+    () =>
+      allHandleVariants.filter((variant) =>
+        nodeVariant.handleTypes.includes(variant.id)
+      ),
     [nodeVariant]
   );
 

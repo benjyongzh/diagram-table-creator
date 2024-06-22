@@ -3,6 +3,7 @@ import edgeReducer from "./edgeSlice";
 import nodeReducer from "./nodeSlice";
 import edgeVariantReducer from "./edgeVariantSlice";
 import nodeVariantReducer from "./nodeVariantSlice";
+import handleVariantReducer from "./handleVariantSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     nodes: nodeReducer,
     nodeVariants: nodeVariantReducer,
     edgeVariants: edgeVariantReducer,
+    handleVariants: handleVariantReducer,
   },
 });
 
