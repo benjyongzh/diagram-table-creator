@@ -29,5 +29,21 @@ export const useStoreEdgeById = (edgeId: string) => {
     return getEdgeVariantFromId(variantId);
   }, [edgeId]);
 
-  return { thisEdge, deleteEdgeById, edgeVariant };
+  const variantIndex: number = useMemo(() => {}, [edgeVariant]);
+
+  const mainLabel: string = useMemo(() => {}, [edgeVariant]);
+
+  const startLabel: string = useMemo(() => {}, [edgeVariant]);
+
+  const endLabel: string = useMemo(() => {}, [edgeVariant]);
+
+  return {
+    thisEdge,
+    deleteEdgeById,
+    edgeVariant,
+    variantIndex,
+    mainLabel,
+    startLabel,
+    endLabel,
+  };
 };

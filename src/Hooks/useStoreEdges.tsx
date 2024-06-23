@@ -17,9 +17,6 @@ import { EdgeData } from "Types/edges/edge";
 import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 import {
   createEdgeId,
-  createEdgeMainLabel,
-  createEdgeLabelAtSource,
-  createEdgeLabelAtTarget,
   getUsableEdgeIdentifierFromConnection,
 } from "Services/edges";
 
@@ -39,19 +36,9 @@ export const useStoreEdges = () => {
     const variantId: EdgeVariantId =
       getEdgeVariantFromEdgeIdentifier(edgeIdentifier).id;
 
-    // get new connectionTypeIndex. bsaed on next highest index of this connectionType
-    const variantIndex: number = getVariantCountOfEdges(variantId) + 1;
-
     // create edge data
-    const mainLabel: string = createEdgeMainLabel(edgeIdentifier, variantIndex);
-    const edgeStartLabel: string = createEdgeLabelAtSource(connection);
-    const edgeEndLabel: string = createEdgeLabelAtTarget(connection);
     const edgeData: EdgeData = {
       variantId,
-      mainLabel,
-      edgeStartLabel,
-      edgeEndLabel,
-      variantIndex,
     };
 
     // create id
