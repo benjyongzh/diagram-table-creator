@@ -27,15 +27,13 @@ import { NodeVariant } from "Types/nodes/nodeVariant";
 export const useStoreNodes = () => {
   const dispatch = useAppDispatch();
   const { allEdges, removeEdge } = useStoreEdges();
-  const { allNodeVariants, getNodesOfVariantId } = useStoreNodeVariants();
+  const { allNodeVariants } = useStoreNodeVariants();
   const allNodes: Node[] = useAppSelector((state) => state.nodes.nodes);
 
   const addNode = (nodeVariant: NodeVariant) => {
     const id: NodeId = createNodeId();
-    const variantIndex: number = getNodesOfVariantId(nodeVariant.id).length + 1;
     const newNodeData: NodeData = {
       variantId: nodeVariant.id,
-      variantIndex,
       isHovered: false,
     };
     const node: Node = { id, data: newNodeData, ...standardNodeData };

@@ -37,7 +37,7 @@ import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 
 export const useStoreNodeById = (nodeId: NodeId) => {
   // const dispatch = useAppDispatch();
-  const { allNodeVariants } = useStoreNodeVariants();
+  const { allNodeVariants, getNodesOfVariantId } = useStoreNodeVariants();
   const { allHandleVariants, getEdgeIdentifierOfhandleVariant } =
     useStoreHandleVariants();
   const updateNodeInternals = useUpdateNodeInternals();
@@ -46,19 +46,29 @@ export const useStoreNodeById = (nodeId: NodeId) => {
     (state) => state.nodes.nodes.filter((node: Node) => node.id === nodeId)[0]
   );
 
-  const nodeHeight = useMemo(
+  const nodeHeight: number = useMemo(
     () => (thisNode ? thisNode.height! : 0),
     [thisNode]
   );
-  const nodeWidth = useMemo(() => (thisNode ? thisNode.width! : 0), [thisNode]);
+  const nodeWidth: number = useMemo(
+    () => (thisNode ? thisNode.width! : 0),
+    [thisNode]
+  );
 
   const nodeVariant: NodeVariant = useMemo(
     () =>
       allNodeVariants.filter(
         (variant: NodeVariant) => variant.id === thisNode!.data.variantId
-      ),
+      )[0],
     [thisNode]
   );
+
+  const variantIndex: number = useMemo(() => {
+    const nodes: NodeId[] = getNodesOfVariantId(nodeVariant.id).map(
+      (node) => node.id
+    );
+    return nodes.indexOf(nodeId);
+  }, [nodeVariant]);
 
   const nodeName: string = useMemo(() => nodeVariant.nodeName, [nodeVariant]);
 
@@ -154,6 +164,7 @@ export const useStoreNodeById = (nodeId: NodeId) => {
     nodeHeight,
     nodeWidth,
     nodeVariant,
+    variantIndex,
     nodeName,
     handleVariants,
     nodeColor,

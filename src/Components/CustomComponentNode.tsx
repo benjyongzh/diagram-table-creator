@@ -24,8 +24,14 @@ import { X } from "lucide-react";
 export default memo((props: NodeProps) => {
   const { id, data } = props;
   const connectedEdges: Edge[] = useConnectedEdges(id);
-  const { nodeVariant, nodeName, handleVariants, nodeColor, handles } =
-    useStoreNodeById(id);
+  const {
+    nodeVariant,
+    variantIndex,
+    nodeName,
+    handleVariants,
+    nodeColor,
+    handles,
+  } = useStoreNodeById(id);
   const { removeNodeById } = useStoreNodes();
 
   // use id to call reactflowslice action to remove node
@@ -46,7 +52,7 @@ export default memo((props: NodeProps) => {
   const modalConfirmationContent = useMemo(
     () => (
       <div className="flex flex-col gap-2">
-        <span className="menu-text">{`${nodeName} ${data.variantIndex} will be permanently removed from your network. You cannot undo this action.`}</span>
+        <span className="menu-text">{`${nodeName} ${variantIndex} will be permanently removed from your network. You cannot undo this action.`}</span>
         <span className="menu-text">{`The following connections will also be removed:`}</span>
         <div className="flex flex-col items-start">
           {connectedEdges.map((edge) => (
@@ -55,7 +61,7 @@ export default memo((props: NodeProps) => {
         </div>
       </div>
     ),
-    [nodeName, data.variantIndex, connectedEdges]
+    [nodeName, variantIndex, connectedEdges]
   );
 
   return (
@@ -72,7 +78,7 @@ export default memo((props: NodeProps) => {
       }`}
     >
       <h2>
-        {nodeName} {data.variantIndex}
+        {nodeName} {variantIndex}
       </h2>
       {/* <p>
         height: {nodeHeight}, width: {nodeWidth}

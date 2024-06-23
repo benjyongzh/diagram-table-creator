@@ -21,7 +21,7 @@ import featureFlags from "@/Configs/featureFlags";
 
 export const useStoreNodeVariants = () => {
   const dispatch = useAppDispatch();
-  const allNodeVariants = useAppSelector(
+  const allNodeVariants: NodeVariant[] = useAppSelector(
     (state) => state.nodeVariants.nodeVariants
   );
 

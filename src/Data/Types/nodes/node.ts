@@ -5,7 +5,6 @@ import { nodeStyle } from "Styles/node";
 
 export type NodeData = {
   variantId: NodeVariantId;
-  variantIndex: number;
   isHovered: boolean;
 };
 
