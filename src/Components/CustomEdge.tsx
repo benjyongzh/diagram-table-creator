@@ -38,7 +38,7 @@ export default memo(
     data, // this or useEdgeData
     selected,
   }: EdgeProps) => {
-    const { deleteEdgeById } = useStoreEdgeById(id);
+    const { deleteEdgeById, edgeVariant, edgeLabels } = useStoreEdgeById(id);
     const [edgePath, labelX, labelY, offsetX, offsetY] = getSmoothStepPath({
       sourceX,
       sourceY,
@@ -62,7 +62,7 @@ export default memo(
           <EdgeLabel
             show={selected || false}
             origin={{ x: sourceX, y: sourceY }}
-            label={data.edgeStartLabel}
+            label={edgeLabels.startLabel}
           />
           <div
             style={{
@@ -75,7 +75,7 @@ export default memo(
               selected ? "visible" : "invisible"
             }`}
           >
-            <span className="mb-[1px]">{data.mainLabel}</span>
+            <span className="mb-[1px]">{edgeLabels.mainLabel}</span>
             {edgeConfig.DELETION_REQUIRES_USER_CONFIRMATION ? (
               <Modal
                 triggerElement={
@@ -93,7 +93,7 @@ export default memo(
                 modalContent={
                   <ModalConfirmation
                     title={`Delete this connection?`}
-                    content={`Connection ${data.mainLabel} will be permanently removed from your network. You cannot undo this action.`}
+                    content={`Connection ${edgeLabels.mainLabel} will be permanently removed from your network. You cannot undo this action.`}
                     destructive
                     action={onButtonClick}
                   />
@@ -114,7 +114,7 @@ export default memo(
           <EdgeLabel
             show={selected || false}
             origin={{ x: targetX, y: targetY }}
-            label={data.edgeEndLabel}
+            label={edgeLabels.endLabel}
           />
         </EdgeLabelRenderer>
       </>
