@@ -16,3 +16,9 @@ export const standardEdgeData = {
   focusable: true,
   //styling
 };
+
+export type EdgeLabels = {
+  mainLabel: string;
+  startLabel: string;
+  endLabel: string;
+};

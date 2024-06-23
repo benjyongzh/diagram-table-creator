@@ -1,13 +1,17 @@
 import { EdgeVariant, EdgeVariantId } from "Types/edges/edgeVariant";
 import { Edge } from "reactflow";
 
+// types
+import { EdgeId, EdgeLabels } from "Types/edges/edge";
+
 // hooks
 import { useMemo, useCallback } from "react";
 // import { useAppDispatch } from "Hooks/reduxHooks";
 import { useStoreEdges } from "./useStoreEdges";
 import { useStoreEdgeVariants } from "./useStoreEdgeVariants";
 
-import { EdgeId } from "Types/edges/edge";
+// utils
+import { getEdgeLabels } from "Services/edges";
 
 export const useStoreEdgeById = (edgeId: string) => {
   // const dispatch = useAppDispatch();
@@ -38,19 +42,21 @@ export const useStoreEdgeById = (edgeId: string) => {
     return edges.indexOf(edgeId);
   }, [edgeVariant]);
 
-  const mainLabel: string = useMemo(() => {}, [edgeVariant]);
-
-  const startLabel: string = useMemo(() => {}, [edgeVariant]);
-
-  const endLabel: string = useMemo(() => {}, [edgeVariant]);
+  const edgeLabels: EdgeLabels = useMemo(
+    () =>
+      getEdgeLabels({
+        edge: thisEdge,
+        edgeIdentifier: edgeVariant.edgeIdentifier,
+        variantIndex,
+      }),
+    [edgeVariant]
+  );
 
   return {
     thisEdge,
     deleteEdgeById,
     edgeVariant,
     variantIndex,
-    mainLabel,
-    startLabel,
-    endLabel,
+    edgeLabels,
   };
 };
