@@ -26,10 +26,10 @@ import { Modal } from "./modals/Modal";
 
 export const Sidebar = () => {
   const nodeVariants: Array<NodeVariant> = useAppSelector(
-    (state) => state.nodeVariants.variants
+    (state) => state.nodeVariants.nodeVariants
   );
   const edgeVariants: Array<EdgeVariant> = useAppSelector(
-    (state) => state.edgeVariants.variants
+    (state) => state.edgeVariants.edgeVariants
   );
 
   const {
