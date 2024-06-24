@@ -1,7 +1,7 @@
 import { z } from "zod";
 import edgeIdentifierSchema from "Types/edges/edgeIdentifier";
 
-const formSchemaNewEdge = z.object({
+const formSchemaNewEdgeVariant = z.object({
   connection_name: z
     .string()
     .min(1, "Connection name must not be empty")
@@ -12,4 +12,4 @@ const formSchemaNewEdge = z.object({
   connection_identifier: edgeIdentifierSchema,
 });
 
-export default formSchemaNewEdge;
+export default formSchemaNewEdgeVariant;
