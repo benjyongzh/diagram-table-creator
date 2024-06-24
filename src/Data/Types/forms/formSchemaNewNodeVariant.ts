@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { handleVariantSchema } from "./handleVariant";
+import { handleVariantIdSchema } from "Types/handles/handleVariant";
 import colors from "Types/colorString";
 
 // const handleVariantSchema = z.custom<HandleVariant>((value) =>
 //   isHandleVariant(value)
 // );
 
-const formSchemaNewNode = z.object({
+const formSchemaNewNodeVariant = z.object({
   component_name: z
     .string()
     .min(1, "Component name must not be empty")
@@ -14,8 +14,8 @@ const formSchemaNewNode = z.object({
       /^[\w\s]+$/,
       "Component name can only contain alphanumeric characters, spaces and/or underscores"
     ),
-  handle_variants: z.array(handleVariantSchema).default([]),
+  handle_variants: z.array(handleVariantIdSchema).default([]),
   color: z.nativeEnum(colors).default(colors.blue),
 });
 
-export default formSchemaNewNode;
+export default formSchemaNewNodeVariant;

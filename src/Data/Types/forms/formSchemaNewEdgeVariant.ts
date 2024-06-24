@@ -1,5 +1,5 @@
 import { z } from "zod";
-import edgeIdentifierSchema from "../edges/edgeIdentifier";
+import edgeIdentifierSchema from "Types/edges/edgeIdentifier";
 
 const formSchemaNewEdge = z.object({
   connection_name: z
@@ -9,7 +9,7 @@ const formSchemaNewEdge = z.object({
       /^[\w\s]+$/,
       "Connection name can only contain alphanumeric characters, spaces and/or underscores"
     ),
-  edge_identifier: edgeIdentifierSchema,
+  connection_identifier: edgeIdentifierSchema,
 });
 
 export default formSchemaNewEdge;
