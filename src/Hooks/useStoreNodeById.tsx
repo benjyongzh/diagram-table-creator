@@ -1,4 +1,10 @@
-import { Node, HandleProps, Position, useUpdateNodeInternals } from "reactflow";
+import {
+  Node,
+  HandleProps,
+  Position,
+  useUpdateNodeInternals,
+  getConnectedEdges,
+} from "reactflow";
 import { toast } from "sonner";
 import colors from "Types/colorString";
 
@@ -7,6 +13,7 @@ import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 import { useMemo } from "react";
 import { useStoreNodeVariants } from "./useStoreNodeVariants";
 import { useStoreHandleVariants } from "./useStoreHandleVariants";
+import { useStoreEdges } from "./useStoreEdges";
 
 // types
 import { NodeVariant } from "Types/nodes/nodeVariant";
@@ -37,6 +44,7 @@ import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 
 export const useStoreNodeById = (nodeId: NodeId) => {
   // const dispatch = useAppDispatch();
+  const { allEdges } = useStoreEdges();
   const { allNodeVariants, getNodesOfVariantId } = useStoreNodeVariants();
   const { allHandleVariants, getEdgeIdentifierOfhandleVariant } =
     useStoreHandleVariants();
@@ -160,6 +168,11 @@ export const useStoreNodeById = (nodeId: NodeId) => {
     return finalArr;
   }, [nodeVariant]);
 
+  const connectedEdges = useMemo(
+    () => getConnectedEdges([thisNode!], allEdges),
+    [nodeId, allEdges]
+  );
+
   return {
     nodeHeight,
     nodeWidth,
@@ -169,5 +182,6 @@ export const useStoreNodeById = (nodeId: NodeId) => {
     handleVariants,
     nodeColor,
     handles,
+    connectedEdges,
   };
 };

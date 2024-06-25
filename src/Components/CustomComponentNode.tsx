@@ -15,7 +15,6 @@ import colors from "Types/colorString";
 
 // hooks
 import { useStoreNodeById } from "Hooks/useStoreNodeById";
-import { useConnectedEdges } from "Hooks/useConnectedEdges";
 import { useStoreNodes } from "Hooks/useStoreNodes";
 
 //styles
@@ -23,7 +22,6 @@ import { X } from "lucide-react";
 
 export default memo((props: NodeProps) => {
   const { id, data } = props;
-  const connectedEdges: Edge[] = useConnectedEdges(id);
   const {
     nodeVariant,
     variantIndex,
@@ -31,6 +29,7 @@ export default memo((props: NodeProps) => {
     handleVariants,
     nodeColor,
     handles,
+    connectedEdges,
   } = useStoreNodeById(id);
   const { removeNodeById } = useStoreNodes();
 
