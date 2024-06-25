@@ -23,9 +23,10 @@ import { z } from "zod";
 import { handleVariantDataDefaultValue } from "Types/handles/handleVariant";
 import colors from "Types/colorString";
 import { NodeVariant } from "Types/nodes/nodeVariant";
-import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
-import { randomStringGenerator } from "Utilities/strings";
-import handleConfig from "@/Configs/handleConfig";
+import formSchemaNewNodeVariant from "Types/forms/formSchemaNewNodeVariant";
+
+// utils
+import { createHandleVariantId } from "Services/handleVariants";
 
 type FormFieldGroupNodeProps = {
   variant?: NodeVariant;
@@ -40,7 +41,7 @@ export const FormFieldGroupNode = (props: FormFieldGroupNodeProps) => {
 
   const setFormValuesBasedOnExistingVariant = useCallback(() => {
     console.log(props.variant);
-    const fieldValues: z.infer<typeof formSchemaNewNode> = {
+    const fieldValues: z.infer<typeof formSchemaNewNodeVariant> = {
       component_name: props.variant!.nodeName,
       handle_variants: props.variant!.handleTypes,
       color: props.variant!.color,
@@ -49,10 +50,8 @@ export const FormFieldGroupNode = (props: FormFieldGroupNodeProps) => {
   }, [reset]);
 
   const addHandleVariant = useCallback(() => {
-    const handleId: string = randomStringGenerator(
-      handleConfig.HANDLE_VARIANT_ID_LENGTH
-    );
-    append({ handleTypeId: handleId, ...handleVariantDataDefaultValue });
+    const handleId: string = createHandleVariantId();
+    append({ id: handleId, ...handleVariantDataDefaultValue });
   }, []);
 
   const removeHandleVariant = (index: number) =>

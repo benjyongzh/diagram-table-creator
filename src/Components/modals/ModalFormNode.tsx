@@ -1,7 +1,7 @@
 import { ModalForm } from "./ModalForm";
 import { FormFieldGroupNode } from "../formFieldGroups/FormFieldGroupNode";
 import { z } from "zod";
-import formSchemaNewNode from "Types/schemas/formSchemaNewNode";
+import formSchemaNewNodeVariant from "Types/forms/formSchemaNewNodeVariant";
 
 // types
 import { NodeVariant, NodeVariantData } from "Types/nodes/nodeVariant";
@@ -21,10 +21,10 @@ type modalFormNodeSubmitArgs = Omit<onFormSubmitParams, "data"> & {
   data: z.infer<typeof schema>;
 };
 
-const schema = formSchemaNewNode;
+const schema = formSchemaNewNodeVariant;
 
 export const ModalFormNode = (props: ModalFormNodeProps) => {
-  const { addVariant, editVariant } = useStoreNodeVariants();
+  const { addNodeVariant, updateNodeVariant } = useStoreNodeVariants();
   const { formSubmitSuccess, formSubmitFailure } = useModalForm();
 
   const onNodeFormSubmit: onFormSubmitFunction = async (
@@ -36,14 +36,15 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
     if (props.variant) {
       // edit redux node variant slice
       try {
-        const newNodeVariantData: NodeVariantData = {
+        const newNodeVariant: NodeVariant = {
+          id: props.variant.id,
           nodeName: data.component_name,
           handleTypes: data.handle_variants,
           color: data.color,
         };
         if (form.formState.isDirty) {
           // await inserting data into DB
-          editVariant({ old: props.variant, new: newNodeVariant });
+          updateNodeVariant(newNodeVariant);
           formSubmitSuccess("Component edited", data.component_name, () =>
             props.setModalOpen(false)
           );
@@ -60,7 +61,7 @@ export const ModalFormNode = (props: ModalFormNodeProps) => {
           handleTypes: data.handle_variants,
           color: data.color,
         };
-        addVariant(newNodeVariantData);
+        addNodeVariant(newNodeVariantData);
         formSubmitSuccess("Component created", data.component_name, () =>
           props.setModalOpen(false)
         );

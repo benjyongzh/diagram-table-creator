@@ -8,9 +8,13 @@ import {
 } from "@/Store/nodeVariantSlice";
 
 // types
-import { NodeVariant, NodeVariantId } from "Types/nodes/nodeVariant";
-import { HandleVariantId } from "Types/handles/handleVariant";
-import { HandleVariant } from "Types/handles/handleVariant";
+import {
+  NodeVariantData,
+  NodeVariant,
+  NodeVariantId,
+} from "Types/nodes/nodeVariant";
+import { HandleVariantId, HandleVariant } from "Types/handles/handleVariant";
+import {} from "Types/handles/handleVariant";
 
 // hooks
 import { useStoreNodes } from "./useStoreNodes";
@@ -18,6 +22,7 @@ import { useStoreHandleVariants } from "./useStoreHandleVariants";
 
 // configs
 import featureFlags from "@/Configs/featureFlags";
+import { createNodeVariantId } from "Services/nodeVariants";
 
 export const useStoreNodeVariants = () => {
   const dispatch = useAppDispatch();
@@ -29,13 +34,16 @@ export const useStoreNodeVariants = () => {
   const { allHandleVariants, removeHandleVariantById } =
     useStoreHandleVariants();
 
-  const addNodeVariant = (newVariant: NodeVariant) => {
+  const addNodeVariant = (newVariantData: NodeVariantData) => {
     // check to make sure there are no other variants of this name
     const nodesWithSameName: NodeVariant[] = allNodeVariants.filter(
-      (node: NodeVariant) => node.nodeName === newVariant.nodeName
+      (node: NodeVariant) => node.nodeName === newVariantData.nodeName
     );
     if (nodesWithSameName.length > 0)
-      throw `"${newVariant.nodeName}" already exists.`;
+      throw `"${newVariantData.nodeName}" already exists.`;
+
+    const id: NodeVariantId = createNodeVariantId();
+    const newVariant: NodeVariant = { id, ...newVariantData };
 
     dispatch(storeAddNodeVariant(newVariant));
   };
