@@ -11,20 +11,26 @@ import { useStoreEdgeVariants } from "./useStoreEdgeVariants";
 // config
 
 // types
-import { EdgeId } from "Types/edges/edge";
-import { EdgeVariantId } from "Types/edges/edgeVariant";
+import { EdgeId, EdgeLabels } from "Types/edges/edge";
+import { EdgeVariant, EdgeVariantId } from "Types/edges/edgeVariant";
 import { EdgeData } from "Types/edges/edge";
 import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 import {
+  getEdgeLabels as getEdgeLabelsService,
   createEdgeId,
   getUsableEdgeIdentifierFromConnection,
 } from "Services/edges";
+import { useCallback } from "react";
 
 export const useStoreEdges = () => {
   const dispatch = useAppDispatch();
   // const allNodes: Node[] = useAppSelector((state) => state.nodes.nodes);
   const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
-  const { getEdgeVariantFromEdgeIdentifier } = useStoreEdgeVariants();
+  const {
+    allEdgeVariants,
+    getEdgesOfVariantId,
+    getEdgeVariantFromEdgeIdentifier,
+  } = useStoreEdgeVariants();
 
   const addEdgeFromConnection = (connection: Connection) => {
     const { source, target, sourceHandle, targetHandle } = connection;
@@ -75,6 +81,28 @@ export const useStoreEdges = () => {
 
   const getEdgeById = (id: EdgeId): Edge => {
     return allEdges.filter((edge: Edge) => edge.id === id)[0];
+  };
+
+  const getEdgeVariant = (edge: Edge): EdgeVariant =>
+    allEdgeVariants.filter((variant) => variant.id === edge.data.variantId)[0];
+
+  const getVariantIndex = (edge: Edge): number => {
+    const variant: EdgeVariant = getEdgeVariant(edge);
+    const edgeIds: EdgeId[] = getEdgesOfVariantId(variant.id).map(
+      (edge) => edge.id
+    );
+    return edgeIds.indexOf(edge.id);
+  };
+
+  const getEdgeLabels = (edge: Edge): EdgeLabels => {
+    const variant: EdgeVariant = getEdgeVariant(edge);
+    const identifier: EdgeIdentifier = variant.edgeIdentifier;
+    const variantIndex: number = getVariantIndex(edge);
+    return getEdgeLabelsService({
+      edge,
+      edgeIdentifier: identifier,
+      variantIndex,
+    });
   };
 
   // const editEdgesOfNodeVariant = (change: EditVariant) => {
@@ -246,5 +274,8 @@ export const useStoreEdges = () => {
     removeEdge,
     getVariantCountOfEdges,
     getEdgeById,
+    getEdgeVariant,
+    getVariantIndex,
+    getEdgeLabels,
   };
 };

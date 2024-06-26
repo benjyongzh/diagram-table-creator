@@ -83,6 +83,7 @@ export const useStoreEdgeVariants = () => {
   };
 
   return {
+    allEdgeVariants,
     getEdgeVariantFromId,
     addEdgeVariant,
     updateEdgeVariant,

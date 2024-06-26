@@ -10,13 +10,16 @@ import { useMemo, useCallback } from "react";
 import { useStoreEdges } from "./useStoreEdges";
 import { useStoreEdgeVariants } from "./useStoreEdgeVariants";
 
-// utils
-import { getEdgeLabels } from "Services/edges";
-
 export const useStoreEdgeById = (edgeId: string) => {
   // const dispatch = useAppDispatch();
-  const { allEdges, removeEdge } = useStoreEdges();
-  const { getEdgeVariantFromId, getEdgesOfVariantId } = useStoreEdgeVariants();
+  const {
+    allEdges,
+    removeEdge,
+    getEdgeVariant,
+    getVariantIndex,
+    getEdgeLabels,
+  } = useStoreEdges();
+  const { allEdgeVariants } = useStoreEdgeVariants();
 
   const thisEdge: Edge = useMemo(
     () => allEdges.filter((edge) => edge.id === edgeId)[0],
@@ -29,27 +32,19 @@ export const useStoreEdgeById = (edgeId: string) => {
     }
   }, [edgeId]);
 
-  const edgeVariant: EdgeVariant = useMemo(() => {
-    console.log(`use ${edgeId}`);
-    const variantId: EdgeVariantId = thisEdge.data.variantId;
-    return getEdgeVariantFromId(variantId);
-  }, [edgeId]);
+  const edgeVariant: EdgeVariant = useMemo(
+    () => getEdgeVariant(thisEdge),
+    [thisEdge.data.variantId]
+  );
 
-  const variantIndex: number = useMemo(() => {
-    const edges: EdgeId[] = getEdgesOfVariantId(edgeVariant.id).map(
-      (edge) => edge.id
-    );
-    return edges.indexOf(edgeId);
-  }, [edgeVariant]);
+  const variantIndex: number = useMemo(
+    () => getVariantIndex(thisEdge),
+    [allEdgeVariants, thisEdge.data.variantId]
+  );
 
   const edgeLabels: EdgeLabels = useMemo(
-    () =>
-      getEdgeLabels({
-        edge: thisEdge,
-        edgeIdentifier: edgeVariant.edgeIdentifier,
-        variantIndex,
-      }),
-    [edgeVariant]
+    () => getEdgeLabels(thisEdge),
+    [thisEdge.sourceHandle, thisEdge.targetHandle, edgeVariant, variantIndex]
   );
 
   return {
