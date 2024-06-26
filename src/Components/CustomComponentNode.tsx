@@ -16,6 +16,7 @@ import colors from "Types/colorString";
 // hooks
 import { useStoreNodeById } from "Hooks/useStoreNodeById";
 import { useStoreNodes } from "Hooks/useStoreNodes";
+import { useStoreEdges } from "Hooks/useStoreEdges";
 
 //styles
 import { X } from "lucide-react";
@@ -32,6 +33,7 @@ export default memo((props: NodeProps) => {
     connectedEdges,
   } = useStoreNodeById(id);
   const { removeNodeById } = useStoreNodes();
+  const { getEdgeLabels } = useStoreEdges();
 
   // use id to call reactflowslice action to remove node
   const onDeleteButtonClicked = () => removeNodeById(id);
@@ -55,7 +57,9 @@ export default memo((props: NodeProps) => {
         <span className="menu-text">{`The following connections will also be removed:`}</span>
         <div className="flex flex-col items-start">
           {connectedEdges.map((edge) => (
-            <span className="menu-text ml-3">{edge.data.mainLabel}</span>
+            <span className="menu-text ml-3">
+              {getEdgeLabels(edge).mainLabel}
+            </span>
           ))}
         </div>
       </div>
