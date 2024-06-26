@@ -1,31 +1,33 @@
-import { ModalForm } from "./ModalForm";
+import {
+  ModalForm,
+  onFormSubmitParams,
+  onFormSubmitFunction,
+} from "./ModalForm";
 import { FormFieldGroupNode } from "../formFieldGroups/FormFieldGroupNode";
 import { z } from "zod";
-import formSchemaNewEdge from "Types/schemas/formSchemaNewEdge";
 
-//redux
-import CustomEdgeVariant from "Types/edges/customEdgeVariant";
+// types
+import { EdgeVariant, EdgeVariantData } from "Types/edges/edgeVariant";
+import formSchemaNewEdgeVariant from "Types/forms/formSchemaNewEdgeVariant";
 
 // hooks
-import { useStoreNodeVariants } from "Hooks/useStoreNodeVariants";
+import { useStoreEdgeVariants } from "Hooks/useStoreEdgeVariants";
 import { useModalForm } from "Hooks/useModalForm";
 import { useMemo } from "react";
 
-import { onFormSubmitParams, onFormSubmitFunction } from "./ModalForm";
-
 type ModalFormNodeProps = {
   setModalOpen: Function;
-  variant?: CustomEdgeVariant;
+  variant?: EdgeVariant;
 };
 
 type modalFormNodeSubmitArgs = Omit<onFormSubmitParams, "data"> & {
   data: z.infer<typeof schema>;
 };
 
-const schema = formSchemaNewEdge;
+const schema = formSchemaNewEdgeVariant;
 
 export const ModalFormEdge = (props: ModalFormNodeProps) => {
-  const { addVariant, editVariant } = useStoreNodeVariants();
+  const { addEdgeVariant, updateEdgeVariant } = useStoreEdgeVariants();
   const { formSubmitSuccess, formSubmitFailure } = useModalForm();
 
   const onEdgeFormSubmit: onFormSubmitFunction = async (
@@ -37,29 +39,29 @@ export const ModalFormEdge = (props: ModalFormNodeProps) => {
     if (props.variant) {
       // edit redux node variant slice
       try {
-        const newNodeVariant: CustomEdgeVariant = {
+        const newEdgeVariantData: EdgeVariantData = {
           edgeName: data.connection_name,
-          edgeIdentifier: data.edge_identifier,
+          edgeIdentifier: data.connection_identifier,
         };
         if (form.formState.isDirty) {
           // await inserting data into DB
-          editVariant({ old: props.variant, new: newNodeVariant });
-          formSubmitSuccess("Component edited", data.connection_name, () =>
+          updateEdgeVariant({ id: props.variant.id, ...newEdgeVariantData });
+          formSubmitSuccess("Connection edited", data.connection_name, () =>
             props.setModalOpen(false)
           );
         } else {
           props.setModalOpen(false);
         }
       } catch (error) {
-        formSubmitFailure("Error editing component", `${error}`);
+        formSubmitFailure("Error editing connection", `${error}`);
       }
     } else {
       try {
-        const newEdgeVariant: CustomEdgeVariant = {
+        const newEdgeVariantData: EdgeVariantData = {
           edgeName: data.connection_name,
-          edgeIdentifier: data.edge_identifier,
+          edgeIdentifier: data.connection_identifier,
         };
-        addVariant(newEdgeVariant);
+        addEdgeVariant(newEdgeVariantData);
         formSubmitSuccess("Connection type created", data.connection_name, () =>
           props.setModalOpen(false)
         );
