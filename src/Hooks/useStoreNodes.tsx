@@ -60,7 +60,7 @@ export const useStoreNodes = () => {
       nodeConfig.DELETION_CREATES_TOAST_NOTIFICATION
     ) {
       toast.success("Component deleted", {
-        description: getNodeName(thisNode),
+        description: thisVariant.nodeName,
       });
     }
 
@@ -72,16 +72,10 @@ export const useStoreNodes = () => {
     return allNodes.filter((node) => node.id === nodeId)[0];
   };
 
-  const getNodeVariant = (node: Node): NodeVariant => {
-    return allNodeVariants.filter(
+  const getNodeVariant = (node: Node): NodeVariant =>
+    allNodeVariants.filter(
       (variant: NodeVariant) => variant.id === node.data.variantId
-    );
-  };
-
-  const getNodeName = (node: Node): string => {
-    const variant: NodeVariant = getNodeVariant(node);
-    return variant.nodeName;
-  };
+    )[0];
 
   const refreshVariantIndexesOfNodes = (variant: NodeVariant) => {
     const nodesToUpdate: Node[] = allNodes.filter(
@@ -109,7 +103,6 @@ export const useStoreNodes = () => {
     updateNode,
     removeNodeById,
     getNodeFromNodeId,
-    getNodeVariant,
-    getNodeName /*editNodesOfVariant*/,
+    getNodeVariant /*editNodesOfVariant*/,
   };
 };
