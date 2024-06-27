@@ -12,8 +12,8 @@ import colors from "Types/colorString";
 // hooks
 import { useAppSelector } from "Hooks/reduxHooks";
 import { useMemo } from "react";
-import { useStoreNodeVariants } from "./useStoreNodeVariants";
-import { useStoreHandleVariants } from "./useStoreHandleVariants";
+import { useStoreNodeVariants } from "../useStoreNodeVariants";
+import { useStoreHandleVariants } from "../useStoreHandleVariants";
 
 // types
 import { NodeVariant } from "Types/nodes/nodeVariant";

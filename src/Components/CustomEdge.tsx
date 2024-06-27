@@ -18,7 +18,7 @@ import { Button } from "./ui/button";
 import edgeConfig from "@/Configs/edgeConfig";
 
 // hooks
-import { useStoreEdgeById } from "Hooks/useStoreEdgeById";
+import { useStoreEdgeById } from "Hooks/edges/useStoreEdgeById";
 
 // styles
 import { Trash } from "lucide-react";

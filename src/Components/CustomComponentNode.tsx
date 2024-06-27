@@ -14,7 +14,7 @@ import nodeConfig, {
 import colors from "Types/colorString";
 
 // hooks
-import { useStoreNodeById } from "Hooks/useStoreNodeById";
+import { useStoreNodeById } from "Hooks/nodes/useStoreNodeById";
 import { useStoreNodes } from "Hooks/useStoreNodes";
 import { useStoreEdges } from "Hooks/useStoreEdges";
 
