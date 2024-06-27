@@ -109,3 +109,11 @@ export const getHighestValueBetweenTwoKeysOfCountLibrary = (
   const value2: number = obj[key2];
   return value1 > value2 ? key1 : key2;
 };
+
+export const getItemsFromArrayWithMatchingKeyValue = <T, V>(
+  arr: T[],
+  key: keyof T,
+  value: V
+): T[] => {
+  return arr.filter((item) => item[key as keyof T] === value);
+};
