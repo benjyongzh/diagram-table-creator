@@ -10,7 +10,6 @@ import {
 // hooks
 import { useAppDispatch, useAppSelector } from "Hooks/reduxHooks";
 import { useStoreEdges } from "./useStoreEdges";
-import { useStoreNodeVariants } from "./useStoreNodeVariants";
 
 // types
 import { standardNodeData } from "Types/nodes/node";
@@ -26,9 +25,12 @@ import { NodeVariant } from "Types/nodes/nodeVariant";
 
 export const useStoreNodes = () => {
   const dispatch = useAppDispatch();
-  const { allEdges, removeEdge } = useStoreEdges();
-  const { allNodeVariants } = useStoreNodeVariants();
   const allNodes: Node[] = useAppSelector((state) => state.nodes.nodes);
+  const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
+  const allNodeVariants: NodeVariant[] = useAppSelector(
+    (state) => state.nodeVariants.nodeVariants
+  );
+  const { removeEdge } = useStoreEdges();
 
   const addNode = (nodeVariant: NodeVariant) => {
     const id: NodeId = createNodeId();
@@ -98,7 +100,6 @@ export const useStoreNodes = () => {
   // };
 
   return {
-    allNodes,
     addNode,
     updateNode,
     removeNodeById,

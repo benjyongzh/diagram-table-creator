@@ -21,18 +21,21 @@ import {
   EdgeVariantData,
 } from "Types/edges/edgeVariant";
 import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
-import { HandleVariant } from "Types/handles/handleVariant";
+// import { HandleVariant } from "Types/handles/handleVariant";
 import { useStoreHandleVariants } from "./useStoreHandleVariants";
 import edgeConfig from "Configs/edgeConfig";
 
 export const useStoreEdgeVariants = () => {
   const dispatch = useAppDispatch();
-  const { allEdges, removeEdge } = useStoreEdges();
-  const { allHandleVariants, setEdgeVariantIdOfHandleVariant } =
-    useStoreHandleVariants();
+  const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
+  const { setEdgeVariantIdOfHandleVariant } = useStoreHandleVariants();
   const allEdgeVariants: EdgeVariant[] = useAppSelector(
     (state) => state.edgeVariants.edgeVariants
   );
+  // const allHandleVariants: HandleVariant[] = useAppSelector(
+  //   (state) => state.handleVariants.handleVariants
+  // );
+  const { removeEdge } = useStoreEdges();
 
   const getEdgeVariantFromId = (id: EdgeVariantId) =>
     allEdgeVariants.filter((variant) => variant.id === id)[0];
@@ -44,7 +47,7 @@ export const useStoreEdgeVariants = () => {
   };
 
   const updateEdgeVariant = (updatedVariant: EdgeVariant) => {
-    const edgesToUpdate: Edge[] = getEdgesOfVariantId(updatedVariant.id);
+    // const edgesToUpdate: Edge[] = getEdgesOfVariantId(updatedVariant.id);
     // update edges of this variant as well
     // for (let i = 0; i < edgesToUpdate.length; i++) {
     // update mainLabel
@@ -85,7 +88,6 @@ export const useStoreEdgeVariants = () => {
   };
 
   return {
-    allEdgeVariants,
     getEdgeVariantFromId,
     addEdgeVariant,
     updateEdgeVariant,

@@ -1,5 +1,6 @@
 import {
   Node,
+  Edge,
   HandleProps,
   Position,
   useUpdateNodeInternals,
@@ -9,11 +10,10 @@ import { toast } from "sonner";
 import colors from "Types/colorString";
 
 // hooks
-import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
+import { useAppSelector } from "Hooks/reduxHooks";
 import { useMemo } from "react";
 import { useStoreNodeVariants } from "./useStoreNodeVariants";
 import { useStoreHandleVariants } from "./useStoreHandleVariants";
-import { useStoreEdges } from "./useStoreEdges";
 
 // types
 import { NodeVariant } from "Types/nodes/nodeVariant";
@@ -23,9 +23,6 @@ import {
   HandlePort,
 } from "Types/handles/handleVariant";
 import { CSSProperties } from "react";
-
-//config
-import nodeConfig from "@/Configs/nodeConfig";
 
 //utils
 import { NodeId } from "Types/nodes/node";
@@ -43,11 +40,15 @@ import defaultHandleStyles from "Styles/handle";
 import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 
 export const useStoreNodeById = (nodeId: NodeId) => {
-  // const dispatch = useAppDispatch();
-  const { allEdges } = useStoreEdges();
-  const { allNodeVariants, getNodesOfVariantId } = useStoreNodeVariants();
-  const { allHandleVariants, getEdgeIdentifierOfhandleVariant } =
-    useStoreHandleVariants();
+  const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
+  const allNodeVariants: NodeVariant[] = useAppSelector(
+    (state) => state.nodeVariants.nodeVariants
+  );
+  const allHandleVariants: HandleVariant[] = useAppSelector(
+    (state) => state.handleVariants.handleVariants
+  );
+  const { getNodesOfVariantId } = useStoreNodeVariants();
+  const { getEdgeIdentifierOfhandleVariant } = useStoreHandleVariants();
   const updateNodeInternals = useUpdateNodeInternals();
 
   const thisNode: Node | undefined = useAppSelector(

@@ -24,13 +24,12 @@ import { useCallback } from "react";
 
 export const useStoreEdges = () => {
   const dispatch = useAppDispatch();
-  // const allNodes: Node[] = useAppSelector((state) => state.nodes.nodes);
   const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
-  const {
-    allEdgeVariants,
-    getEdgesOfVariantId,
-    getEdgeVariantFromEdgeIdentifier,
-  } = useStoreEdgeVariants();
+  const allEdgeVariants: EdgeVariant[] = useAppSelector(
+    (state) => state.edgeVariants.edgeVariants
+  );
+  const { getEdgesOfVariantId, getEdgeVariantFromEdgeIdentifier } =
+    useStoreEdgeVariants();
 
   const addEdgeFromConnection = (connection: Connection) => {
     const { source, target, sourceHandle, targetHandle } = connection;
@@ -268,7 +267,6 @@ export const useStoreEdges = () => {
   // };
 
   return {
-    allEdges,
     addEdgeFromConnection,
     updateEdge,
     removeEdge,

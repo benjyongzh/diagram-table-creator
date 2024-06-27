@@ -15,7 +15,6 @@ import {
 import { NodeVariant } from "Types/nodes/nodeVariant";
 
 // hooks
-import { useStoreNodeVariants } from "./useStoreNodeVariants";
 import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 import edgeConfig from "Configs/edgeConfig";
 import { useStoreEdgeVariants } from "./useStoreEdgeVariants";
@@ -23,12 +22,13 @@ import { EdgeVariantId } from "Types/edges/edgeVariant";
 
 export const useStoreHandleVariants = () => {
   const dispatch = useAppDispatch();
-  const { allNodeVariants } = useStoreNodeVariants();
-  const { getEdgeVariantFromId } = useStoreEdgeVariants();
-
+  const allNodeVariants: NodeVariant[] = useAppSelector(
+    (state) => state.nodeVariants.nodeVariants
+  );
   const allHandleVariants: HandleVariant[] = useAppSelector(
     (state) => state.handleVariants.handleVariants
   );
+  const { getEdgeVariantFromId } = useStoreEdgeVariants();
 
   const addHandleVariant = (variant: HandleVariant) => {
     dispatch(storeAddHandleVariant(variant));
@@ -89,7 +89,6 @@ export const useStoreHandleVariants = () => {
   };
 
   return {
-    allHandleVariants,
     addHandleVariant,
     updateHandleVariant,
     removeHandleVariantById,

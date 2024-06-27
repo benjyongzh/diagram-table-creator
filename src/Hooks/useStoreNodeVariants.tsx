@@ -26,13 +26,16 @@ import { createNodeVariantId } from "Services/nodeVariants";
 
 export const useStoreNodeVariants = () => {
   const dispatch = useAppDispatch();
+  const allNodes: Node[] = useAppSelector((state) => state.nodes.nodes);
   const allNodeVariants: NodeVariant[] = useAppSelector(
     (state) => state.nodeVariants.nodeVariants
   );
+  const allHandleVariants: HandleVariant[] = useAppSelector(
+    (state) => state.handleVariants.handleVariants
+  );
 
-  const { allNodes, updateNode, removeNodeById } = useStoreNodes();
-  const { allHandleVariants, removeHandleVariantById } =
-    useStoreHandleVariants();
+  const { updateNode, removeNodeById } = useStoreNodes();
+  const { removeHandleVariantById } = useStoreHandleVariants();
 
   const addNodeVariant = (newVariantData: NodeVariantData) => {
     // check to make sure there are no other variants of this name
@@ -94,7 +97,6 @@ export const useStoreNodeVariants = () => {
   };
 
   return {
-    allNodeVariants,
     addNodeVariant,
     updateNodeVariant,
     removeNodeVariantById,

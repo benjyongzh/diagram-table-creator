@@ -8,18 +8,16 @@ import { EdgeId, EdgeLabels } from "Types/edges/edge";
 import { useMemo, useCallback } from "react";
 // import { useAppDispatch } from "Hooks/reduxHooks";
 import { useStoreEdges } from "./useStoreEdges";
-import { useStoreEdgeVariants } from "./useStoreEdgeVariants";
+import { useAppSelector } from "./reduxHooks";
 
 export const useStoreEdgeById = (edgeId: string) => {
   // const dispatch = useAppDispatch();
-  const {
-    allEdges,
-    removeEdge,
-    getEdgeVariant,
-    getVariantIndex,
-    getEdgeLabels,
-  } = useStoreEdges();
-  const { allEdgeVariants } = useStoreEdgeVariants();
+  const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
+  const allEdgeVariants: EdgeVariant[] = useAppSelector(
+    (state) => state.edgeVariants.edgeVariants
+  );
+  const { removeEdge, getEdgeVariant, getVariantIndex, getEdgeLabels } =
+    useStoreEdges();
 
   const thisEdge: Edge = useMemo(
     () => allEdges.filter((edge) => edge.id === edgeId)[0],
