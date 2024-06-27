@@ -7,6 +7,7 @@ import { createEdgeVariantId } from "Services/edgeVariants";
 import {
   addEdgeVariant as storeAddEdgeVariant,
   removeEdgeVariant as storeRemoveEdgeVariant,
+  updateEdgeVariant as storeUpdateEdgeVariant,
 } from "Store/edgeVariantSlice";
 
 // hooks
@@ -43,14 +44,15 @@ export const useStoreEdgeVariants = () => {
   };
 
   const updateEdgeVariant = (updatedVariant: EdgeVariant) => {
-    //TODO! update edges of this variant as well
     const edgesToUpdate: Edge[] = getEdgesOfVariantId(updatedVariant.id);
-    for (let i = 0; i < edgesToUpdate.length; i++) {
-      // update mainLabel
-      // update edgeStartLabel
-      // update edgeEndLabel
-      // update variantIndex
-    }
+    // update edges of this variant as well
+    // for (let i = 0; i < edgesToUpdate.length; i++) {
+    // update mainLabel
+    // update edgeStartLabel
+    // update edgeEndLabel
+    // update variantIndex
+    // }
+    dispatch(storeUpdateEdgeVariant(updatedVariant));
   };
 
   const removeEdgeVariant = (id: EdgeVariantId) => {
