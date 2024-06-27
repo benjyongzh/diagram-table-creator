@@ -46,10 +46,10 @@ export const useStoreEdgeById = (edgeId: string) => {
   );
 
   return {
-    thisEdge,
+    // thisEdge,
     deleteEdgeById,
-    edgeVariant,
-    variantIndex,
+    // edgeVariant,
+    // variantIndex,
     edgeLabels,
   };
 };

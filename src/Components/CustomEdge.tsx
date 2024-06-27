@@ -38,7 +38,7 @@ export default memo(
     data, // this or useEdgeData
     selected,
   }: EdgeProps) => {
-    const { deleteEdgeById, edgeVariant, edgeLabels } = useStoreEdgeById(id);
+    const { deleteEdgeById, edgeLabels } = useStoreEdgeById(id);
     const [edgePath, labelX, labelY, offsetX, offsetY] = getSmoothStepPath({
       sourceX,
       sourceY,
