@@ -17,7 +17,7 @@ import { HandleVariantId, HandleVariant } from "Types/handles/handleVariant";
 import {} from "Types/handles/handleVariant";
 
 // hooks
-import { useStoreNodes } from "./useStoreNodes";
+import { useStoreNodes } from "./nodes/useStoreNodes";
 import { useStoreHandleVariants } from "./useStoreHandleVariants";
 
 // configs

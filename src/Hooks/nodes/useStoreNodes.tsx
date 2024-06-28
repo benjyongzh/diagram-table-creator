@@ -9,7 +9,9 @@ import {
 
 // hooks
 import { useAppDispatch, useAppSelector } from "Hooks/reduxHooks";
-import { useStoreEdges } from "./useStoreEdges";
+import { useStoreEdges } from "../useStoreEdges";
+import { useGetNodeFromNodeId } from "./useGetNodeFromNodeId";
+import { useGetNodeVariant } from "./useGetNodeVariant";
 
 // types
 import { standardNodeData } from "Types/nodes/node";
@@ -25,11 +27,11 @@ import { NodeVariant } from "Types/nodes/nodeVariant";
 
 export const useStoreNodes = () => {
   const dispatch = useAppDispatch();
+  const getNodeFromNodeId = useGetNodeFromNodeId();
+  const getNodeVariant = useGetNodeVariant();
   const allNodes: Node[] = useAppSelector((state) => state.nodes.nodes);
   const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
-  const allNodeVariants: NodeVariant[] = useAppSelector(
-    (state) => state.nodeVariants.nodeVariants
-  );
+
   const { removeEdge } = useStoreEdges();
 
   const addNode = (nodeVariant: NodeVariant) => {
@@ -70,15 +72,6 @@ export const useStoreNodes = () => {
     refreshVariantIndexesOfNodes(thisVariant);
   };
 
-  const getNodeFromNodeId = (nodeId: NodeId): Node => {
-    return allNodes.filter((node) => node.id === nodeId)[0];
-  };
-
-  const getNodeVariant = (node: Node): NodeVariant =>
-    allNodeVariants.filter(
-      (variant: NodeVariant) => variant.id === node.data.variantId
-    )[0];
-
   const refreshVariantIndexesOfNodes = (variant: NodeVariant) => {
     const nodesToUpdate: Node[] = allNodes.filter(
       (node) => node.data.variantId === variant.id
@@ -102,8 +95,6 @@ export const useStoreNodes = () => {
   return {
     addNode,
     updateNode,
-    removeNodeById,
-    getNodeFromNodeId,
-    getNodeVariant /*editNodesOfVariant*/,
+    removeNodeById /*editNodesOfVariant*/,
   };
 };
