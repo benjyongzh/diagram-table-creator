@@ -7,7 +7,7 @@ import { EdgeId, EdgeLabels } from "Types/edges/edge";
 // hooks
 import { useMemo, useCallback } from "react";
 // import { useAppDispatch } from "Hooks/reduxHooks";
-import { useStoreEdges } from "../useStoreEdges";
+import { useStoreEdges } from "./useStoreEdges";
 import { useAppSelector } from "../reduxHooks";
 
 export const useStoreEdgeById = (edgeId: string) => {

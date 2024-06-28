@@ -8,7 +8,7 @@ import {
 import { getConnectionTypeFromConnectionHandleString } from "@/Services/reactFlowHandles";
 import EdgeData from "Types/edges/edgeData";
 import { useAppSelector } from "./reduxHooks";
-import { useStoreEdges } from "./useStoreEdges";
+import { useStoreEdges } from "./edges/useStoreEdges";
 
 export const useEdgeData = (edgeId: string) => {
   const allEdges: Edge[] = useAppSelector(

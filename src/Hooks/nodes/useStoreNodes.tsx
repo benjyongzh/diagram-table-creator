@@ -9,7 +9,7 @@ import {
 
 // hooks
 import { useAppDispatch, useAppSelector } from "Hooks/reduxHooks";
-import { useStoreEdges } from "../useStoreEdges";
+import { useStoreEdges } from "../edges/useStoreEdges";
 import { useGetNodeFromNodeId } from "./useGetNodeFromNodeId";
 import { useGetNodeVariant } from "./useGetNodeVariant";
 

@@ -11,7 +11,7 @@ import {
 } from "Store/edgeVariantSlice";
 
 // hooks
-import { useStoreEdges } from "./useStoreEdges";
+import { useStoreEdges } from "./edges/useStoreEdges";
 import { useAppSelector, useAppDispatch } from "./reduxHooks";
 
 // types
