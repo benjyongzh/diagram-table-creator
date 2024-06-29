@@ -7,7 +7,7 @@ import formSchemaNewNodeVariant from "Types/forms/formSchemaNewNodeVariant";
 import { NodeVariant, NodeVariantData } from "Types/nodes/nodeVariant";
 
 // hooks
-import { useStoreNodeVariants } from "Hooks/useStoreNodeVariants";
+import { useStoreNodeVariants } from "Hooks/nodeVariants/useStoreNodeVariants";
 import { useModalForm } from "Hooks/useModalForm";
 import { useMemo } from "react";
 import { onFormSubmitParams, onFormSubmitFunction } from "./ModalForm";

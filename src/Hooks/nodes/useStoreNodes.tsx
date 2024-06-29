@@ -14,16 +14,15 @@ import { useGetNodeFromNodeId } from "./useGetNodeFromNodeId";
 import { useGetNodeVariant } from "./useGetNodeVariant";
 
 // types
-import { standardNodeData } from "Types/nodes/node";
-import { NodeData, NodeId } from "Types/nodes/node";
+import { NodeData, NodeId, standardNodeData } from "Types/nodes/node";
 import { EdgeId } from "Types/edges/edge";
+import { NodeVariant } from "Types/nodes/nodeVariant";
 
 // services
 import { createNodeId } from "Services/nodes";
 
 // config
 import nodeConfig from "Configs/nodeConfig";
-import { NodeVariant } from "Types/nodes/nodeVariant";
 
 export const useStoreNodes = () => {
   const dispatch = useAppDispatch();

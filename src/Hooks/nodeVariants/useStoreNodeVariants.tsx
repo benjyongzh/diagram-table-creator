@@ -17,8 +17,9 @@ import { HandleVariantId, HandleVariant } from "Types/handles/handleVariant";
 import {} from "Types/handles/handleVariant";
 
 // hooks
-import { useStoreNodes } from "./nodes/useStoreNodes";
-import { useStoreHandleVariants } from "./useStoreHandleVariants";
+import { useStoreNodes } from "../nodes/useStoreNodes";
+import { useStoreHandleVariants } from "../handleVariants/useStoreHandleVariants";
+import { useGetNodesOfVariantId } from "./useGetNodesOfVariantId";
 
 // configs
 import featureFlags from "@/Configs/featureFlags";
@@ -26,7 +27,7 @@ import { createNodeVariantId } from "Services/nodeVariants";
 
 export const useStoreNodeVariants = () => {
   const dispatch = useAppDispatch();
-  const allNodes: Node[] = useAppSelector((state) => state.nodes.nodes);
+  const getNodesOfVariantId = useGetNodesOfVariantId();
   const allNodeVariants: NodeVariant[] = useAppSelector(
     (state) => state.nodeVariants.nodeVariants
   );
@@ -34,7 +35,7 @@ export const useStoreNodeVariants = () => {
     (state) => state.handleVariants.handleVariants
   );
 
-  const { updateNode, removeNodeById } = useStoreNodes();
+  const { removeNodeById } = useStoreNodes();
   const { removeHandleVariantById } = useStoreHandleVariants();
 
   const addNodeVariant = (newVariantData: NodeVariantData) => {
@@ -79,10 +80,6 @@ export const useStoreNodeVariants = () => {
     dispatch(storeRemoveNodeVariantById(id));
   };
 
-  const getNodesOfVariantId = (id: NodeVariantId): Node[] => {
-    return allNodes.filter((node: Node) => node.data.variantId === id);
-  };
-
   const getNodeVariantFromId = (id: NodeVariantId): NodeVariant => {
     return allNodeVariants.filter(
       (variant: NodeVariant) => variant.id === id
@@ -100,8 +97,7 @@ export const useStoreNodeVariants = () => {
     addNodeVariant,
     updateNodeVariant,
     removeNodeVariantById,
-    getNodesOfVariantId,
-    getNodeVariantFromId,
-    getHandleVariantsFromId,
+    // getNodeVariantFromId,
+    // getHandleVariantsFromId,
   };
 };

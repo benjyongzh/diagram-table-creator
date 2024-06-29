@@ -11,7 +11,7 @@ import { EdgeVariant, EdgeVariantData } from "Types/edges/edgeVariant";
 import formSchemaNewEdgeVariant from "Types/forms/formSchemaNewEdgeVariant";
 
 // hooks
-import { useStoreEdgeVariants } from "Hooks/useStoreEdgeVariants";
+import { useStoreEdgeVariants } from "Hooks/edgeVariants/useStoreEdgeVariants";
 import { useModalForm } from "Hooks/useModalForm";
 import { useMemo } from "react";
 

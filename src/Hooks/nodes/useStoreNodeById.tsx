@@ -12,20 +12,17 @@ import colors from "Types/colorString";
 // hooks
 import { useAppSelector } from "Hooks/reduxHooks";
 import { useMemo } from "react";
-import { useStoreNodeVariants } from "../useStoreNodeVariants";
-import { useStoreHandleVariants } from "../useStoreHandleVariants";
+import { useGetNodesOfVariantId } from "Hooks/nodeVariants/useGetNodesOfVariantId";
+import { useGetEdgeIdentifierOfHandleVariant } from "Hooks/handleVariants/useGetEdgeIdentifierOfHandleVariant";
 
 // types
 import { NodeVariant } from "Types/nodes/nodeVariant";
-import {
-  HandleVariant,
-  HandleVariantId,
-  HandlePort,
-} from "Types/handles/handleVariant";
+import { HandleVariant, HandlePort } from "Types/handles/handleVariant";
+import { NodeId } from "Types/nodes/node";
+import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 import { CSSProperties } from "react";
 
 //utils
-import { NodeId } from "Types/nodes/node";
 import {
   getHandlePropsGroupingByKey,
   handleSpacingAndArray,
@@ -37,7 +34,6 @@ import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 
 // styling
 import defaultHandleStyles from "Styles/handle";
-import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
 
 export const useStoreNodeById = (nodeId: NodeId) => {
   const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
@@ -47,8 +43,9 @@ export const useStoreNodeById = (nodeId: NodeId) => {
   const allHandleVariants: HandleVariant[] = useAppSelector(
     (state) => state.handleVariants.handleVariants
   );
-  const { getNodesOfVariantId } = useStoreNodeVariants();
-  const { getEdgeIdentifierOfhandleVariant } = useStoreHandleVariants();
+  const getNodesOfVariantId = useGetNodesOfVariantId();
+  const getEdgeIdentifierOfhandleVariant =
+    useGetEdgeIdentifierOfHandleVariant();
   const updateNodeInternals = useUpdateNodeInternals();
 
   const thisNode: Node | undefined = useAppSelector(

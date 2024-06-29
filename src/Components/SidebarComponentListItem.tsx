@@ -11,7 +11,7 @@ import { DialogTrigger } from "./ui/dialog";
 import { NodeVariant } from "Types/nodes/nodeVariant";
 
 // hooks
-import { useStoreNodes } from "Hooks/useStoreNodes";
+import { useStoreNodes } from "Hooks/nodes/useStoreNodes";
 
 // ui
 import { Plus, Pencil } from "lucide-react";

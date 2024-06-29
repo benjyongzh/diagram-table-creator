@@ -11,8 +11,10 @@ import {
 } from "Store/edgeVariantSlice";
 
 // hooks
-import { useStoreEdges } from "./edges/useStoreEdges";
-import { useAppSelector, useAppDispatch } from "./reduxHooks";
+import { useStoreEdges } from "../edges/useStoreEdges";
+import { useAppDispatch } from "../reduxHooks";
+import { useGetEdgesOfVariantId } from "./useGetEdgesOfVariantId";
+import { useSetEdgeVariantIdOfHandleVariant } from "Hooks/handleVariants/useSetEdgeVariantIdOfHandleVariant";
 
 // types
 import {
@@ -20,25 +22,14 @@ import {
   EdgeVariantId,
   EdgeVariantData,
 } from "Types/edges/edgeVariant";
-import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
-// import { HandleVariant } from "Types/handles/handleVariant";
-import { useStoreHandleVariants } from "./useStoreHandleVariants";
 import edgeConfig from "Configs/edgeConfig";
 
 export const useStoreEdgeVariants = () => {
   const dispatch = useAppDispatch();
-  const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
-  const { setEdgeVariantIdOfHandleVariant } = useStoreHandleVariants();
-  const allEdgeVariants: EdgeVariant[] = useAppSelector(
-    (state) => state.edgeVariants.edgeVariants
-  );
-  // const allHandleVariants: HandleVariant[] = useAppSelector(
-  //   (state) => state.handleVariants.handleVariants
-  // );
-  const { removeEdge } = useStoreEdges();
+  const getEdgesOfVariantId = useGetEdgesOfVariantId();
+  const setEdgeVariantIdOfHandleVariant = useSetEdgeVariantIdOfHandleVariant();
 
-  const getEdgeVariantFromId = (id: EdgeVariantId) =>
-    allEdgeVariants.filter((variant) => variant.id === id)[0];
+  const { removeEdge } = useStoreEdges();
 
   const addEdgeVariant = (newVariantData: EdgeVariantData) => {
     const id: EdgeVariantId = createEdgeVariantId();
@@ -75,24 +66,9 @@ export const useStoreEdgeVariants = () => {
     dispatch(storeRemoveEdgeVariant(id));
   };
 
-  const getEdgesOfVariantId = (id: EdgeVariantId): Edge[] => {
-    return allEdges.filter((edge) => edge.data.variantId === id);
-  };
-
-  const getEdgeVariantFromEdgeIdentifier = (
-    edgeIdentifier: EdgeIdentifier
-  ): EdgeVariant => {
-    return allEdgeVariants.filter(
-      (variant) => variant.edgeIdentifier === edgeIdentifier
-    )[0];
-  };
-
   return {
-    getEdgeVariantFromId,
     addEdgeVariant,
     updateEdgeVariant,
     removeEdgeVariant,
-    getEdgesOfVariantId,
-    getEdgeVariantFromEdgeIdentifier,
   };
 };

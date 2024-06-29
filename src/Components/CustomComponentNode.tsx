@@ -1,5 +1,5 @@
 import { memo, useMemo } from "react";
-import { Handle, NodeProps, Edge } from "reactflow";
+import { Handle, NodeProps } from "reactflow";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { Modal } from "./modals/Modal";
 import { DialogTrigger } from "./ui/dialog";
@@ -15,8 +15,8 @@ import colors from "Types/colorString";
 
 // hooks
 import { useStoreNodeById } from "Hooks/nodes/useStoreNodeById";
-import { useStoreNodes } from "Hooks/useStoreNodes";
-import { useStoreEdges } from "Hooks/useStoreEdges";
+import { useGetEdgeLabels } from "Hooks/edges/useGetEdgeLabels";
+import { useStoreNodes } from "Hooks/nodes/useStoreNodes";
 
 //styles
 import { X } from "lucide-react";
@@ -33,7 +33,7 @@ export default memo((props: NodeProps) => {
     connectedEdges,
   } = useStoreNodeById(id);
   const { removeNodeById } = useStoreNodes();
-  const { getEdgeLabels } = useStoreEdges();
+  const getEdgeLabels = useGetEdgeLabels();
 
   // use id to call reactflowslice action to remove node
   const onDeleteButtonClicked = () => removeNodeById(id);

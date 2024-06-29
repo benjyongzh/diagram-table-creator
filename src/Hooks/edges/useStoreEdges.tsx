@@ -1,4 +1,4 @@
-import { Node, Edge, Connection } from "reactflow";
+import { Edge, Connection } from "reactflow";
 import { toast } from "sonner";
 
 //redux
@@ -6,7 +6,7 @@ import { onConnect, removeEdgeById, editEdge } from "@/Store/edgeSlice";
 
 // hooks
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
-import { useStoreEdgeVariants } from "../useStoreEdgeVariants";
+import { useGetEdgeVariantFromEdgeIdentifier } from "Hooks/edgeVariants/useGetEdgeVariantFromEdgeIdentifier";
 
 // config
 
@@ -25,7 +25,8 @@ export const useStoreEdges = () => {
   const dispatch = useAppDispatch();
   const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
 
-  const { getEdgeVariantFromEdgeIdentifier } = useStoreEdgeVariants();
+  const getEdgeVariantFromEdgeIdentifier =
+    useGetEdgeVariantFromEdgeIdentifier();
 
   const addEdgeFromConnection = (connection: Connection) => {
     const { source, target, sourceHandle, targetHandle } = connection;
