@@ -70,7 +70,9 @@ const ReactFlowContainer = () => {
   // const zoom = reactFlowInstance.getZoom();
   const nodes = useAppSelector((state) => state.nodes.nodes);
   const edges = useAppSelector((state) => state.edges.edges);
-  const edgeVariants = useAppSelector((state) => state.edgeVariants.variants);
+  const edgeVariants = useAppSelector(
+    (state) => state.edgeVariants.edgeVariants
+  );
   const dispatch = useAppDispatch();
   const { connectionIsValid } = useConnectionValidation();
   const { addEdgeFromConnection } = useStoreEdges();
