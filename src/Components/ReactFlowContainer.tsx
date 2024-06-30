@@ -36,17 +36,19 @@ import {
   onConnect as onReactFlowConnect,
   setAllEdges,
 } from "@/Store/edgeSlice";
-import { setAllNodeVariants } from "@/Store/nodeVariantSlice";
-import { setAllEdgeVariants } from "@/Store/edgeVariantSlice";
+import { setAllNodeVariants } from "Store/nodeVariantSlice";
+import { setAllEdgeVariants } from "Store/edgeVariantSlice";
+import { setAllHandleVariants } from "Store/handleVariantSlice";
 
 //hooks
 import { useConnectionValidation } from "Hooks/useConnectionValidation";
-import { useStoreEdges } from "Hooks/useStoreEdges";
+import { useStoreEdges } from "Hooks/edges/useStoreEdges";
 
 //initial
 import initialNodes, {
   initialNodeVariants,
   initialNodeTypes,
+  initialHandleVariants,
 } from "Objects/initialNodes";
 import initialEdges, {
   initialEdgeVariants,
@@ -113,8 +115,9 @@ const ReactFlowContainer = () => {
     if (featureFlags.USE_INITIAL_OBJECTS) {
       // dispatch(setAllNodes(initialNodes));
       // dispatch(setAllEdges(initialEdges));
-      dispatch(setAllNodeVariants(initialNodeVariants));
       dispatch(setAllEdgeVariants(initialEdgeVariants));
+      dispatch(setAllHandleVariants(initialHandleVariants));
+      dispatch(setAllNodeVariants(initialNodeVariants));
     }
   };
   return (

@@ -48,7 +48,7 @@ export const {
   addHandleVariant,
   removeHandleVariantById,
   updateHandleVariant,
-  setAllhandleVariants,
+  setAllHandleVariants,
 } = handleVariantslice.actions;
 
 export default handleVariantslice.reducer;
