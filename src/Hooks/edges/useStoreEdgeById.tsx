@@ -41,7 +41,7 @@ export const useStoreEdgeById = (edgeId: string) => {
 
   const variantIndex: number = useMemo(
     () => getVariantIndex(thisEdge),
-    [allEdgeVariants, thisEdge.data.variantId]
+    [allEdges.length, edgeVariant, thisEdge.data.variantId]
   );
 
   const edgeLabels: EdgeLabels = useMemo(
