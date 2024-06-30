@@ -1,5 +1,5 @@
-import { memo, useMemo } from "react";
-import { Handle, NodeProps } from "reactflow";
+import { memo, useMemo, useEffect } from "react";
+import { Handle, NodeProps, useUpdateNodeInternals } from "reactflow";
 import ButtonStyledIcon from "./ui/ButtonStyledIcon";
 import { Modal } from "./modals/Modal";
 import { DialogTrigger } from "./ui/dialog";
@@ -24,31 +24,38 @@ import { X } from "lucide-react";
 export default memo((props: NodeProps) => {
   const { id, data } = props;
   const {
+    nodeHeight,
+    nodeWidth,
     nodeVariant,
     variantIndex,
     nodeName,
     handleVariants,
     nodeColor,
-    handles,
+    createHandlePorts,
     connectedEdges,
   } = useStoreNodeById(id);
   const { removeNodeById } = useStoreNodes();
   const getEdgeLabels = useGetEdgeLabels();
+  // const updateNodeInternals = useUpdateNodeInternals();
 
   // use id to call reactflowslice action to remove node
   const onDeleteButtonClicked = () => removeNodeById(id);
 
-  const nodeHandles: React.ReactElement[] = handles.map((handlePort) => (
-    <Handle
-      key={handlePort.id}
-      id={handlePort.id}
-      type={handlePort.handleType}
-      position={handlePort.position} //position should depend on value of handleCount
-      isConnectableStart={true}
-      isConnectableEnd={true}
-      style={handlePort.style}
-    />
-  ));
+  const nodeHandles: React.ReactElement[] = useMemo(
+    () =>
+      createHandlePorts().map((handlePort) => (
+        <Handle
+          key={handlePort.id}
+          id={handlePort.id}
+          type={handlePort.handleType}
+          position={handlePort.position} //position should depend on value of handleCount
+          isConnectableStart={true}
+          isConnectableEnd={true}
+          style={handlePort.style}
+        />
+      )),
+    [nodeHeight, nodeWidth, handleVariants]
+  );
 
   const modalConfirmationContent = useMemo(
     () => (

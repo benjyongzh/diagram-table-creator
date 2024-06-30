@@ -83,27 +83,21 @@ export const useStoreNodeById = (nodeId: NodeId) => {
       allHandleVariants.filter((variant) =>
         nodeVariant.handleTypes.includes(variant.id)
       ),
-    [nodeVariant]
+    [nodeVariant.handleTypes]
   );
 
-  const nodeColor: colors = useMemo(() => nodeVariant.color, [nodeVariant]);
+  const nodeColor: colors = nodeVariant.color;
 
-  const handlesGroupings: Record<string, HandleProps[]> = useMemo(
-    () => getHandlePropsGroupingByKey(handleVariants, "position"),
-    [handleVariants]
-  );
+  const handlesGroupings: Record<string, HandleProps[]> =
+    getHandlePropsGroupingByKey(handleVariants, "position");
 
   const handleSpacingsAndArray: Record<Position, handleSpacingAndArray> =
-    useMemo(
-      () =>
-        getHandleSpacingAndArrayPerNodeSide(
-          { height: nodeHeight, width: nodeWidth },
-          handleVariants
-        ),
-      [nodeHeight, nodeWidth, handleVariants]
+    getHandleSpacingAndArrayPerNodeSide(
+      { height: nodeHeight, width: nodeWidth },
+      handleVariants
     );
 
-  const handles: HandlePort[] = useMemo(() => {
+  const createHandlePorts = () => {
     const finalArr: HandlePort[] = [];
     if (handleVariants.length < 1) return finalArr;
 
@@ -164,7 +158,7 @@ export const useStoreNodeById = (nodeId: NodeId) => {
     }
     updateNodeInternals(nodeId);
     return finalArr;
-  }, [nodeVariant]);
+  };
 
   const connectedEdges = useMemo(
     () => getConnectedEdges([thisNode!], allEdges),
@@ -179,7 +173,7 @@ export const useStoreNodeById = (nodeId: NodeId) => {
     nodeName,
     handleVariants,
     nodeColor,
-    handles,
+    createHandlePorts,
     connectedEdges,
   };
 };
