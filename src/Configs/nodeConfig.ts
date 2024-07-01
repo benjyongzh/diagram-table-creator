@@ -12,6 +12,8 @@ const nodeConfig = {
   DELETION_REQUIRES_USER_CONFIRMATION: true,
   DELETION_DELETES_AFFECTED_EDGES: true,
   DELETION_CREATES_TOAST_NOTIFICATION: true,
+  UNKNOWN_NODE_VARIANT_STRING: "unknown component type",
+  UNKNOWN_VARIANT_INDEX_STRING: "unknown index",
 };
 
 export default nodeConfig;

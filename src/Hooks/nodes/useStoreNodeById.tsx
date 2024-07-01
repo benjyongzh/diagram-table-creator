@@ -4,10 +4,8 @@ import {
   HandleProps,
   Position,
   useUpdateNodeInternals,
-  getConnectedEdges,
 } from "reactflow";
 import { toast } from "sonner";
-import colors from "Types/colorString";
 
 // hooks
 import { useAppSelector } from "Hooks/reduxHooks";
@@ -36,7 +34,6 @@ import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 import defaultHandleStyles from "Styles/handle";
 
 export const useStoreNodeById = (nodeId: NodeId) => {
-  const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
   const allNodeVariants: NodeVariant[] = useAppSelector(
     (state) => state.nodeVariants.nodeVariants
   );
@@ -61,32 +58,32 @@ export const useStoreNodeById = (nodeId: NodeId) => {
     [thisNode]
   );
 
-  const nodeVariant: NodeVariant = useMemo(
+  const nodeVariant: NodeVariant | null = useMemo(
     () =>
-      allNodeVariants.filter(
-        (variant: NodeVariant) => variant.id === thisNode!.data.variantId
-      )[0],
+      thisNode
+        ? allNodeVariants.filter(
+            (variant: NodeVariant) => variant.id === thisNode.data.variantId
+          )[0]
+        : null,
     [thisNode]
   );
 
-  const variantIndex: number = useMemo(() => {
-    const nodes: NodeId[] = getNodesOfVariantId(nodeVariant.id).map(
-      (node) => node.id
-    );
-    return nodes.indexOf(nodeId);
+  const variantIndex: number | null = useMemo(() => {
+    const nodes: NodeId[] | null = nodeVariant
+      ? getNodesOfVariantId(nodeVariant.id).map((node) => node.id)
+      : null;
+    return nodes ? nodes.indexOf(nodeId) : nodes;
   }, [nodeVariant]);
-
-  const nodeName: string = useMemo(() => nodeVariant.nodeName, [nodeVariant]);
 
   const handleVariants: HandleVariant[] = useMemo(
     () =>
-      allHandleVariants.filter((variant) =>
-        nodeVariant.handleTypes.includes(variant.id)
-      ),
-    [nodeVariant.handleTypes]
+      nodeVariant
+        ? allHandleVariants.filter((variant) =>
+            nodeVariant.handleTypes.includes(variant.id)
+          )
+        : [],
+    [nodeVariant]
   );
-
-  const nodeColor: colors = nodeVariant.color;
 
   const handlesGroupings: Record<string, HandleProps[]> =
     getHandlePropsGroupingByKey(handleVariants, "position");
@@ -160,20 +157,13 @@ export const useStoreNodeById = (nodeId: NodeId) => {
     return finalArr;
   };
 
-  const connectedEdges = useMemo(
-    () => getConnectedEdges([thisNode!], allEdges),
-    [nodeId, allEdges]
-  );
-
   return {
+    thisNode,
     nodeHeight,
     nodeWidth,
     nodeVariant,
     variantIndex,
-    nodeName,
     handleVariants,
-    nodeColor,
     createHandlePorts,
-    connectedEdges,
   };
 };
