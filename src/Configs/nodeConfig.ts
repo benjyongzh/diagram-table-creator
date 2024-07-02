@@ -14,6 +14,7 @@ const nodeConfig = {
   DELETION_CREATES_TOAST_NOTIFICATION: true,
   UNKNOWN_NODE_VARIANT_STRING: "unknown component type",
   UNKNOWN_VARIANT_INDEX_STRING: "unknown index",
+  DEFAULT_COLOR_STRING: "gray",
 };
 
 export default nodeConfig;

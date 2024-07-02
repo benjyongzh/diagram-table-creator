@@ -67,13 +67,10 @@ export default memo((props: NodeProps) => {
     () => (
       <div className="flex flex-col gap-2">
         <span className="menu-text">{`${
-          nodeVariant
-            ? nodeVariant.nodeName
-            : `This ${nodeConfig.UNKNOWN_NODE_VARIANT_STRING}`
+          nodeVariant?.nodeName ||
+          `This ${nodeConfig.UNKNOWN_NODE_VARIANT_STRING}`
         } ${
-          variantIndex
-            ? variantIndex
-            : `of ${nodeConfig.UNKNOWN_VARIANT_INDEX_STRING}`
+          variantIndex || `of ${nodeConfig.UNKNOWN_VARIANT_INDEX_STRING}`
         } will be permanently removed from your network. You cannot undo this action.`}</span>
         {connectedEdges.length ? (
           <span className="menu-text">{`The following connections will also be removed:`}</span>
@@ -92,23 +89,24 @@ export default memo((props: NodeProps) => {
     [nodeVariant, variantIndex, connectedEdges]
   );
 
+  const bgColorTailwindClass: string = useMemo(() => {
+    const color: string = nodeVariant
+      ? colors[nodeVariant?.color as keyof typeof colors]
+      : nodeConfig.DEFAULT_COLOR_STRING;
+    return `bg-${color}-${
+      data.isHovered
+        ? nodeBackgroundBrightnessTailwind.hover
+        : nodeBackgroundBrightnessTailwind.normal
+    }`;
+  }, [nodeVariant?.color, data.isHovered]);
+
   return (
     <div
       className={`relative nodeComponent cursor-auto
-      flex-col ${
-        data.isHovered
-          ? `bg-${colors[nodeVariant.color as keyof typeof colors]}-${
-              nodeBackgroundBrightnessTailwind.hover
-            }`
-          : `bg-${colors[nodeVariant.color as keyof typeof colors]}-${
-              nodeBackgroundBrightnessTailwind.normal
-            }`
-      }`}
+      flex-col ${bgColorTailwindClass}`}
     >
       <h2>
-        {nodeVariant
-          ? nodeVariant.nodeName
-          : nodeConfig.UNKNOWN_NODE_VARIANT_STRING}{" "}
+        {nodeVariant?.nodeName || nodeConfig.UNKNOWN_NODE_VARIANT_STRING}{" "}
         {variantIndex && variantIndex}
       </h2>
       {/* <p>
