@@ -34,6 +34,7 @@ import { convertObjectGroupingOfArraysToCountLibrary } from "Utilities/objects";
 import defaultHandleStyles from "Styles/handle";
 
 export const useStoreNodeById = (nodeId: NodeId) => {
+  const allNodes: Node[] = useAppSelector((state) => state.nodes.nodes);
   const allNodeVariants: NodeVariant[] = useAppSelector(
     (state) => state.nodeVariants.nodeVariants
   );
@@ -45,9 +46,9 @@ export const useStoreNodeById = (nodeId: NodeId) => {
     useGetEdgeIdentifierOfHandleVariant();
   const updateNodeInternals = useUpdateNodeInternals();
 
-  const thisNode: Node | undefined = useAppSelector(
-    (state) => state.nodes.nodes.filter((node: Node) => node.id === nodeId)[0]
-  );
+  const thisNode: Node | undefined = allNodes.filter(
+    (node: Node) => node.id === nodeId
+  )[0];
 
   const nodeHeight: number = useMemo(
     () => (thisNode ? thisNode.height! : 0),
@@ -73,7 +74,7 @@ export const useStoreNodeById = (nodeId: NodeId) => {
       ? getNodesOfVariantId(nodeVariant.id).map((node) => node.id)
       : null;
     return nodes ? nodes.indexOf(nodeId) : nodes;
-  }, [nodeVariant]);
+  }, [nodeVariant, allNodes.length]);
 
   const handleVariants: HandleVariant[] = useMemo(
     () =>
