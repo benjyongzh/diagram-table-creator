@@ -28,7 +28,6 @@ export const useStoreNodes = () => {
   const dispatch = useAppDispatch();
   const getNodeFromNodeId = useGetNodeFromNodeId();
   const getNodeVariant = useGetNodeVariant();
-  const allNodes: Node[] = useAppSelector((state) => state.nodes.nodes);
   const allEdges: Edge[] = useAppSelector((state) => state.edges.edges);
 
   const { removeEdge } = useStoreEdges();
@@ -48,14 +47,15 @@ export const useStoreNodes = () => {
   };
 
   const removeNodeById = (nodeId: NodeId) => {
+    const thisNode: Node = getNodeFromNodeId(nodeId);
     // delete edges on this node first
-    const edgeIdsToDelete: EdgeId[] = getConnectedEdges([], allEdges).map(
-      (edge) => edge.id
-    );
+    const edgeIdsToDelete: EdgeId[] = getConnectedEdges(
+      [thisNode],
+      allEdges
+    ).map((edge) => edge.id);
     for (let i = 0; i < edgeIdsToDelete.length; i++) {
       removeEdge(edgeIdsToDelete[i]);
     }
-    const thisNode: Node = getNodeFromNodeId(nodeId);
     const thisVariant: NodeVariant = getNodeVariant(thisNode);
     dispatch(storeRemoveNodeById(nodeId));
     if (
@@ -66,34 +66,11 @@ export const useStoreNodes = () => {
         description: thisVariant.nodeName,
       });
     }
-
-    // update nodeVariant Indexes for other nodes of this variant
-    refreshVariantIndexesOfNodes(thisVariant);
   };
-
-  const refreshVariantIndexesOfNodes = (variant: NodeVariant) => {
-    const nodesToUpdate: Node[] = allNodes.filter(
-      (node) => node.data.variantId === variant.id
-    );
-    for (let i = 0; i < nodesToUpdate.length; i++) {
-      const newNode: Node = {
-        ...nodesToUpdate[i],
-        data: { ...nodesToUpdate[i].data, variantIndex: i + 1 },
-      };
-      updateNode(newNode);
-    }
-  };
-
-  // const editNodesOfVariant = (change: EditVariant) => {
-  //   dispatch(editNodesByVariant(change));
-  //   if (nodeConfig.EDITING_VARIANT_EDITS_AFFECTED_EDGES) {
-  //     editEdgesOfNodeVariant(change);
-  //   }
-  // };
 
   return {
     addNode,
     updateNode,
-    removeNodeById /*editNodesOfVariant*/,
+    removeNodeById,
   };
 };
