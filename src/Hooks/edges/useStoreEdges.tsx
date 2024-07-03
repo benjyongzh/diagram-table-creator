@@ -20,6 +20,7 @@ import {
   getUsableEdgeIdentifierFromConnection,
 } from "Services/edges";
 import { useCallback } from "react";
+import edgeConfig from "Configs/edgeConfig";
 
 export const useStoreEdges = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +37,9 @@ export const useStoreEdges = () => {
 
     // get variantId from edgeIdentifier
     const variantId: EdgeVariantId =
-      getEdgeVariantFromEdgeIdentifier(edgeIdentifier).id;
+      edgeIdentifier === edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER
+        ? edgeConfig.FREE_CONNECTION_TYPE_VARIANT_ID
+        : getEdgeVariantFromEdgeIdentifier(edgeIdentifier).id;
 
     // create edge data
     const edgeData: EdgeData = {

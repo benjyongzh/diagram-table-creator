@@ -6,13 +6,16 @@ import { useGetEdgeVariant } from "./useGetEdgeVariant";
 import { useGetEdgeVariantIndex } from "./useGetEdgeVariantIndex";
 
 import { getEdgeLabels as getEdgeLabelsService } from "Services/edges";
+import edgeConfig from "Configs/edgeConfig";
 
 export const useGetEdgeLabels = () => {
   const getEdgeVariant = useGetEdgeVariant();
   const getVariantIndex = useGetEdgeVariantIndex();
   const getEdgeLabels = (edge: Edge): EdgeLabels => {
-    const variant: EdgeVariant = getEdgeVariant(edge);
-    const identifier: EdgeIdentifier = variant.edgeIdentifier;
+    const variant: EdgeVariant | null = getEdgeVariant(edge);
+    const identifier: EdgeIdentifier =
+      variant?.edgeIdentifier ||
+      edgeConfig.FREE_CONNECTION_TYPE_EDGE_IDENTIFIER;
     const variantIndex: number = getVariantIndex(edge);
     return getEdgeLabelsService({
       edge,

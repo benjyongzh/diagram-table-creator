@@ -6,7 +6,7 @@ export const useGetEdgeVariant = () => {
   const allEdgeVariants: EdgeVariant[] = useAppSelector(
     (state) => state.edgeVariants.edgeVariants
   );
-  const getEdgeVariant = (edge: Edge): EdgeVariant =>
+  const getEdgeVariant = (edge: Edge): EdgeVariant | null =>
     allEdgeVariants.filter((variant) => variant.id === edge.data.variantId)[0];
   return getEdgeVariant;
 };
