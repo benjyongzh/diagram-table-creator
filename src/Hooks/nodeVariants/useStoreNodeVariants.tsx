@@ -1,4 +1,5 @@
 import { Node } from "reactflow";
+import { toast } from "sonner";
 //redux
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 import {
@@ -15,6 +16,7 @@ import {
 } from "Types/nodes/nodeVariant";
 import { HandleVariantId, HandleVariant } from "Types/handles/handleVariant";
 import {} from "Types/handles/handleVariant";
+import { reduxObjectsHookOptions } from "Types/reduxObjectsHookOptions";
 
 // hooks
 import { useStoreNodes } from "../nodes/useStoreNodes";
@@ -38,7 +40,10 @@ export const useStoreNodeVariants = () => {
   const { removeNodeById } = useStoreNodes();
   const { removeHandleVariantById } = useStoreHandleVariants();
 
-  const addNodeVariant = (newVariantData: NodeVariantData) => {
+  const addNodeVariant = (
+    newVariantData: NodeVariantData,
+    options: reduxObjectsHookOptions = { useToast: true }
+  ) => {
     // check to make sure there are no other variants of this name
     const nodesWithSameName: NodeVariant[] = allNodeVariants.filter(
       (node: NodeVariant) => node.nodeName === newVariantData.nodeName
@@ -50,9 +55,17 @@ export const useStoreNodeVariants = () => {
     const newVariant: NodeVariant = { id, ...newVariantData };
 
     dispatch(storeAddNodeVariant(newVariant));
+    if (options.useToast) {
+      toast.success(`Component type created`, {
+        description: `${newVariantData.nodeName}`,
+      });
+    }
   };
 
-  const updateNodeVariant = (variant: NodeVariant) => {
+  const updateNodeVariant = (
+    variant: NodeVariant,
+    options: reduxObjectsHookOptions = { useToast: true }
+  ) => {
     dispatch(storeUpdateNodeVariant(variant));
     if (featureFlags.EDITING_VARIANTS_CHANGES_EXISTING_NODES) {
       //! update nodes of this variant. variantIndex?
@@ -61,13 +74,21 @@ export const useStoreNodeVariants = () => {
       // updateNode
       // }
     }
+    if (options.useToast) {
+      toast.success(`Component type updated`, {
+        description: `${variant.nodeName}`,
+      });
+    }
   };
 
-  const removeNodeVariantById = (id: NodeVariantId) => {
+  const removeNodeVariantById = (
+    id: NodeVariantId,
+    options: reduxObjectsHookOptions = { useToast: true }
+  ) => {
     // delete nodes of this variant
     const nodesToDelete: Node[] = getNodesOfVariantId(id);
     for (let i = 0; i < nodesToDelete.length; i++) {
-      removeNodeById(nodesToDelete[i].id);
+      removeNodeById(nodesToDelete[i].id, { useToast: false });
     }
 
     // delete handleVariants of this nodeVariant
@@ -77,7 +98,13 @@ export const useStoreNodeVariants = () => {
     }
 
     // delete this nodeVariant
+    const variant: NodeVariant = { ...getNodeVariantFromId(id) };
     dispatch(storeRemoveNodeVariantById(id));
+    if (options.useToast) {
+      toast.success(`Component type deleted`, {
+        description: `${variant.nodeName}`,
+      });
+    }
   };
 
   const getNodeVariantFromId = (id: NodeVariantId): NodeVariant => {
