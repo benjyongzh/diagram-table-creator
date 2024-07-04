@@ -34,7 +34,7 @@ export const useStoreEdgeById = (edgeId: string) => {
     }
   }, [edgeId]);
 
-  const edgeVariant: EdgeVariant = useMemo(
+  const edgeVariant: EdgeVariant | null = useMemo(
     () => getEdgeVariant(thisEdge),
     [thisEdge.data.variantId]
   );

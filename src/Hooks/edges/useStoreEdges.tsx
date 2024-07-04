@@ -7,20 +7,21 @@ import { onConnect, removeEdgeById, editEdge } from "@/Store/edgeSlice";
 // hooks
 import { useAppSelector, useAppDispatch } from "Hooks/reduxHooks";
 import { useGetEdgeVariantFromEdgeIdentifier } from "Hooks/edgeVariants/useGetEdgeVariantFromEdgeIdentifier";
+import { useGetEdgeLabels } from "./useGetEdgeLabels";
 
 // config
+import edgeConfig from "Configs/edgeConfig";
 
 // types
 import { EdgeId } from "Types/edges/edge";
 import { EdgeVariantId } from "Types/edges/edgeVariant";
 import { EdgeData } from "Types/edges/edge";
 import { EdgeIdentifier } from "Types/edges/edgeIdentifier";
+import { reduxObjectsHookOptions } from "Types/reduxObjectsHookOptions";
 import {
   createEdgeId,
   getUsableEdgeIdentifierFromConnection,
 } from "Services/edges";
-import { useCallback } from "react";
-import edgeConfig from "Configs/edgeConfig";
 
 export const useStoreEdges = () => {
   const dispatch = useAppDispatch();
@@ -28,8 +29,12 @@ export const useStoreEdges = () => {
 
   const getEdgeVariantFromEdgeIdentifier =
     useGetEdgeVariantFromEdgeIdentifier();
+  const getEdgeLabels = useGetEdgeLabels();
 
-  const addEdgeFromConnection = (connection: Connection) => {
+  const addEdgeFromConnection = (
+    connection: Connection,
+    options: reduxObjectsHookOptions = { useToast: true }
+  ) => {
     const { source, target, sourceHandle, targetHandle } = connection;
     // get edgeIdentifier of connection
     const edgeIdentifier: EdgeIdentifier =
@@ -61,14 +66,33 @@ export const useStoreEdges = () => {
       // label: "",
     };
     dispatch(onConnect(newEdge));
+    if (options.useToast) {
+      toast.success(`${edgeIdentifier} connection created`);
+    }
   };
 
-  const updateEdge = (updatedEdge: Edge) => {
+  const updateEdge = (
+    updatedEdge: Edge,
+    options: reduxObjectsHookOptions = { useToast: true }
+  ) => {
     dispatch(editEdge(updatedEdge));
+    if (options.useToast) {
+      toast.success(`connection ${updatedEdge.id} updated`);
+    }
   };
 
-  const removeEdge = (edgeId: EdgeId) => {
+  const removeEdge = (
+    edgeId: EdgeId,
+    options: reduxObjectsHookOptions = { useToast: true }
+  ) => {
+    const edgeToDelete: Edge = {
+      ...allEdges.filter((edge) => edge.id === edgeId)[0],
+    };
+    const label: string = getEdgeLabels(edgeToDelete).mainLabel;
     dispatch(removeEdgeById(edgeId));
+    if (options.useToast) {
+      toast.success(`connection ${label} deleted`);
+    }
   };
 
   const getVariantCountOfEdges = (variantId: EdgeVariantId): number => {
